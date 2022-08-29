@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <title>ProjectFinder</title>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+
+                <div class="text-end ms-auto">
+
+                    <a href="/home.html" class="btn btn-outline-light me-2">Home</a>
+
+                    <a href="/profile.html" class="btn btn-outline-light me-2">My Profile</a>
+                    <a href="/tasks.html" class="btn btn-outline-light me-2">My Tasks</a>
+
+                    <a href="/admin.html" class="btn btn-outline-light me-2">Admin Panel</a>
+
+                    <a href="/login.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="/register.html" class="btn btn-warning">Sign-up</a>
+                    <a href="/login.html" class="btn btn-outline-light me-2">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Navigation -->
+
+
+    <div class="card mx-4 my-2 py-2">
+        <h2 class="text-center">Uploaded</h2>
+        <h4 class="text-center pt-2">Current project title</h4>
+
+        <div class="overflow-auto p-5">
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="hover">
+                            <a href="" class="nav-link">
+                                <div class="d-flex align-items-center">
+                                    <img src="/static/images/student.png" alt="profileIcon" width="45" height="45"
+                                        class="rounded-circle">
+                                    <div class="ms-3">
+                                        <span class="fw-bold mb-1">FirstName</span>
+                                        <span class="fw-bold mb-1">LastName</span>
+                                        <p class="text-muted mb-0">username</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <p class="fw-normal mb-1">https://github.com</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+
+</html>

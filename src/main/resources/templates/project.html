@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <title>ProjectFinder</title>
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+
+                <div class="text-end ms-auto">
+
+                    <a href="/home.html" class="btn btn-outline-light me-2">Home</a>
+
+                    <a href="/profile.html" class="btn btn-outline-light me-2">My Profile</a>
+                    <a href="/tasks.html" class="btn btn-outline-light me-2">My Tasks</a>
+
+                    <a href="/admin.html" class="btn btn-outline-light me-2">Admin Panel</a>
+
+                    <a href="/login.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="/register.html" class="btn btn-warning">Sign-up</a>
+                    <a href="/login.html" class="btn btn-outline-light me-2">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Navigation -->
+
+    <div class="container rounded bg-white mt-5 mb-5 p-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h3 class="text-center m-4">Title of the project</h3>
+                <h6 class="text-end">Company name</h6>
+                <p class="mt-5">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
+                    explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
+                    voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
+                    blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque explicabo nemo
+                    asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo voluptate quae rem
+                    nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus
+                    saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores
+                    molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis
+                    voluptatum sint blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem
+                    ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
+                    explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
+                    voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
+                    blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque explicabo nemo
+                    asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo voluptate quae rem
+                    nulla nobis sequi.
+                </p>
+                <h5>Tehnologies:</h5>
+                <div class="row">
+                    <span class="col">Java</span>
+                    <span class="col">C#</span>
+                    <span class="col">Python</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid d-md-flex justify-content-between mt-4 ">
+
+            <!-- Participants Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-outline-dark btn-lg m-4" data-bs-toggle="modal"
+                data-bs-target="#participants">
+                All participants
+            </button>
+
+            <!-- Participants Modal -->
+            <div class="modal fade" id="participants" tabindex="-1" aria-labelledby="allParticipants"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="allParticipants">All participants</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3 hover"
+                                aria-current="true">
+                                <img src="/icons/student.png" alt="profileIcon" width="45" height="45"
+                                    class="rounded-circle">
+                                <div class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <span class="mb-0 fw-bold">FirstName</span>
+                                        <span class="mb-0 fw-bold">LastName</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-outline-dark btn-lg m-4">Participate</button>
+
+
+            <!-- Submit Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-outline-dark btn-lg m-4" data-bs-toggle="modal"
+                data-bs-target="#submitProject">
+                Submit
+            </button>
+
+            <!-- Submit Modal -->
+            <div class="modal fade" id="submitProject" tabindex="-1" aria-labelledby="submit" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="submit">Submit project</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <label>Enter link for your github repository</label>
+                            <input type="text" class="form-control" required autofocus>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Submit project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <a href="/uploaded.html" class="btn btn-primary btn-outline-dark btn-lg m-4">Uploaded</a>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

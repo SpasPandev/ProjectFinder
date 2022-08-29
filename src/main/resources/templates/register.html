@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <title>ProjectFinder</title>
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-9 mx-auto">
+                <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+                    <div class="card-body p-sm-5">
+                        <h3 class="text-center mb-3">Create an account</h3>
+
+                        <form>
+
+                            <div>
+                                <form>
+                                    <h6>Choose your role:</h6>
+                                    <input type="radio" name="role" id="student" checked>
+                                    <label for="student">Student</label>
+                                    <br>
+                                    <input type="radio" name="role" id="company">
+                                    <label for="company">Company</label>
+                                </form>
+                                <p class="alert alert-danger">Mark your role.</p>
+                            </div>
+
+                            <hr>
+
+                            <div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="username" required autofocus>
+                                    <label for="username">Username</label>
+
+                                    <p class="alert alert-danger">
+                                        Username is required.
+                                    </p>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="firstName" required autofocus>
+                                    <label for="firstName">First Name</label>
+
+                                    <p class="alert alert-danger">
+                                        First name is required.
+                                    </p>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="lastName" required autofocus>
+                                    <label for="lastName">Last Name</label>
+
+                                    <p class="alert alert-danger">
+                                        Last name is required.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="companyName" required autofocus>
+                                    <label for="companyName">Company Name</label>
+
+                                    <p class="alert alert-danger">
+                                        Company name is required.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" required autofocus>
+                                <label for="email">Email address</label>
+
+                                <p class="alert alert-danger">
+                                    Email is required.
+                                </p>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="password" required autofocus>
+                                <label for="password">Password</label>
+
+                                <p class="alert alert-danger">
+                                    Password is required.
+                                </p>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="passwordRepeat" required autofocus>
+                                <label for="passwordRepeat">Repeat Password</label>
+
+                                <p class="alert alert-danger">
+                                    Repeat password is required.
+                                </p>
+                            </div>
+
+                            <hr>
+
+                            <div>
+                                <div class="form-group">
+                                    <h6>Description</h6>
+                                    <textarea class="form-control" id="description" rows="13"
+                                        placeholder="Write something about yourself and your activities"></textarea>
+                                </div>
+
+                                <p class="alert alert-danger">
+                                    Description is required.
+                                </p>
+                            </div>
+
+                            <hr>
+                            <div class="row">
+                                <h6>Choose your interests:</h6>
+                                <div class="form-check mx-2 col">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckJava">
+                                    <label class="form-check-label" for="flexCheckJava">
+                                        Java
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2 col">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckC#">
+                                    <label class="form-check-label" for="flexCheckC#">
+                                        C#
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2 col">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckPython">
+                                    <label class="form-check-label" for="flexCheckPython">
+                                        Python
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2 col">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckC">
+                                    <label class="form-check-label" for="flexCheckC">
+                                        C
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2 col">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckPHP">
+                                    <label class="form-check-label" for="flexCheckPHP">
+                                        PHP
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2 col">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckJavaScript">
+                                    <label class="form-check-label" for="flexCheckJavaScript">
+                                        JavaScript
+                                    </label>
+                                </div>
+                                <div class="form-check mx-2 col">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckC++">
+                                    <label class="form-check-label" for="flexCheckC++">
+                                        C++
+                                    </label>
+                                </div>
+                                <p class="alert alert-danger">
+                                    Mark your interests.
+                                </p>
+                            </div>
+
+                            <hr>
+
+                        </form>
+
+                        <div class="text-center mt-4 mb-2">
+                            <button class="btn btn-lg btn-primary fw-bold text-uppercase"
+                                type="submit">Register</button>
+                        </div>
+
+                        <a class="d-block text-center mt-2 small" href="/login.html">Already have an account?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+    integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/static/css/style.css">
+
+  <title>ProjectFinder</title>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+
+        <div class="text-end ms-auto">
+
+          <a href="/home.html" class="btn btn-outline-light me-2">Home</a>
+
+          <a href="/profile.html" class="btn btn-outline-light me-2">My Profile</a>
+          <a href="/tasks.html" class="btn btn-outline-light me-2">My Tasks</a>
+
+          <a href="/admin.html" class="btn btn-outline-light me-2">Admin Panel</a>
+
+          <a href="/login.html" class="btn btn-outline-light me-2">Login</a>
+          <a href="/register.html" class="btn btn-warning">Sign-up</a>
+          <a href="/login.html" class="btn btn-outline-light me-2">Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- End Navigation -->
+
+  <div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+      <div class="col-md-3 border-right">
+        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+          <img class="rounded-circle mt-5" width="150px" src="/static/images/student.png" alt="profileIcon">
+          <div class="mt-3">
+            <span class="font-weight-bold">FirstName</span>
+            <span class="font-weight-bold">LastName</span>
+          </div>
+          <span class="font-weight-bold">username</span>
+          <span class="text-black-50">student@mail.com.my</span>
+        </div>
+
+        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+          <img class="rounded-circle mt-5" width="150px" src="/static/images/company.png" alt="profileIcon">
+          <div class="mt-3">
+            <span class="font-weight-bold">CompanyName</span>
+          </div>
+          <span class="font-weight-bold">username</span>
+          <span class="text-black-50">company@mail.com.my</span>
+        </div>
+      </div>
+
+      <div class="col-md-8 border-right">
+
+        <form>
+          <div class="p-3 py-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="text-right">Profile Settings</h4>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-6">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="First Name" value="">
+              </div>
+              <div class="col-md-6">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" class="form-control" value="" placeholder="Last Name">
+              </div>
+              <div class="col-md-6">
+                <label for="companyName">Company Name</label>
+                <input type="text" id="companyName" class="form-control" value="" placeholder="Company Name">
+              </div>
+              <div class="col-md-6">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" value="" placeholder="username">
+              </div>
+              <div class="col-md-6">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" value="" placeholder="email">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-6">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" value="" placeholder="Enter password">
+              </div>
+              <div class="col-md-6">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" class="form-control" value="" placeholder="Enter new password">
+              </div>
+              <div class="col-md-6">
+                <label for="repeatPassword">Repeat Password</label>
+                <input type="password" id="repeatPassword" class="form-control" value=""
+                  placeholder="Repeat new password">
+              </div>
+            </div>
+            <br>
+            <div class="input-group mb-3">
+              <input type="file" class="form-control" id="changeProfilePicture">
+              <label class="input-group-text" for="changeProfilePicture">Change Profile Picture</label>
+            </div>
+            <br>
+            <div class="row mt-3">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" rows="13"></textarea>
+              </div>
+            </div>
+            <br>
+            <div class="row mt-3">
+
+              <div class="form-check mx-2 col">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckJava">
+                <label class="form-check-label" for="flexCheckJava">
+                  Java
+                </label>
+              </div>
+              <div class="form-check mx-2 col">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckC#">
+                <label class="form-check-label" for="flexCheckC#">
+                  C#
+                </label>
+              </div>
+              <div class="form-check mx-2 col">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckPython">
+                <label class="form-check-label" for="flexCheckPython">
+                  Python
+                </label>
+              </div>
+              <div class="form-check mx-2 col">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckC">
+                <label class="form-check-label" for="flexCheckC">
+                  C
+                </label>
+              </div>
+              <div class="form-check mx-2 col">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckPHP">
+                <label class="form-check-label" for="flexCheckPHP">
+                  PHP
+                </label>
+              </div>
+              <div class="form-check mx-2 col">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckJavaScript">
+                <label class="form-check-label" for="flexCheckJavaScript">
+                  JavaScript
+                </label>
+              </div>
+              <div class="form-check mx-2 col">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckC++">
+                <label class="form-check-label" for="flexCheckC++">
+                  C++
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+        <div class="mb-5 text-center">
+          <button class="btn btn-primary profile-button" type="button">Save Profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
