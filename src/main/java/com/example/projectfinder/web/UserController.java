@@ -3,6 +3,7 @@ package com.example.projectfinder.web;
 import com.example.projectfinder.model.binding.UserLoginBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
 import com.example.projectfinder.model.service.UserServiceModel;
+import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -101,6 +103,16 @@ public class UserController {
         userService.registerUser(modelMapper.map(userRegisterBindingModel, UserServiceModel.class));
 
         return "redirect:login";
+    }
+
+    @GetMapping("/profile/{id}")
+    private String profile(@PathVariable Long id, Model model)
+    {
+        model
+                .addAttribute("user", modelMapper
+                        .map(userService.findUserById(id), UserViewModel.class));
+
+        return "profile";
     }
 
 }

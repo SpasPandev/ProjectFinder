@@ -44,4 +44,14 @@ public class UserServiceImpl implements UserService {
             currentUser.setId(id);
             currentUser.setUsername(username);
     }
+
+    @Override
+    public UserServiceModel findUserById(Long id) {
+
+        return userRepository
+                .findById(id)
+                .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
+                .orElse(null);
+
+    }
 }
