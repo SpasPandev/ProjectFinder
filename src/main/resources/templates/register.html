@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -29,25 +30,28 @@
                     <div class="card-body p-sm-5">
                         <h3 class="text-center mb-3">Create an account</h3>
 
-                        <form>
+                        <form
+                                th:object="${userRegisterBindingModel}"
+                                th:action="@{/register}"
+                                th:method="post">
 
-                            <div>
-                                <form>
-                                    <h6>Choose your role:</h6>
-                                    <input type="radio" name="role" id="student" checked>
-                                    <label for="student">Student</label>
-                                    <br>
-                                    <input type="radio" name="role" id="company">
-                                    <label for="company">Company</label>
-                                </form>
-                                <p class="alert alert-danger">Mark your role.</p>
-                            </div>
+<!--                            <div>-->
+<!--                                <form>-->
+<!--                                    <h6>Choose your role:</h6>-->
+<!--                                    <input type="radio" name="role" id="student" checked>-->
+<!--                                    <label for="student">Student</label>-->
+<!--                                    <br>-->
+<!--                                    <input type="radio" name="role" id="company">-->
+<!--                                    <label for="company">Company</label>-->
+<!--                                </form>-->
+<!--                                <p class="alert alert-danger">Mark your role.</p>-->
+<!--                            </div>-->
 
                             <hr>
 
                             <div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="username" required autofocus>
+                                    <input th:field="*{username}" type="text" class="form-control" id="username" required autofocus>
                                     <label for="username">Username</label>
 
                                     <p class="alert alert-danger">
@@ -56,37 +60,17 @@
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="firstName" required autofocus>
-                                    <label for="firstName">First Name</label>
+                                    <input th:field="*{name}" type="text" class="form-control" id="name" required autofocus>
+                                    <label for="name">Name</label>
 
                                     <p class="alert alert-danger">
-                                        First name is required.
-                                    </p>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="lastName" required autofocus>
-                                    <label for="lastName">Last Name</label>
-
-                                    <p class="alert alert-danger">
-                                        Last name is required.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="companyName" required autofocus>
-                                    <label for="companyName">Company Name</label>
-
-                                    <p class="alert alert-danger">
-                                        Company name is required.
+                                        Name is required.
                                     </p>
                                 </div>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="email" required autofocus>
+                                <input th:field="*{email}" type="email" class="form-control" id="email" required autofocus>
                                 <label for="email">Email address</label>
 
                                 <p class="alert alert-danger">
@@ -97,7 +81,7 @@
                             <hr>
 
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="password" required autofocus>
+                                <input th:field="*{password}" type="password" class="form-control" id="password" required autofocus>
                                 <label for="password">Password</label>
 
                                 <p class="alert alert-danger">
@@ -106,7 +90,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="passwordRepeat" required autofocus>
+                                <input th:field="*{confirmPassword}" type="password" class="form-control" id="passwordRepeat" required autofocus>
                                 <label for="passwordRepeat">Repeat Password</label>
 
                                 <p class="alert alert-danger">
@@ -119,7 +103,7 @@
                             <div>
                                 <div class="form-group">
                                     <h6>Description</h6>
-                                    <textarea class="form-control" id="description" rows="13"
+                                    <textarea th:field="*{description}" class="form-control" id="description" rows="13"
                                         placeholder="Write something about yourself and your activities"></textarea>
                                 </div>
 
@@ -180,12 +164,12 @@
 
                             <hr>
 
-                        </form>
+                            <div class="text-center mt-4 mb-2">
+                                <button class="btn btn-lg btn-primary fw-bold text-uppercase"
+                                        type="submit">Register</button>
+                            </div>
 
-                        <div class="text-center mt-4 mb-2">
-                            <button class="btn btn-lg btn-primary fw-bold text-uppercase"
-                                type="submit">Register</button>
-                        </div>
+                        </form>
 
                         <a class="d-block text-center mt-2 small" href="/login">Already have an account?</a>
                     </div>

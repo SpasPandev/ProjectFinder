@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -30,30 +31,38 @@
 
             <h3 class="mb-5">Wellcome !</h3>
 
-            <form>
+            <form
+                    th:object="${userLoginBindingModel}"
+                    th:action="@{/login}"
+                    th:method="post">
               <div class="form-outline mb-4">
-                <input type="username" id="username" class="form-control form-control-lg"
-                  placeholder="Enter username" />
+                <input
+                        th:field="*{username}"
+                        type="text"
+                        id="username" class="form-control form-control-lg"
+                  placeholder="Enter username">
               </div>
 
               <div class="form-outline mb-4">
-                <input type="password" id="password" class="form-control form-control-lg"
-                  placeholder="Enter password" />
+                <input
+                        th:field="*{password}"
+                        type="password" id="password" class="form-control form-control-lg"
+                  placeholder="Enter password">
               </div>
 
-              <p class="alert alert-danger">
+              <p th:if="${isExists == false}" class="alert alert-danger">
                 Invalid username or password.
               </p>
 
               <!-- Checkbox -->
               <div class="form-check d-flex justify-content-start mb-4">
-                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck" />
+                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
                 <label class="form-check-label" for="rememberPasswordCheck"> Remember password </label>
               </div>
 
-            </form>
+              <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
 
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+            </form>
 
             <a class="d-block text-center mt-2 small" href="/register">Need an account?</a>
           </div>
