@@ -19,8 +19,8 @@ public class ProjectEntity extends BaseEntity{
     @ManyToOne
     private UserEntity author;
 
-    @ManyToOne
-    private UserEntity participant;
+    @ManyToMany
+    private Set<UserEntity> participant;
 
     public String getTitle() {
         return title;
@@ -54,11 +54,11 @@ public class ProjectEntity extends BaseEntity{
         this.author = author;
     }
 
-    public UserEntity getParticipant() {
+    public Set<UserEntity> getParticipant() {
         return participant;
     }
 
-    public void setParticipant(UserEntity participant) {
+    public void setParticipant(Set<UserEntity> participant) {
         this.participant = participant;
     }
 
