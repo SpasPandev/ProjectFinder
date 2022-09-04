@@ -100,6 +100,13 @@ public class UserController {
             return "redirect:register";
         }
 
+        boolean isNameExists = userService.isNameExists(userRegisterBindingModel.getUsername());
+
+        if (isNameExists)
+        {
+            ///TODO
+        }
+
         userService.registerUser(modelMapper.map(userRegisterBindingModel, UserServiceModel.class));
 
         return "redirect:login";

@@ -10,4 +10,6 @@ public interface UserService {
     void loginUser(Long id, String username);
 
     UserServiceModel findUserById(Long id);
+
+    boolean isNameExists(String username);
 }

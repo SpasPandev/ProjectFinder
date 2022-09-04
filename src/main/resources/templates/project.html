@@ -14,11 +14,12 @@
     <!-- End Navigation -->
 
     <div class="container rounded bg-white mt-5 mb-5 p-3">
-        <div class="row justify-content-center">
+        <div th:object="${projectId}" class="row justify-content-center">
             <div class="col-md-8">
-                <h3 class="text-center m-4">Title of the project</h3>
-                <h6 class="text-end">Company name</h6>
-                <p class="mt-5">
+                <h3 th:text="*{title}" class="text-center m-4">Title of the project</h3>
+                <h6 th:text="*{author.name}" class="text-end">Company name</h6>
+                <hr>
+                <p th:text="*{project_description}" class="mt-5">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -40,11 +41,12 @@
                     asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo voluptate quae rem
                     nulla nobis sequi.
                 </p>
+                <hr>
                 <h5>Tehnologies:</h5>
-                <div class="row">
-                    <span class="col">Java</span>
-                    <span class="col">C#</span>
-                    <span class="col">Python</span>
+                <div th:each="t : ${projectId.technologies}" class="row">
+                    <span th:text="${t}" class="col">Java</span>
+<!--                    <span class="col">C#</span>-->
+<!--                    <span class="col">Python</span>-->
                 </div>
             </div>
         </div>
