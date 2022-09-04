@@ -64,7 +64,7 @@ VALUES (1, '1st project description', '1st title', '3');
 INSERT INTO project (id, project_description, title, author_id)
 VALUES (2, '2nd project description', '2nd title', '3');
 
--- project participant
+-- project technologies
 INSERT INTO project_technologies (`project_entity_id`, `technologies_id`)
 VALUES (1, 1);
 
@@ -73,3 +73,10 @@ VALUES (1, 5);
 
 INSERT INTO project_technologies (`project_entity_id`, `technologies_id`)
 VALUES (2, 3);
+
+-- project participant
+INSERT INTO project_participant (`project_entity_id`, `participant_id`)
+VALUES (1, 2);
+
+INSERT INTO project_participant (`project_entity_id`, `participant_id`)
+VALUES (2, 2);
