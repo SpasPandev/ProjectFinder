@@ -38,12 +38,8 @@
         <br>
         <p>Java/ C#/ Ptyhon/ PHP</p>
 
-        <div class=" px-2 rounded mt-4 ">
-          <span>Joined May,2021</span>
-        </div>
-
-        <div class=" d-flex mt-2">
-          <a href="/editProfile" class="btn btn-dark">Edit Profile</a>
+        <div th:object="${user}" class=" d-flex mt-2">
+          <a th:href="@{{id}/editProfile(id = *{id})}" class="btn btn-dark">Edit Profile</a>
         </div>
       </div>
 
