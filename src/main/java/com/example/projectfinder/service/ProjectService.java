@@ -10,4 +10,6 @@ public interface ProjectService {
     ProjectServiceModel findProjectId(Long id);
 
     List<ProjectViewModel> findAllProjectViews();
+
+    void createNewProject(ProjectServiceModel projectServiceModel);
 }

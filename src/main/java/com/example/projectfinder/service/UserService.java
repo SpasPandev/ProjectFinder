@@ -1,5 +1,6 @@
 package com.example.projectfinder.service;
 
+import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.service.UserServiceModel;
 
 public interface UserService {
@@ -12,4 +13,6 @@ public interface UserService {
     UserServiceModel findUserById(Long id);
 
     boolean isNameExists(String username);
+
+    UserEntity findCurrentLoginUserEntity();
 }

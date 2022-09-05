@@ -21,77 +21,56 @@
                     <h3>Create Project</h3>
                     <br>
 
-                    <form>
+                    <form
+                    th:action="@{createProject}"
+                    th:method="post"
+                    th:object="${createProjectBindingModel}">
                         <div class="row mt-3">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input class="form-control" type="text" id="title" placeholder="Title of the project">
+                                <input th:field="*{title}"
+                                       th:errorclass="'is-invalid'"
+                                       class="form-control" type="text" id="title" placeholder="Title of the project">
+
+                                <p class="invalid-feedback alert alert-danger" >
+                                 Title is required.
+                                </p>
                             </div>
-                            <p class="alert alert-danger">
-                                Title is required.
-                            </p>
                             <div class="form-group mt-4">
                                 <label for="description">Description</label>
-                                <textarea class="form-control" id="description" rows="13"
-                                    placeholder="Description of the project"></textarea>
+                                <textarea th:field="*{project_description}"
+                                          th:errorclass="'is-invalid'"
+                                          class="form-control" id="description" rows="13"
+                                          placeholder="Description of the project"></textarea>
+                                <p class="invalid-feedback alert alert-danger">
+                                    Description is required.
+                                </p>
                             </div>
-                            <p class="alert alert-danger">
-                                Description is required.
-                            </p>
                         </div>
                         <br>
                         <p>Choose tehnologies</p>
                         <div class="row mt-3">
 
-                            <div class="form-check mx-2 col">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckJava">
-                                <label class="form-check-label" for="flexCheckJava">
-                                    Java
+                            <div class="form-group mx-2 col">
+                                <label class="p-2" for="technologies">
+                                    Technologies:
                                 </label>
+                                <input
+                                       th:each="t : ${T(com.example.projectfinder.model.entity.enums.TechnologyNameEnum).values()}"
+                                       th:object="${t}"
+                                       th:text="${t}"
+                                       th:value="${t}"
+                                       class="m-3" type="checkbox" name="technologies" id="technologies"
+                                       value="1" text="Technology">
+
+                                <p th:if="${#fields.hasErrors()}" class="alert alert-danger">Mark the necessary technologies.</p>
                             </div>
-                            <div class="form-check mx-2 col">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckC#">
-                                <label class="form-check-label" for="flexCheckC#">
-                                    C#
-                                </label>
-                            </div>
-                            <div class="form-check mx-2 col">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckPython">
-                                <label class="form-check-label" for="flexCheckPython">
-                                    Python
-                                </label>
-                            </div>
-                            <div class="form-check mx-2 col">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckC">
-                                <label class="form-check-label" for="flexCheckC">
-                                    C
-                                </label>
-                            </div>
-                            <div class="form-check mx-2 col">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckPHP">
-                                <label class="form-check-label" for="flexCheckPHP">
-                                    PHP
-                                </label>
-                            </div>
-                            <div class="form-check mx-2 col">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckJavaScript">
-                                <label class="form-check-label" for="flexCheckJavaScript">
-                                    JavaScript
-                                </label>
-                            </div>
-                            <div class="form-check mx-2 col">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckC++">
-                                <label class="form-check-label" for="flexCheckC++">
-                                    C++
-                                </label>
-                            </div>
-                            <p class="alert alert-danger">Mark the necessary technologies.</p>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button class="btn btn-primary profile-button" type="submit">Create Project</button>
                         </div>
 
                     </form>
-                    <div class="mt-4 text-center">
-                        <button class="btn btn-primary profile-button" type="submit">Create Project</button>
-                    </div>
                 </div>
             </div>
         </div>
