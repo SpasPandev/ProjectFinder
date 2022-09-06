@@ -23,10 +23,12 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final CurrentUser currentUser;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper, CurrentUser currentUser) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.currentUser = currentUser;
     }
 
     @ModelAttribute
@@ -77,7 +79,7 @@ public class UserController {
 
         userService.loginUser(user.getId(), user.getUsername());
 
-        return "home.html";
+        return "redirect:home";
     }
 
     @GetMapping("/register")
@@ -115,6 +117,11 @@ public class UserController {
     @GetMapping("/profile/{id}")
     private String profile(@PathVariable Long id, Model model)
     {
+        if (currentUser.getId() == null)
+        {
+            return "redirect:/login";
+        }
+
         model
                 .addAttribute("user", modelMapper
                         .map(userService.findUserById(id), UserViewModel.class));
