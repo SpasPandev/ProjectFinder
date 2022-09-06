@@ -1,8 +1,11 @@
 package com.example.projectfinder.web;
 
+import com.example.projectfinder.model.binding.EditProejectBindingModel;
 import com.example.projectfinder.model.binding.UserLoginBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
+import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
+import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
@@ -10,10 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -120,6 +120,45 @@ public class UserController {
                         .map(userService.findUserById(id), UserViewModel.class));
 
         return "profile";
+    }
+
+    @GetMapping("/profile/{id}/editProfile")
+    public String editProfile(@PathVariable Long id, Model model)
+    {
+        EditProfileViewModel editProfileViewModel = this.userService.getById(id);
+        EditProejectBindingModel editProejectBindingModel = modelMapper.map(editProfileViewModel, EditProejectBindingModel.class);
+
+        model.addAttribute("editProejectBindingModel", editProejectBindingModel);
+
+        return "editProfile";
+    }
+    @GetMapping("/profile/{id}/editProfile/errors")
+    public String editProfileErrors(@PathVariable Long id, Model model)
+    {
+
+        return "editProfile";
+    }
+
+    @PatchMapping("/profile/{id}/editProfile")
+    public String editProfileConfirm(@PathVariable Long id,
+                                     @Valid EditProejectBindingModel editProejectBindingModel,
+                                     BindingResult bindingResult,
+                                     RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("editProejectBindingModel", editProejectBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProejectBindingModel", bindingResult);
+
+            return "redirect:/profile/" + id + "/editProfile/errors";
+        }
+
+        EditProfileServiceModel editProfileServiceModel = modelMapper.map(editProejectBindingModel, EditProfileServiceModel.class);
+        editProfileServiceModel.setId(id);
+
+        this.userService.updateProfile(editProfileServiceModel);
+
+
+        return "redirect:/profile/" + id;
     }
 
 }

@@ -1,7 +1,9 @@
 package com.example.projectfinder.service;
 
 import com.example.projectfinder.model.entity.UserEntity;
+import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
+import com.example.projectfinder.model.view.EditProfileViewModel;
 
 public interface UserService {
     void registerUser(UserServiceModel userServiceModel);
@@ -15,4 +17,8 @@ public interface UserService {
     boolean isNameExists(String username);
 
     UserEntity findCurrentLoginUserEntity();
+
+    EditProfileViewModel getById(Long id);
+
+    void updateProfile(EditProfileServiceModel editProfileServiceModel);
 }
