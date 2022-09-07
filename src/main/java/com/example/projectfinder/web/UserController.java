@@ -3,6 +3,7 @@ package com.example.projectfinder.web;
 import com.example.projectfinder.model.binding.EditProejectBindingModel;
 import com.example.projectfinder.model.binding.UserLoginBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
+import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
@@ -88,8 +89,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(UserRegisterBindingModel userRegisterBindingModel,
+    public String register(@Valid UserRegisterBindingModel userRegisterBindingModel,
                            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
 
             redirectAttributes
@@ -99,7 +101,7 @@ public class UserController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel",
                             bindingResult);
 
-            return "redirect:register";
+            return "redirect:/register";
         }
 
         boolean isNameExists = userService.isNameExists(userRegisterBindingModel.getUsername());

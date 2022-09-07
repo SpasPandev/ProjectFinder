@@ -1,17 +1,24 @@
 package com.example.projectfinder.model.binding;
 
+import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
+
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 public class UserRegisterBindingModel {
 
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
-
+    @NotEmpty
     private String confirmPassword;
-
-    @NotNull
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String description;
 
     public UserRegisterBindingModel() {

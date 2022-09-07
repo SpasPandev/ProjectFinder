@@ -35,29 +35,38 @@
 
                             <div>
                                 <div class="form-floating mb-3">
-                                    <input th:field="*{username}" type="text" class="form-control" id="username" required autofocus>
+                                    <input
+                                            th:field="*{username}"
+                                            th:errorclass="is-invalid"
+                                            type="text" class="form-control" id="username">
                                     <label for="username">Username</label>
 
-                                    <p class="alert alert-danger">
+                                    <p class="invalid-feedback alert alert-danger">
                                         Username is required.
                                     </p>
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input th:field="*{name}" type="text" class="form-control" id="name" required autofocus>
+                                    <input
+                                            th:field="*{name}"
+                                           th:errorclass="is-invalid"
+                                           type="text" class="form-control" id="name">
                                     <label for="name">Name</label>
 
-                                    <p class="alert alert-danger">
+                                    <p class="invalid-feedback alert alert-danger">
                                         Name is required.
                                     </p>
                                 </div>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input th:field="*{email}" type="email" class="form-control" id="email" required autofocus>
+                                <input
+                                        th:field="*{email}"
+                                        th:errorclass="is-invalid"
+                                        type="email" class="form-control" id="email">
                                 <label for="email">Email address</label>
 
-                                <p class="alert alert-danger">
+                                <p class="invalid-feedback alert alert-danger">
                                     Email is required.
                                 </p>
                             </div>
@@ -65,19 +74,25 @@
                             <hr>
 
                             <div class="form-floating mb-3">
-                                <input th:field="*{password}" type="password" class="form-control" id="password" required autofocus>
+                                <input
+                                        th:field="*{password}"
+                                        th:errorclass="is-invalid"
+                                        type="password" class="form-control" id="password">
                                 <label for="password">Password</label>
 
-                                <p class="alert alert-danger">
+                                <p class="invalid-feedback alert alert-danger">
                                     Password is required.
                                 </p>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input th:field="*{confirmPassword}" type="password" class="form-control" id="passwordRepeat" required autofocus>
+                                <input
+                                        th:field="*{confirmPassword}"
+                                        th:errorclass="is-invalid"
+                                        type="password" class="form-control" id="passwordRepeat">
                                 <label for="passwordRepeat">Repeat Password</label>
 
-                                <p class="alert alert-danger">
+                                <p class="invalid-feedback alert alert-danger">
                                     Repeat password is required.
                                 </p>
                             </div>
@@ -87,64 +102,33 @@
                             <div>
                                 <div class="form-group">
                                     <h6>Description</h6>
-                                    <textarea th:field="*{description}" class="form-control" id="description" rows="13"
+                                    <textarea
+                                            th:field="*{description}"
+                                            th:errorclass="is-invalid"
+                                            class="form-control" id="description" rows="13"
                                         placeholder="Write something about yourself and your activities"></textarea>
                                 </div>
 
-                                <p class="alert alert-danger">
+                                <p class="invalid-feedback alert alert-danger">
                                     Description is required.
                                 </p>
                             </div>
 
-                            <hr>
-                            <div class="row">
-                                <h6>Choose your interests:</h6>
-                                <div class="form-check mx-2 col">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckJava">
-                                    <label class="form-check-label" for="flexCheckJava">
-                                        Java
-                                    </label>
-                                </div>
-                                <div class="form-check mx-2 col">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckC#">
-                                    <label class="form-check-label" for="flexCheckC#">
-                                        C#
-                                    </label>
-                                </div>
-                                <div class="form-check mx-2 col">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckPython">
-                                    <label class="form-check-label" for="flexCheckPython">
-                                        Python
-                                    </label>
-                                </div>
-                                <div class="form-check mx-2 col">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckC">
-                                    <label class="form-check-label" for="flexCheckC">
-                                        C
-                                    </label>
-                                </div>
-                                <div class="form-check mx-2 col">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckPHP">
-                                    <label class="form-check-label" for="flexCheckPHP">
-                                        PHP
-                                    </label>
-                                </div>
-                                <div class="form-check mx-2 col">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckJavaScript">
-                                    <label class="form-check-label" for="flexCheckJavaScript">
-                                        JavaScript
-                                    </label>
-                                </div>
-                                <div class="form-check mx-2 col">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckC++">
-                                    <label class="form-check-label" for="flexCheckC++">
-                                        C++
-                                    </label>
-                                </div>
-                                <p class="alert alert-danger">
-                                    Mark your interests.
-                                </p>
-                            </div>
+<!--                            <hr>-->
+<!--                            <div class="row">-->
+<!--                                <h6>Choose your interests:</h6>-->
+<!--                                <div>-->
+<!--                                    <select-->
+<!--                                            th:field="*{technologies}"-->
+<!--                                            class="form-select">-->
+<!--                                        <option value="">- Select your technology -</option>-->
+<!--                                        <option th:each="t : ${technologiesList}" th:value="${t}" th:text="${t}"></option>-->
+<!--                                    </select>-->
+
+<!--                                    <p th:if="${#fields.hasErrors()}" class="alert alert-danger">-->
+<!--                                        Mark your interests.</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <hr>
 
