@@ -4,6 +4,7 @@ import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 
+import java.util.List;
 import java.util.Set;
 
 public class ProjectServiceModel {
@@ -17,6 +18,8 @@ public class ProjectServiceModel {
     private Set<TechnologyNameEnum> technologies;
 
     private UserEntity author;
+
+    private List<UserEntity> participants;
 
     public ProjectServiceModel() {
     }
@@ -59,5 +62,18 @@ public class ProjectServiceModel {
 
     public void setAuthor(UserEntity author) {
         this.author = author;
+    }
+
+    public List<UserEntity> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<UserEntity> participants) {
+        this.participants = participants;
+    }
+
+    public void addParticipant(UserEntity userEntity)
+    {
+        participants.add(userEntity);
     }
 }

@@ -1,6 +1,9 @@
 package com.example.projectfinder.model.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,8 +22,13 @@ public class ProjectEntity extends BaseEntity{
     @ManyToOne
     private UserEntity author;
 
-    @ManyToMany
-    private Set<UserEntity> participant;
+    @ManyToMany(mappedBy = "listOfProjects", fetch = FetchType.EAGER)
+    private List<UserEntity> listOfParticipants = new ArrayList<>();
+
+    public void addParticipantForProject(UserEntity userEntity) {
+
+        listOfParticipants.add(userEntity);
+    }
 
     public String getTitle() {
         return title;
@@ -54,12 +62,12 @@ public class ProjectEntity extends BaseEntity{
         this.author = author;
     }
 
-    public Set<UserEntity> getParticipant() {
-        return participant;
+    public List<UserEntity> getListOfParticipants() {
+        return listOfParticipants;
     }
 
-    public void setParticipant(Set<UserEntity> participant) {
-        this.participant = participant;
+    public void setListOfParticipants(List<UserEntity> listOfParticipants) {
+        this.listOfParticipants = listOfParticipants;
     }
 
     public ProjectEntity() {

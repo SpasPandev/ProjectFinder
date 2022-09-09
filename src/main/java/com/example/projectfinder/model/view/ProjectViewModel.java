@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import java.util.List;
 import java.util.Set;
 
 public class ProjectViewModel {
@@ -20,6 +21,8 @@ public class ProjectViewModel {
     private Set<TechnologyEntity> technologies;
 
     private UserEntity author;
+
+    private List<UserEntity> participants;
 
     public ProjectViewModel() {
     }
@@ -62,5 +65,13 @@ public class ProjectViewModel {
 
     public void setAuthor(UserEntity author) {
         this.author = author;
+    }
+
+    public List<UserEntity> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<UserEntity> participants) {
+        this.participants = participants;
     }
 }

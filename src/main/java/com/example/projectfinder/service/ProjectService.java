@@ -12,4 +12,8 @@ public interface ProjectService {
     List<ProjectViewModel> findAllProjectViews();
 
     void createNewProject(ProjectServiceModel projectServiceModel);
+
+    void participateInProject(Long id);
+
+    boolean isParticipant(Long id);
 }
