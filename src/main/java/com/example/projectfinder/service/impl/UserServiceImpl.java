@@ -4,12 +4,17 @@ import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
+import com.example.projectfinder.model.view.ProjectViewModel;
+import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.repository.UserRepository;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
 import com.example.projectfinder.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -95,6 +100,18 @@ public class UserServiceImpl implements UserService {
         userEntity.setDescription(editProfileServiceModel.getDescription());
 
         this.userRepository.save(userEntity);
+    }
+
+    @Override
+    public List<UserViewModel> findAllUsers() {
+
+        return userRepository.findAll().stream()
+                .map(userEntity -> {UserViewModel userViewModel = modelMapper
+                        .map(userEntity, UserViewModel.class);
+
+                return userViewModel;
+                })
+                .collect(Collectors.toList());
     }
 
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {

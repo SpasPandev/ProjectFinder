@@ -28,19 +28,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">
+                        <tr th:each="user : ${allUsers}">
+                            <th
+                                    th:text="*{user.id}" scope="row">
                                 1
                             </th>
                             <td class="hover">
                                 <img src="/images/company.png" alt="profileIcon" width="45" height="45"
                                     class="rounded-circle">
-                                <a href="#" class="text-body">CompanyName</a>
+                                <a th:href="@{/profile/{id}(id = *{user.id})}"
+                                   th:text="*{user.name}" class="text-body">CompanyName</a>
                             </td>
-                            <td>email@email.com</td>
+                            <td
+                                    th:text="*{user.email}">email@email.com</td>
                             <td>role</td>
                             <td>
-                                <button class="btn btn-danger">Delete</button>
+                                <form>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                             </td>
                         </tr>
 
