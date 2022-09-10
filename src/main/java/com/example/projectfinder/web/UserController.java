@@ -85,6 +85,7 @@ public class UserController {
 
     @GetMapping("/register")
     public String register(Model model) {
+
         return "register";
     }
 

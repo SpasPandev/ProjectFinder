@@ -1,5 +1,6 @@
 package com.example.projectfinder.model.binding;
 
+import com.example.projectfinder.model.entity.enums.RoleNameEnum;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 
 import javax.validation.constraints.NotEmpty;
@@ -20,6 +21,10 @@ public class UserRegisterBindingModel {
     private String email;
     @NotEmpty
     private String description;
+    @NotNull
+    private RoleNameEnum role;
+    @NotNull
+    private TechnologyNameEnum technology;
 
     public UserRegisterBindingModel() {
     }
@@ -70,5 +75,21 @@ public class UserRegisterBindingModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public RoleNameEnum getRole() {
+        return role;
+    }
+
+    public void setRole(RoleNameEnum role) {
+        this.role = role;
+    }
+
+    public TechnologyNameEnum getTechnology() {
+        return technology;
+    }
+
+    public void setTechnology(TechnologyNameEnum technology) {
+        this.technology = technology;
     }
 }

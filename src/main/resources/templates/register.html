@@ -114,24 +114,50 @@
                                 </p>
                             </div>
 
-<!--                            <hr>-->
-<!--                            <div class="row">-->
-<!--                                <h6>Choose your interests:</h6>-->
-<!--                                <div>-->
-<!--                                    <select-->
-<!--                                            th:field="*{technologies}"-->
-<!--                                            class="form-select">-->
-<!--                                        <option value="">- Select your technology -</option>-->
-<!--                                        <option th:each="t : ${technologiesList}" th:value="${t}" th:text="${t}"></option>-->
-<!--                                    </select>-->
+                            <hr>
+                            <div class="row">
+                                <h6>Choose your role:</h6>
+                                <div>
+                                    <select th:field="*{role}"
+                                            th:errorclass="is-invalid"
+                                            id="role" class="form-select">
+                                        <option value="" selected>Choose role</option>
+                                        <option
+                                                th:value="${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).STUDENT}"
+                                                th:text="${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).STUDENT}">Student</option>
+                                        <option
+                                                th:value="${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).COMPANY}"
+                                                th:text="${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).COMPANY}">Company</option>
+                                    </select>
 
-<!--                                    <p th:if="${#fields.hasErrors()}" class="alert alert-danger">-->
-<!--                                        Mark your interests.</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                                    <p class="invalid-feedback errors alert alert-danger">
+                                        Role is required.
+                                    </p>
+                                </div>
+                            </div>
 
                             <hr>
 
+                            <div class="row">
+                                <h6>Choose your favourite technology:</h6>
+                                <div>
+                                    <select th:field="*{technology}"
+                                            th:errorclass="is-invalid"
+                                            id="technology" class="form-select">
+                                        <option value="" selected>Choose technology</option>
+                                        <option th:each="t : ${T(com.example.projectfinder.model.entity.enums.TechnologyNameEnum).values()}"
+                                                th:value="${t}"
+                                                th:text="${t}">Technologies
+                                        </option>
+                                    </select>
+
+                                    <p class="invalid-feedback errors alert alert-danger">
+                                        Technology is required.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <hr>
                             <div class="text-center mt-4 mb-2">
                                 <button class="btn btn-lg btn-primary fw-bold text-uppercase"
                                         type="submit">Register</button>

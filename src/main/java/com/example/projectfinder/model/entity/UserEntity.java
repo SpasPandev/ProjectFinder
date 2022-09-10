@@ -47,10 +47,11 @@ public class UserEntity extends BaseEntity{
 
         listOfProjects.add(projectEntity);
     }
-    public boolean asda(ProjectEntity projectEntity)
+
+    public void addTechnologiesForUser(TechnologyEntity technologyEntity)
     {
-        listOfProjects.contains(projectEntity);
-        return true;
+
+        technologies.add(technologyEntity);
     }
 
     public String getName() {

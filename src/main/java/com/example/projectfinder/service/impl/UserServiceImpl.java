@@ -1,11 +1,15 @@
 package com.example.projectfinder.service.impl;
 
+import com.example.projectfinder.model.entity.RoleEntity;
+import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.UserEntity;
+import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
-import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
+import com.example.projectfinder.repository.RoleRepository;
+import com.example.projectfinder.repository.TechnologyRepository;
 import com.example.projectfinder.repository.UserRepository;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
@@ -13,7 +17,10 @@ import com.example.projectfinder.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,17 +29,33 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final CurrentUser currentUser;
+    private final RoleRepository roleRepository;
+    private final TechnologyRepository technologyRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser, RoleRepository roleRepository, TechnologyRepository technologyRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.currentUser = currentUser;
+        this.roleRepository = roleRepository;
+        this.technologyRepository = technologyRepository;
     }
 
     @Override
     public void registerUser(UserServiceModel userServiceModel) {
 
+        RoleEntity userRole = this.roleRepository.findByRole(userServiceModel.getRole());
+        Set<RoleEntity> roles = new HashSet<>();
+        roles.add(userRole);
+
+        TechnologyEntity techno = technologyRepository.findByTechnologies(userServiceModel.getTechnology());
+        Set<TechnologyEntity> technologies = new HashSet<>();
+        technologies.add(techno);
+
         UserEntity userEntity = modelMapper.map(userServiceModel, UserEntity.class);
+
+        userEntity.setRoles(roles);
+
+        userEntity.setTechnologies(technologies);
 
         userRepository.save(userEntity);
     }
