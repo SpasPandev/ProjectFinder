@@ -9,7 +9,9 @@ public interface ProjectService {
 
     ProjectServiceModel findProjectId(Long id);
 
-    List<ProjectViewModel> findAllProjectViews();
+    List<ProjectViewModel> findAllProjectViewsOrderDescId();
+
+    List<ProjectViewModel> findProjectsByConcretTechnology();
 
     void createNewProject(ProjectServiceModel projectServiceModel);
 

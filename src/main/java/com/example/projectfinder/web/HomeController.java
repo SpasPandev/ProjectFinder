@@ -19,7 +19,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model)
     {
-        model.addAttribute("projectsList", this.projectService.findAllProjectViews());
+        model.addAttribute("projectsList", this.projectService.findAllProjectViewsOrderDescId());
 
         return "home";
     }

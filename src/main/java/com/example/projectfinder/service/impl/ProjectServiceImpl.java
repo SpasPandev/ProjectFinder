@@ -2,6 +2,7 @@ package com.example.projectfinder.service.impl;
 
 import com.example.projectfinder.model.entity.ProjectEntity;
 import com.example.projectfinder.model.entity.UserEntity;
+import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import com.example.projectfinder.model.service.ProjectServiceModel;
 import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.repository.ProjectRepository;
@@ -46,14 +47,49 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectViewModel> findAllProjectViews() {
-        return this.projectRepository.findAll()
+    public List<ProjectViewModel> findAllProjectViewsOrderDescId() {
+
+        List<ProjectViewModel> allProjectViewsList =
+         this.projectRepository.findAllByOrderByIdDesc()
                 .stream().map(projectEntity -> {
                     ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
 
                     return projectViewModel;
                 })
                 .collect(Collectors.toList());
+
+        return allProjectViewsList;
+    }
+
+    @Override
+    public List<ProjectViewModel> findProjectsByConcretTechnology() {
+
+        List<ProjectViewModel> allProjectViewsList =
+                this.projectRepository.findAll()
+                        .stream().map(projectEntity -> {
+                            ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
+
+                            return projectViewModel;
+                        })
+                        .collect(Collectors.toList());
+
+        List<ProjectViewModel> projectViewsListWithConcretTechnology = allProjectViewsList;
+
+        int k = -1;
+
+        for (int i = 0; i < allProjectViewsList.size(); i++)
+        {
+            k++;
+            if (!allProjectViewsList.get(i).getTechnologies().equals(TechnologyNameEnum.PYTHON))
+            {
+                projectViewsListWithConcretTechnology
+                        .remove(allProjectViewsList.get(k));
+                k--;
+                System.out.println("k = " + k);
+            }
+        }
+
+        return projectViewsListWithConcretTechnology;
     }
 
     @Override
