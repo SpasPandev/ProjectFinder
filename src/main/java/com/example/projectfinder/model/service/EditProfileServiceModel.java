@@ -1,5 +1,10 @@
 package com.example.projectfinder.model.service;
 
+import com.example.projectfinder.model.entity.TechnologyEntity;
+import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
+
+import java.util.Set;
+
 public class EditProfileServiceModel {
     private Long id;
     private String name;
@@ -8,6 +13,7 @@ public class EditProfileServiceModel {
     private String password;
     private String profile_picture_url;
     private String description;
+    private TechnologyNameEnum technology;
 
     public EditProfileServiceModel() {
     }
@@ -66,5 +72,13 @@ public class EditProfileServiceModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public TechnologyNameEnum getTechnology() {
+        return technology;
+    }
+
+    public void setTechnology(TechnologyNameEnum technology) {
+        this.technology = technology;
     }
 }

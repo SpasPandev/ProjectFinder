@@ -17,7 +17,6 @@ public class UserServiceModel {
     private String description;
     private String profile_picture_url;
     private RoleNameEnum role;
-    private Set<TechnologyEntity> technologies;
 
     private TechnologyNameEnum technology;
 
@@ -86,14 +85,6 @@ public class UserServiceModel {
 
     public void setRole(RoleNameEnum role) {
         this.role = role;
-    }
-
-    public Set<TechnologyEntity> getTechnologies() {
-        return technologies;
-    }
-
-    public void setTechnologies(Set<TechnologyEntity> technologies) {
-        this.technologies = technologies;
     }
 
     public TechnologyNameEnum getTechnology() {

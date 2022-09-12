@@ -1,6 +1,9 @@
 package com.example.projectfinder.model.binding;
 
+import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
+
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class EditProejectBindingModel {
 
@@ -16,6 +19,8 @@ public class EditProejectBindingModel {
     private String profile_picture_url;
     @NotEmpty
     private String description;
+    @NotNull
+    private TechnologyNameEnum technology;
 
     public EditProejectBindingModel() {
     }
@@ -74,5 +79,13 @@ public class EditProejectBindingModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public TechnologyNameEnum getTechnology() {
+        return technology;
+    }
+
+    public void setTechnology(TechnologyNameEnum technology) {
+        this.technology = technology;
     }
 }

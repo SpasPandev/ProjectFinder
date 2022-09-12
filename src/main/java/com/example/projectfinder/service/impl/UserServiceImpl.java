@@ -3,7 +3,6 @@ package com.example.projectfinder.service.impl;
 import com.example.projectfinder.model.entity.RoleEntity;
 import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.UserEntity;
-import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
@@ -17,7 +16,6 @@ import com.example.projectfinder.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -122,6 +120,12 @@ public class UserServiceImpl implements UserService {
         userEntity.setPassword(editProfileServiceModel.getPassword());
         userEntity.setDescription(editProfileServiceModel.getDescription());
 
+        TechnologyEntity techno = technologyRepository.findByTechnologies(editProfileServiceModel.getTechnology());
+        Set<TechnologyEntity> technologies = new HashSet<>();
+        technologies.add(techno);
+
+        userEntity.setTechnologies(technologies);
+
         this.userRepository.save(userEntity);
     }
 
@@ -155,7 +159,6 @@ public class UserServiceImpl implements UserService {
         editProfileViewModel.setEmail(userEntity.getEmail());
         editProfileViewModel.setPassword(userEntity.getPassword());
         editProfileViewModel.setDescription(userEntity.getDescription());
-
 
         return editProfileViewModel;
     }
