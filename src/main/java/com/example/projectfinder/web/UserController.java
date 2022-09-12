@@ -3,7 +3,6 @@ package com.example.projectfinder.web;
 import com.example.projectfinder.model.binding.EditProejectBindingModel;
 import com.example.projectfinder.model.binding.UserLoginBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
-import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
@@ -124,6 +123,8 @@ public class UserController {
         {
             return "redirect:/login";
         }
+
+        model.addAttribute("technologyNameInString", userService.findUserTechnologyNameInString());
 
         model
                 .addAttribute("user", modelMapper

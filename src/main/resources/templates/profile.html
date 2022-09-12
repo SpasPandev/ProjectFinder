@@ -13,7 +13,7 @@
   </header>
   <!-- End Navigation -->
 
-  <div class="container mt-4 mb-4 p-3 w-50 d-flex justify-content-center">
+  <div class="container mt-4 mb-4 p-3 w-50  justify-content-center">
     <div class="card p-4">
 
       <!-- Profile Info -->
@@ -31,12 +31,13 @@
         <span th:text="*{email}">@email</span>
 
         <h5 class="mt-3">Description</h5>
-        <p th:text="*{description}">Opisane na potrebitelq Lorem ipsum, dolor sit amet consectetur adipisicingm, dolor sit amet
+        <p th:text="*{description}" class="w-100">Opisane na potrebitelq Lorem ipsum, dolor sit amet consectetur adipisicingm, dolor sit amet
           consectetur adipisicingm, dolor sit amet consectetur adipisicing elit. Inventore reiciendis vero
           of
         </p>
-        <br>
-        <p>Java/ C#/ Ptyhon/ PHP</p>
+
+        <h5>Favourite technology</h5>
+        <p th:text="${technologyNameInString}">Java/ C#/ Ptyhon/ PHP</p>
 
         <div th:object="${user}" class=" d-flex mt-2">
           <a th:href="@{{id}/editProfile(id = *{id})}" class="btn btn-dark">Edit Profile</a>

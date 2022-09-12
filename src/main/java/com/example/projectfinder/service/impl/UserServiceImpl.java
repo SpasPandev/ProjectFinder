@@ -137,6 +137,16 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public String findUserTechnologyNameInString() {
+
+        Long currentUserTechnologyId = userRepository.asd(currentUser.getId());
+
+        String currentUserTechnologyName = technologyRepository.asdddd(currentUserTechnologyId);
+
+        return currentUserTechnologyName;
+    }
+
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {
         EditProfileViewModel editProfileViewModel = modelMapper.map(userEntity, EditProfileViewModel.class);
 
