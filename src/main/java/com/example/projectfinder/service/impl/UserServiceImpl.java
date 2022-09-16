@@ -16,6 +16,7 @@ import com.example.projectfinder.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -132,13 +133,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserViewModel> findAllUsers() {
 
-        return userRepository.findAll().stream()
+        List<UserViewModel> userViewModelList = userRepository.findAll().stream()
                 .map(userEntity -> {UserViewModel userViewModel = modelMapper
                         .map(userEntity, UserViewModel.class);
 
                 return userViewModel;
                 })
                 .collect(Collectors.toList());
+
+        List<Long> listOfIds = new ArrayList<>();
+
+        for (int i = 0; i < userViewModelList.size(); i++) {
+            listOfIds.add(userRepository.findUserRoleId(userViewModelList.get(i).getId()));
+            userViewModelList.get(i).setRole(roleRepository.findRoleName(listOfIds.get(i)));
+        }
+
+        return userViewModelList;
     }
 
     @Override
@@ -149,6 +159,36 @@ public class UserServiceImpl implements UserService {
         String currentUserTechnologyName = technologyRepository.asdddd(currentUserTechnologyId);
 
         return currentUserTechnologyName;
+    }
+
+    @Override
+    public void adminChangeUserRole(UserServiceModel userServiceModel, Long id) {
+
+        RoleEntity userRole = this.roleRepository.findByRole(userServiceModel.getRole());
+        Set<RoleEntity> roles = new HashSet<>();
+        roles.add(userRole);
+
+        UserEntity userEntity = userRepository.findById(id).get();
+
+        userEntity.setRoles(roles);
+
+        userRepository.save(userEntity);
+    }
+
+    @Override
+    public boolean isAdmin(CurrentUser currentUser) {
+
+        Long currentUserRoleId = userRepository.findUserRoleId(currentUser.getId());
+        String currentUserRoleNameInString = roleRepository.findRoleName(currentUserRoleId);
+
+        if (currentUserRoleNameInString.equals("ADMIN"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {

@@ -7,6 +7,7 @@ public class UserViewModel {
     private String username;
     private String email;
     private String description;
+    private String role;
 
     public UserViewModel() {
     }
@@ -49,5 +50,13 @@ public class UserViewModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

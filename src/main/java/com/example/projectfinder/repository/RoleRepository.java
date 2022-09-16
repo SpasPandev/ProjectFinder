@@ -10,4 +10,9 @@ import org.springframework.stereotype.Repository;
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
     RoleEntity findByRole(RoleNameEnum role);
+    @Query(value = "SELECT role FROM roles\n" +
+            "WHERE id = ?1 ", nativeQuery = true)
+    String findRoleName(Long roleId);
+
+
 }

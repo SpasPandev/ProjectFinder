@@ -14,11 +14,13 @@
 
     <h2 class="text-center pt-3">Admin panel</h2>
 
-    <div class="row p-4">
-        <div class="card card-body">
-            <div class="table-responsive">
-                <table class="table table-centered mb-0">
-                    <thead>
+
+    <th:block th:if="${isAdmin}">
+        <div class="row p-4">
+            <div class="card card-body">
+                <div class="table-responsive">
+                    <table class="table table-centered mb-0">
+                        <thead>
                         <tr>
                             <th scope="col">№</th>
                             <th scope="col">Username</th>
@@ -26,35 +28,52 @@
                             <th scope="col">role</th>
                             <th scope="col">Delete</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr th:each="user : ${allUsers}">
-                            <th
-                                    th:text="*{user.id}" scope="row">
+                            <th th:text="*{user.id}" scope="row">
                                 1
                             </th>
                             <td class="hover">
                                 <img src="/images/company.png" alt="profileIcon" width="45" height="45"
-                                    class="rounded-circle">
+                                     class="rounded-circle">
                                 <a th:href="@{/profile/{id}(id = *{user.id})}"
                                    th:text="*{user.name}" class="text-body">CompanyName</a>
                             </td>
                             <td
                                     th:text="*{user.email}">email@email.com</td>
-                            <td>role</td>
-                            <td>
-                                <form>
+                            <td th:text="*{user.role}">role</td>
+
+                            <form th:method="post" th:action="@{/admin/{id}(id = *{user.id})}">
+                                <td th:object="${changeRoleBindingModel}">
+                                    <select th:field="*{role}" class="form-select user-select" >
+                                        <option value="" selected>Choose role</option>
+                                        <option th:each="t : ${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).values()}"
+                                                th:value="${t}" th:text="${t}"></option>
+                                    </select>
+                                </td>
+                                <td>
                                     <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
+                                </td>
+                            </form>
+
                         </tr>
 
-
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    </th:block>
+
+    <th:block th:if="!${isAdmin}">
+        <div class="row p-4 card card-body">
+        <h5 class="text-center">
+            You are not an administrator!
+        </h5>
+        </div>
+    </th:block>
+
 
 </body>
 

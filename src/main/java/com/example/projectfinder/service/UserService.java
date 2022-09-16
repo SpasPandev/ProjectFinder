@@ -5,6 +5,7 @@ import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
+import com.example.projectfinder.util.CurrentUser;
 
 import java.util.List;
 
@@ -28,4 +29,8 @@ public interface UserService {
     List<UserViewModel> findAllUsers();
 
     String findUserTechnologyNameInString();
+
+    void adminChangeUserRole(UserServiceModel userServiceModel, Long id);
+
+    boolean isAdmin(CurrentUser currentUser);
 }
