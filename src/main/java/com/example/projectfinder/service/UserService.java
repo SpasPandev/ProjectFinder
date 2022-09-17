@@ -33,4 +33,6 @@ public interface UserService {
     void adminChangeUserRole(UserServiceModel userServiceModel, Long id);
 
     boolean isAdmin(CurrentUser currentUser);
+
+    String findUserRoleNameInString(Long currentUserRole);
 }

@@ -1,9 +1,6 @@
 package com.example.projectfinder.model.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,18 +31,12 @@ public class UserEntity extends BaseEntity{
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<TechnologyEntity> technologies;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "PROJECT_PARTICIPANT",
-            joinColumns = @JoinColumn(name = "PARTICIPANT_ID"),
-            inverseJoinColumns = @JoinColumn(name = "PROJECT_ID")
-    )
-    private List<ProjectEntity> listOfProjects = new ArrayList<>();
+    @OneToMany(mappedBy = "participant", fetch = FetchType.EAGER)
+    private Set<ProjectParticipant> participant;
 
-    public void addProjectForParticipant(ProjectEntity projectEntity)
+    public void addProjectForParticipant(ProjectParticipant projectParticipant)
     {
-
-        listOfProjects.add(projectEntity);
+        participant.add(projectParticipant);
     }
 
     public void addTechnologiesForUser(TechnologyEntity technologyEntity)
@@ -118,12 +109,12 @@ public class UserEntity extends BaseEntity{
         this.technologies = technologies;
     }
 
-    public List<ProjectEntity> getListOfProjects() {
-        return listOfProjects;
+    public Set<ProjectParticipant> getParticipant() {
+        return participant;
     }
 
-    public void setListOfProjects(List<ProjectEntity> listOfProjects) {
-        this.listOfProjects = listOfProjects;
+    public void setParticipant(Set<ProjectParticipant> participant) {
+        this.participant = participant;
     }
 
     public UserEntity() {

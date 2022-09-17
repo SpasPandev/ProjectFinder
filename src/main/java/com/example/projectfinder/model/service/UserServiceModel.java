@@ -19,6 +19,7 @@ public class UserServiceModel {
     private RoleNameEnum role;
 
     private TechnologyNameEnum technology;
+    private String link;
 
     public UserServiceModel() {
     }
@@ -93,5 +94,13 @@ public class UserServiceModel {
 
     public void setTechnology(TechnologyNameEnum technology) {
         this.technology = technology;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

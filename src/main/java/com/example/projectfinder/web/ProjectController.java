@@ -1,7 +1,9 @@
 package com.example.projectfinder.web;
 
 import com.example.projectfinder.model.binding.CreateProjectBindingModel;
+import com.example.projectfinder.model.binding.SubmitLinkBindingModel;
 import com.example.projectfinder.model.service.ProjectServiceModel;
+import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
@@ -23,14 +25,14 @@ public class ProjectController {
 
     private final ModelMapper modelMapper;
     private final ProjectService projectService;
-    private final UserService userService;
     private final CurrentUser currentUser;
+    private final UserService userService;
 
-    public ProjectController(ModelMapper modelMapper, ProjectService projectService, UserService userService, CurrentUser currentUser) {
+    public ProjectController(ModelMapper modelMapper, ProjectService projectService, CurrentUser currentUser, UserService userService) {
         this.modelMapper = modelMapper;
         this.projectService = projectService;
-        this.userService = userService;
         this.currentUser = currentUser;
+        this.userService = userService;
     }
 
     @ModelAttribute
@@ -38,6 +40,9 @@ public class ProjectController {
     {
         return new CreateProjectBindingModel();
     }
+
+    @ModelAttribute
+    public SubmitLinkBindingModel submitLinkBindingModel () { return new SubmitLinkBindingModel(); }
 
     @GetMapping("/project/{id}")
     public String project(@PathVariable Long id, Model model)
@@ -48,14 +53,25 @@ public class ProjectController {
             return "redirect:/login";
         }
 
+        model.addAttribute("allParticipants", projectService.showAllParticipants(id));
+
         model
                 .addAttribute("projectId", modelMapper
                         .map(projectService.findProjectId(id), ProjectViewModel.class));
         model
                 .addAttribute("isParticipant", projectService.isParticipant(id));
 
-        model
-                .addAttribute("user", userService.findUserById(currentUser.getId()));
+
+        model.addAttribute("technologyNameInString",
+                projectService.findProjectTechnologyNameInString(id));
+
+        if (projectService.isParticipant(id) != true)
+        {
+            model.addAttribute("isSubmitted", projectService.isSubmitted(id));
+        }
+
+        model.addAttribute("currentUserRoleNameInString", userService.findUserRoleNameInString(currentUser.getId()));
+
 
         return "project";
     }
@@ -97,6 +113,28 @@ public class ProjectController {
         projectService.createNewProject(projectServiceModel);
 
         return "redirect:home";
+    }
+
+    @PostMapping("/submit/{id}")
+    public String submitProject(@PathVariable Long id, @Valid SubmitLinkBindingModel submitLinkBindingModel,
+                                BindingResult bindingResult, RedirectAttributes redirectAttributes)
+    {
+        if (bindingResult.hasErrors()) {
+
+            redirectAttributes
+                    .addFlashAttribute("submitLinkBindingModel", submitLinkBindingModel);
+
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.submitLinkBindingModel",
+                            bindingResult);
+
+            return "redirect:/project/{id}";
+        }
+
+        projectService.submitLink(modelMapper.map(submitLinkBindingModel, UserServiceModel.class), id);
+
+
+        return "redirect:/project/{id}";
     }
 
 }

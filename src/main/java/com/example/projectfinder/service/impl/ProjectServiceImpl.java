@@ -1,12 +1,13 @@
 package com.example.projectfinder.service.impl;
 
 import com.example.projectfinder.model.entity.ProjectEntity;
+import com.example.projectfinder.model.entity.ProjectParticipant;
 import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import com.example.projectfinder.model.service.ProjectServiceModel;
+import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.ProjectViewModel;
-import com.example.projectfinder.repository.ProjectRepository;
-import com.example.projectfinder.repository.UserRepository;
+import com.example.projectfinder.repository.*;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.TechnologyService;
 import com.example.projectfinder.service.UserService;
@@ -14,7 +15,9 @@ import com.example.projectfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,14 +30,18 @@ public class ProjectServiceImpl implements ProjectService {
     private final TechnologyService technologyService;
     private final UserRepository userRepository;
     private final CurrentUser currentUser;
+    private final ProjectParticipantRepository projectParticipantRepository;
+    private final TechnologyRepository technologyRepository;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ModelMapper modelMapper, UserService userService, TechnologyService technologyService, UserRepository userRepository, CurrentUser currentUser) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ModelMapper modelMapper, UserService userService, TechnologyService technologyService, UserRepository userRepository, CurrentUser currentUser, ProjectParticipantRepository projectParticipantRepository, TechnologyRepository technologyRepository) {
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
         this.userService = userService;
         this.technologyService = technologyService;
         this.userRepository = userRepository;
         this.currentUser = currentUser;
+        this.projectParticipantRepository = projectParticipantRepository;
+        this.technologyRepository = technologyRepository;
     }
 
     @Override
@@ -115,31 +122,119 @@ public class ProjectServiceImpl implements ProjectService {
 
         UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
 
-        userEntity.addProjectForParticipant(projectEntity);
+        ProjectParticipant projectParticipant = new ProjectParticipant();
 
-        userRepository.save(userEntity);
+        projectParticipant.setParticipant(userEntity);
+        projectParticipant.setProject(projectEntity);
+
+        userEntity.addProjectForParticipant(projectParticipant);
+
+        projectParticipantRepository.save(projectParticipant);
     }
 
     @Override
     public boolean isParticipant(Long id) {
 
-        boolean isParticipant;
+        boolean isParticipant = true;
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
         UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
 
-        List<ProjectEntity> test =  projectRepository.findUserParticipateInProject(userEntity.getId(), projectEntity.getId());
+        ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
+                .findCurrentUserAndCurrentProject(projectEntity, userEntity);
 
-        if ( test.isEmpty())
-        {
-
-            isParticipant = true;
-        }
-        else
+        if (currentProjectWithCurrentUser != null)
         {
             isParticipant = false;
         }
 
         return isParticipant;
     }
+
+    @Override
+    public List<ProjectEntity> showCurrentUserProjects()
+    {
+        List<Long> listOfAllProjectsIds = projectRepository.listOfAllProjectsIds(currentUser.getId());
+
+        List<ProjectEntity> listOfCurrentUserProjects = new ArrayList<>();
+
+        for (int i = listOfAllProjectsIds.size() - 1; i >= 0; i--) {
+
+            listOfCurrentUserProjects
+                    .add(projectRepository.findById(listOfAllProjectsIds.get(i)).get());
+        }
+
+        return listOfCurrentUserProjects;
+    }
+
+    @Override
+    public List<ProjectParticipant> showAllParticipants(Long id)
+    {
+        List<ProjectParticipant> allProjectParticipants = projectParticipantRepository
+                .findProjectParticipantByProject(projectRepository.findById(id).get());
+
+        return allProjectParticipants;
+    }
+
+    @Override
+    public boolean isSubmitted(Long id) {
+
+        boolean isSubmitted = true;
+
+        ProjectEntity projectEntity = projectRepository.findById(id).get();
+        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
+
+        ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
+                .findCurrentUserAndCurrentProject(projectEntity, userEntity);
+
+        if (currentProjectWithCurrentUser.getLink() != null)
+        {
+            isSubmitted = false;
+        }
+
+        return isSubmitted;
+    }
+
+    @Override
+    public String findProjectTechnologyNameInString(Long id) {
+
+        Long currentProjectTechnologyId = projectRepository.findTechnologyNameByProjectId(id);
+
+        String currentProjectTechnologyName = technologyRepository.findTechnologyNameInStringById(currentProjectTechnologyId);
+
+        return currentProjectTechnologyName;
+    }
+
+    @Override
+    public void submitLink(UserServiceModel userServiceModel, Long id) {
+
+
+        ProjectEntity currentProject = projectRepository.findById(id).get();
+        UserEntity currentUserEntity = userRepository.findById(currentUser.getId()).get();
+
+        ProjectParticipant projectParticipant = projectParticipantRepository
+                .findCurrentUserAndCurrentProject(currentProject, currentUserEntity);
+
+        projectParticipant.setLink(userServiceModel.getLink());
+
+        projectParticipantRepository.save(projectParticipant);
+    }
+
+    @Override
+    public List<ProjectParticipant> currentProjectUploaders(Long currentProjectId)
+    {
+        List<ProjectParticipant> listOfAllProjectParticipantsUploadedOnCurrentProject =
+                projectParticipantRepository.findAllProjectParticipantsUploadedOnCurrentProject(currentProjectId);
+
+        return listOfAllProjectParticipantsUploadedOnCurrentProject;
+    }
+
+    @Override
+    public List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId)
+    {
+        List<ProjectEntity> allProjectsForAuthor =  projectRepository.findAllProjectsForAuthor(currentUserId);
+
+        return allProjectsForAuthor;
+    }
+
 }

@@ -15,4 +15,16 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
     List<ProjectEntity> findUserParticipateInProject(Long userId, Long projectId);
 
     List<ProjectEntity> findAllByOrderByIdDesc();
+
+    @Query(value = "SELECT project_id FROM project_participant\n" +
+            "WHERE participant_id = ?1 ", nativeQuery = true)
+    List<Long> listOfAllProjectsIds(Long currentUserId);
+
+    @Query(value = "SELECT technologies_id FROM project_technologies\n" +
+            "WHERE project_entity_id = ?1 ", nativeQuery = true)
+    Long findTechnologyNameByProjectId(Long projectId);
+
+    @Query(value = "SELECT * FROM project\n" +
+            "WHERE author_id = ?1 ", nativeQuery = true)
+    List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId);
 }

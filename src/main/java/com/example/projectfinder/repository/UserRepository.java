@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUsername(String username);
     @Query(value = "SELECT technologies_id FROM users_technologies\n" +
             "WHERE user_entity_id = ?1 ", nativeQuery = true)
-    Long asd(Long userId);
+    Long findTechnologyIdByUserId(Long userId);
     @Query(value = "SELECT roles_id FROM users_roles\n" +
             "WHERE user_entity_id = ?1 ", nativeQuery = true)
     Long findUserRoleId(Long userId);

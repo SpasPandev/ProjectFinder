@@ -11,130 +11,78 @@
   <header th:replace="fragments/commons::navigation">
   </header>
   <!-- End Navigation -->
-
-
-  <!-- For Company -->
-
-
+  
   <div class="card mx-4 my-4 border border-dark H">
 
     <h2 class="text-center pt-3">My Tasks</h2>
 
-    <div class="row gx-0 overflow-auto">
-      <div class="table-responsive">
-        <table class="table table-centered mb-0">
-          <tbody>
-            <tr>
-              <td class="hover border">
-                <img src="images/company.png" alt="profileIcon" width="45" height="45" class="rounded-circle m-1">
-                <a href="#" class="text-body">CompanyName</a>
-              </td>
-              <td class="hover border">
-                <a href="" class="nav-link">
-                  <h6 class="mb-0">List group item heading</h6>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="hover border">
-                <img src="/images/company.png" alt="profileIcon" width="45" height="45" class="rounded-circle m-1">
-                <a href="#" class="text-body">CompanyName</a>
-              </td>
-              <td class="hover border">
-                <a href="" class="nav-link">
-                  <h6 class="mb-0">Another title here</h6>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="hover border">
-                <img src="/images/company.png" alt="profileIcon" width="45" height="45" class="rounded-circle m-1">
-                <a href="#" class="text-body">CompanyName</a>
-              </td>
-              <td class="hover border">
-                <a href="" class="nav-link">
-                  <h6 class="mb-0">Third heading</h6>
-                </a>
-              </td>
-            </tr>
+<!--    FOR STUDENT-->
+    <th:block th:if="${currentUserRoleNameInString.equals('STUDENT')}">
+
+      <th:block th:if="${allProjectsForCurrentUser.isEmpty()}">
+        <h5 class="text-center mt-5">You don't have any tasks!</h5>
+      </th:block>
+
+      <th:block th:if="!${allProjectsForCurrentUser.isEmpty()}" >
+        <div class="row gx-0 overflow-auto">
+          <div class="table-responsive">
+            <table class="table table-centered mb-0">
+              <tbody>
+              <tr th:each="project : ${allProjectsForCurrentUser}"
+                  th:object="${project}">
+                <td class="hover border">
+                  <img src="images/company.png" alt="profileIcon" width="45" height="45" class="rounded-circle m-1">
+                  <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}"
+                     class="text-body">CompanyName</a>
+                </td>
+                <td class="hover border">
+                  <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
+                    <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
+                  </a>
+                </td>
+              </tr>
 
 
-          </tbody>
-        </table>
-      </div>
-    </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </th:block>
+    </th:block>
 
-  </div>
+<!--    FOR COMPANY-->
+    <th:block th:if="${currentUserRoleNameInString.equals('COMPANY')}">
 
+      <th:block th:if="${allProjectsForAuthor.isEmpty()}">
+        <h5 class="text-center mt-5">You don't have any projects!</h5>
+      </th:block>
 
-  <!-- For Students -->
-  <div class="card mx-4 my-4 border border-dark H">
-
-    <h2 class="text-center pt-3">My Tasks</h2>
-
-    <div class="row gx-0">
-      <div class="col px-5 py-2 d-flex">
-        <span class="mx-2 mt-2">Order by</span>
-        <select class="form-select w-auto" aria-label="Default select example">
-          <option selected>All</option>
-          <option value="1">In progress</option>
-          <option value="2">Complete</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="row gx-0 overflow-auto">
-      <div class="table-responsive">
-        <table class="table table-centered mb-0">
-          <tbody>
-            <tr>
-              <td class="hover border">
-                <img src="/images/company.png" alt="profileIcon" width="45" height="45" class="rounded-circle m-1">
-                <a href="#" class="text-body">CompanyName</a>
-              </td>
-              <td class="hover border">
-                <a href="" class="nav-link">
-                  <h6 class="mb-0">List group item heading</h6>
-                </a>
-              </td>
-              <td class="hover border">
-                <img src="/images/inProgress.png" alt="In Progress" width="45" height="45">
-              </td>
-            </tr>
-            <tr>
-              <td class="hover border">
-                <img src="/images/company.png" alt="profileIcon" width="45" height="45" class="rounded-circle m-1">
-                <a href="#" class="text-body">CompanyName</a>
-              </td>
-              <td class="hover border">
-                <a href="" class="nav-link">
-                  <h6 class="mb-0">Another title here</h6>
-                </a>
-              </td>
-              <td class="hover border">
-                <img src="/images/complete.png" alt="In Progress" width="45" height="45">
-              </td>
-            </tr>
-            <tr>
-              <td class="hover border">
-                <img src="/images/company.png" alt="profileIcon" width="45" height="45" class="rounded-circle m-1">
-                <a href="#" class="text-body">CompanyName</a>
-              </td>
-              <td class="hover border">
-                <a href="" class="nav-link">
-                  <h6 class="mb-0">Third heading</h6>
-                </a>
-              </td>
-              <td class="hover border">
-                <img src="/images/inProgress.png" alt="In Progress" width="45" height="45">
-              </td>
-            </tr>
+      <th:block th:if="!${allProjectsForAuthor.isEmpty()}" >
+        <div class="row gx-0 overflow-auto">
+          <div class="table-responsive">
+            <table class="table table-centered mb-0">
+              <tbody>
+              <tr th:each="project : ${allProjectsForAuthor}"
+                  th:object="${project}">
+                <td class="hover border">
+                  <img src="images/company.png" alt="profileIcon" width="45" height="45" class="rounded-circle m-1">
+                  <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}"
+                     class="text-body">CompanyName</a>
+                </td>
+                <td class="hover border">
+                  <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
+                    <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
+                  </a>
+                </td>
+              </tr>
 
 
-          </tbody>
-        </table>
-      </div>
-    </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </th:block>
+    </th:block>
 
   </div>
 

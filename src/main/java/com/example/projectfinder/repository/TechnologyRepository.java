@@ -15,6 +15,6 @@ public interface TechnologyRepository extends JpaRepository<TechnologyEntity, Lo
     TechnologyEntity findByTechnologies(TechnologyNameEnum technologyName);
     @Query(value = "SELECT technologies FROM technologies\n" +
             "WHERE id = ?1 ", nativeQuery = true)
-    String asdddd(Long technologyId);
+    String findTechnologyNameInStringById(Long technologyId);
 
 }

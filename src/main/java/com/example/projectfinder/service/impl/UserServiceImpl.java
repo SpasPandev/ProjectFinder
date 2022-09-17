@@ -1,15 +1,11 @@
 package com.example.projectfinder.service.impl;
 
-import com.example.projectfinder.model.entity.RoleEntity;
-import com.example.projectfinder.model.entity.TechnologyEntity;
-import com.example.projectfinder.model.entity.UserEntity;
+import com.example.projectfinder.model.entity.*;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
-import com.example.projectfinder.repository.RoleRepository;
-import com.example.projectfinder.repository.TechnologyRepository;
-import com.example.projectfinder.repository.UserRepository;
+import com.example.projectfinder.repository.*;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
 import com.example.projectfinder.web.exception.ObjectNotFoundException;
@@ -154,9 +150,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String findUserTechnologyNameInString() {
 
-        Long currentUserTechnologyId = userRepository.asd(currentUser.getId());
+        Long currentUserTechnologyId = userRepository.findTechnologyIdByUserId(currentUser.getId());
 
-        String currentUserTechnologyName = technologyRepository.asdddd(currentUserTechnologyId);
+        String currentUserTechnologyName = technologyRepository.findTechnologyNameInStringById(currentUserTechnologyId);
 
         return currentUserTechnologyName;
     }
@@ -189,6 +185,15 @@ public class UserServiceImpl implements UserService {
         {
             return false;
         }
+    }
+
+    @Override
+    public String findUserRoleNameInString(Long currentUserRole)
+    {
+        Long userRoleId = userRepository.findUserRoleId(currentUserRole);
+        String userRoleNameInString = roleRepository.findRoleName(userRoleId);
+
+        return userRoleNameInString;
     }
 
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {

@@ -1,5 +1,6 @@
 package com.example.projectfinder.model.view;
 
+import com.example.projectfinder.model.entity.ProjectParticipant;
 import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.UserEntity;
 
@@ -22,7 +23,7 @@ public class ProjectViewModel {
 
     private UserEntity author;
 
-    private List<UserEntity> participants;
+    Set<ProjectParticipant> participant;
 
     public ProjectViewModel() {
     }
@@ -67,11 +68,11 @@ public class ProjectViewModel {
         this.author = author;
     }
 
-    public List<UserEntity> getParticipants() {
-        return participants;
+    public Set<ProjectParticipant> getParticipant() {
+        return participant;
     }
 
-    public void setParticipants(List<UserEntity> participants) {
-        this.participants = participants;
+    public void setParticipant(Set<ProjectParticipant> participant) {
+        this.participant = participant;
     }
 }
