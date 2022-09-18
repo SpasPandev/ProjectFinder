@@ -77,6 +77,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void logoutUser() {
+
+        currentUser.setId(null);
+        currentUser.setUsername(null);
+    }
+
+    @Override
     public UserServiceModel findUserById(Long id) {
 
         return userRepository
