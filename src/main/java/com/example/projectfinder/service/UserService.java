@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserService {
     void registerUser(UserServiceModel userServiceModel);
 
-    UserServiceModel findUserByUsernameAndPassword(String username, String password);
+    UserServiceModel findUserByUsername(String username);
 
     void loginUser(Long id, String username);
 

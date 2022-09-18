@@ -1,8 +1,12 @@
 package com.example.projectfinder.model.binding;
 
+import javax.validation.constraints.NotEmpty;
+
 public class UserLoginBindingModel {
 
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
 
     public UserLoginBindingModel() {

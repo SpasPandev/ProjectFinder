@@ -10,6 +10,7 @@ import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
 import com.example.projectfinder.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,13 +27,15 @@ public class UserServiceImpl implements UserService {
     private final CurrentUser currentUser;
     private final RoleRepository roleRepository;
     private final TechnologyRepository technologyRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser, RoleRepository roleRepository, TechnologyRepository technologyRepository) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser, RoleRepository roleRepository, TechnologyRepository technologyRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.currentUser = currentUser;
         this.roleRepository = roleRepository;
         this.technologyRepository = technologyRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -48,6 +51,8 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = modelMapper.map(userServiceModel, UserEntity.class);
 
+        userEntity.setPassword(passwordEncoder.encode(userServiceModel.getPassword()));
+
         userEntity.setRoles(roles);
 
         userEntity.setTechnologies(technologies);
@@ -56,10 +61,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel findUserByUsernameAndPassword(String username, String password) {
+    public UserServiceModel findUserByUsername(String username) {
 
         return userRepository
-                .findUserByUsernameAndPassword(username, password)
+                .findByUsername(username)
                 .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
                 .orElse(null);
     }

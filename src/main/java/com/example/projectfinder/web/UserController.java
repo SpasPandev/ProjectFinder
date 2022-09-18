@@ -3,13 +3,16 @@ package com.example.projectfinder.web;
 import com.example.projectfinder.model.binding.EditProejectBindingModel;
 import com.example.projectfinder.model.binding.UserLoginBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
+import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
+import com.example.projectfinder.repository.UserRepository;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,11 +27,15 @@ public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final CurrentUser currentUser;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService, ModelMapper modelMapper, CurrentUser currentUser) {
+    public UserController(UserService userService, ModelMapper modelMapper, CurrentUser currentUser, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.currentUser = currentUser;
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     @ModelAttribute
@@ -50,21 +57,32 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginConfirm( UserLoginBindingModel userLoginBindingModel,
+    public String loginConfirm(@Valid UserLoginBindingModel userLoginBindingModel,
                                BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors() )
         {
             redirectAttributes
                     .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
                             bindingResult);
 
-            return "redirect:login";
+            return "redirect:/login";
         }
 
-        UserServiceModel user = userService.findUserByUsernameAndPassword(userLoginBindingModel.getUsername(),
-                userLoginBindingModel.getPassword());
+        UserEntity userEntity = userRepository.findByUsername(userLoginBindingModel.getUsername()).get();
+
+        if (bindingResult.hasErrors() || passwordEncoder.matches(userLoginBindingModel.getPassword(), userEntity.getPassword()) == false)
+        {
+            redirectAttributes
+                    .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
+                            bindingResult);
+
+            return "redirect:/login";
+        }
+
+        UserServiceModel user = userService.findUserByUsername(userLoginBindingModel.getUsername());
 
         if (user == null)
         {
@@ -74,16 +92,16 @@ public class UserController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
                             bindingResult);
 
-            return "redirect:login";
+            return "redirect:/login";
         }
 
         userService.loginUser(user.getId(), user.getUsername());
 
-        return "redirect:home";
+        return "redirect:/home";
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register() {
 
         return "register";
     }
@@ -189,6 +207,7 @@ public class UserController {
 
         EditProfileServiceModel editProfileServiceModel = modelMapper.map(editProejectBindingModel, EditProfileServiceModel.class);
         editProfileServiceModel.setId(id);
+        editProfileServiceModel.setPassword(passwordEncoder.encode(editProejectBindingModel.getPassword()));
 
         this.userService.updateProfile(editProfileServiceModel);
 

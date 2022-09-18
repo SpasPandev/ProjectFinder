@@ -22,16 +22,24 @@
               <div class="form-outline mb-4">
                 <input
                         th:field="*{username}"
+                        th:errorclass="is-invalid"
                         type="text"
                         id="username" class="form-control form-control-lg"
                   placeholder="Enter username">
+                <p class="invalid-feedback alert alert-danger">
+                  Invalid username!
+                </p>
               </div>
 
               <div class="form-outline mb-4">
                 <input
                         th:field="*{password}"
+                        th:errorclass="is-invalid"
                         type="password" id="password" class="form-control form-control-lg"
                   placeholder="Enter password">
+                <p class="invalid-feedback alert alert-danger">
+                  Invalid password!
+                </p>
               </div>
 
               <p th:if="${isExists == false}" class="alert alert-danger">
