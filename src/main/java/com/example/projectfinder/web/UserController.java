@@ -104,9 +104,9 @@ public class UserController {
             return "redirect:/register";
         }
 
-        boolean isNameExists = userService.isNameExists(userRegisterBindingModel.getUsername());
+        boolean isUsernameExists = userService.isUsernameExists(userRegisterBindingModel.getUsername());
 
-        if (isNameExists)
+        if (isUsernameExists)
         {
             ///TODO
         }
@@ -124,11 +124,20 @@ public class UserController {
             return "redirect:/login";
         }
 
-        model.addAttribute("technologyNameInString", userService.findUserTechnologyNameInString());
+        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("COMPANY"))
+        {
+            model.addAttribute("technologyNameInString",
+                    userService.findUserTechnologyNameInString(id));
+        }
 
         model
                 .addAttribute("user", modelMapper
                         .map(userService.findUserById(id), UserViewModel.class));
+
+        model.addAttribute("currentUserId", currentUser.getId());
+
+        model.addAttribute("currentUserRoleNameInString",
+                userService.findUserRoleNameInString(currentUser.getId()));
 
         return "profile";
     }
@@ -136,10 +145,25 @@ public class UserController {
     @GetMapping("/profile/{id}/editProfile")
     public String editProfile(@PathVariable Long id, Model model)
     {
+        if (id != currentUser.getId())
+        {
+            return "redirect:/home";
+        }
+
+        if (currentUser.getId() == null)
+        {
+            return "redirect:/login";
+        }
+
         EditProfileViewModel editProfileViewModel = this.userService.getById(id);
         EditProejectBindingModel editProejectBindingModel = modelMapper.map(editProfileViewModel, EditProejectBindingModel.class);
 
         model.addAttribute("editProejectBindingModel", editProejectBindingModel);
+
+        model.addAttribute("currentUserId", currentUser.getId());
+
+        model.addAttribute("currentUserRoleNameInString",
+                userService.findUserRoleNameInString(currentUser.getId()));
 
         return "editProfile";
     }

@@ -15,14 +15,21 @@
   <div class="card mx-4 my-4 border border-dark H">
     <div class="row gx-0">
       <div class="col px-5 py-2 d-flex">
-        <span class="mx-2 mt-2">Order by</span>
-        <select class="form-select w-auto" aria-label="Default select example">
-          <option selected>Recent</option>
-          <option value="1">Interests</option>
-        </select>
+
+        <th:block th:if="${currentUserRoleInString != 'COMPANY'}">
+            <form th:method="post" th:action="@{/home}">
+                <button th:if="!${interests}" type="submit" class="btn btn-danger">
+                    Order by interests
+                </button>
+                <button th:if="${interests}" type="submit" class="btn btn-danger">
+                    Show all
+                </button>
+            </form>
+        </th:block>
+
       </div>
       <br>
-      <div class="col px-5 py-2 text-end">
+      <div th:if="${currentUserRoleInString != 'STUDENT'}" class="col px-5 py-2 text-end">
         <a href="/createProject" class="btn btn-danger w-50 mt-1">Add Project</a>
       </div>
       <br>
@@ -32,17 +39,35 @@
       <div class="table-responsive">
         <table class="table table-centered mb-0">
           <tbody>
-            <tr th:each="project : ${projectsList}" th:object="${project}">
-              <td class="hover border">
-                <img src="/images/company.png" alt="profileIcon" width="32" height="32" class="rounded-circle m-1">
-                <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}" class="text-body">CompanyName</a>
-              </td>
-              <td class="hover border">
-                <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
-                  <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
-                </a>
-              </td>
-            </tr>
+            <th:block th:if="!${interests}">
+                <tr th:each="project : ${projectsList}" th:object="${project}">
+                    <td class="hover border">
+                        <img src="/images/company.png" alt="profileIcon" width="32" height="32"
+                             class="rounded-circle m-1">
+                        <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}"
+                           class="text-body">CompanyName</a>
+                    </td>
+                    <td class="hover border">
+                        <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
+                            <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
+                        </a>
+                    </td>
+                </tr>
+            </th:block>
+
+            <th:block th:if="${interests}">
+                <tr th:each="project : ${allProjectsForConcretTehnology}" th:object="${project}">
+                    <td class="hover border">
+                        <img src="/images/company.png" alt="profileIcon" width="32" height="32" class="rounded-circle m-1">
+                        <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}" class="text-body">CompanyName</a>
+                    </td>
+                    <td class="hover border">
+                        <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
+                            <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
+                        </a>
+                    </td>
+                </tr>
+            </th:block>
 
           </tbody>
         </table>

@@ -34,6 +34,11 @@ public class AdminController {
     @GetMapping("/admin")
     public String adminPanel(Model model)
     {
+        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("ADMIN"))
+        {
+            return "redirect:/home";
+        }
+
         if (currentUser.getId() == null)
         {
             return "redirect:/login";

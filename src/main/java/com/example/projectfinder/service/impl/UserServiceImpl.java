@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isNameExists(String username) {
+    public boolean isUsernameExists(String username) {
 
         return userRepository
                 .findByUsername(username).isPresent();
@@ -148,9 +148,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String findUserTechnologyNameInString() {
+    public String findUserTechnologyNameInString(Long currentUserId) {
 
-        Long currentUserTechnologyId = userRepository.findTechnologyIdByUserId(currentUser.getId());
+        Long currentUserTechnologyId = userRepository.findTechnologyIdByUserId(currentUserId);
 
         String currentUserTechnologyName = technologyRepository.findTechnologyNameInStringById(currentUserTechnologyId);
 
@@ -188,9 +188,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String findUserRoleNameInString(Long currentUserRole)
+    public String findUserRoleNameInString(Long currentUserId)
     {
-        Long userRoleId = userRepository.findUserRoleId(currentUserRole);
+        Long userRoleId = userRepository.findUserRoleId(currentUserId);
         String userRoleNameInString = roleRepository.findRoleName(userRoleId);
 
         return userRoleNameInString;

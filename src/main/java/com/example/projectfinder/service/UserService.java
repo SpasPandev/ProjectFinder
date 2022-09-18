@@ -18,7 +18,7 @@ public interface UserService {
 
     UserServiceModel findUserById(Long id);
 
-    boolean isNameExists(String username);
+    boolean isUsernameExists(String username);
 
     UserEntity findCurrentLoginUserEntity();
 
@@ -28,11 +28,11 @@ public interface UserService {
 
     List<UserViewModel> findAllUsers();
 
-    String findUserTechnologyNameInString();
+    String findUserTechnologyNameInString(Long currentUserId);
 
     void adminChangeUserRole(UserServiceModel userServiceModel, Long id);
 
     boolean isAdmin(CurrentUser currentUser);
 
-    String findUserRoleNameInString(Long currentUserRole);
+    String findUserRoleNameInString(Long currentUserId);
 }

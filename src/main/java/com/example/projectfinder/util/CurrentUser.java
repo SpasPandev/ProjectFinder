@@ -11,8 +11,6 @@ public class CurrentUser {
     private Long id;
     private String username;
 
-    private RoleNameEnum roleName;
-
     public CurrentUser() {
     }
 
@@ -30,13 +28,5 @@ public class CurrentUser {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public RoleNameEnum getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(RoleNameEnum roleName) {
-        this.roleName = roleName;
     }
 }

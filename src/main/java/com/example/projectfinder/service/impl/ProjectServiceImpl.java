@@ -198,7 +198,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public String findProjectTechnologyNameInString(Long id) {
 
-        Long currentProjectTechnologyId = projectRepository.findTechnologyNameByProjectId(id);
+        Long currentProjectTechnologyId = projectRepository.findTechnologyIdByProjectId(id);
 
         String currentProjectTechnologyName = technologyRepository.findTechnologyNameInStringById(currentProjectTechnologyId);
 
@@ -235,6 +235,22 @@ public class ProjectServiceImpl implements ProjectService {
         List<ProjectEntity> allProjectsForAuthor =  projectRepository.findAllProjectsForAuthor(currentUserId);
 
         return allProjectsForAuthor;
+    }
+
+    @Override
+    public List<ProjectEntity> findAllProjectsForConcretTehnology(Long id)
+    {
+        List<Long> listOfProjectIds = projectRepository.findListOfProjectsIdsForConcretTehnology(id);
+
+        List<ProjectEntity> listOfAllProjectsForConcretTehnology = new ArrayList<>();
+
+        for (int i = 0; i < listOfProjectIds.size(); i++) {
+
+            listOfAllProjectsForConcretTehnology
+                    .add(projectRepository.findById(listOfProjectIds.get(i)).get());
+        }
+
+        return listOfAllProjectsForConcretTehnology;
     }
 
 }

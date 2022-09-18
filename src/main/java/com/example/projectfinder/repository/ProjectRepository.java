@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
 
-    @Query(value = "SELECT * FROM project t1 INNER JOIN project_participant t2 ON t1.id = t2.project_id " +
-            "HAVING t2.participant_id = ?1 AND t2.project_id = ?2 ", nativeQuery = true)
-    List<ProjectEntity> findUserParticipateInProject(Long userId, Long projectId);
+    @Query(value = "SELECT project_entity_id FROM project_technologies\n" +
+            "WHERE technologies_id = ?1 ", nativeQuery = true)
+    List<Long> findListOfProjectsIdsForConcretTehnology(Long tehnologyId);
 
     List<ProjectEntity> findAllByOrderByIdDesc();
 
@@ -22,7 +22,7 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
 
     @Query(value = "SELECT technologies_id FROM project_technologies\n" +
             "WHERE project_entity_id = ?1 ", nativeQuery = true)
-    Long findTechnologyNameByProjectId(Long projectId);
+    Long findTechnologyIdByProjectId(Long projectId);
 
     @Query(value = "SELECT * FROM project\n" +
             "WHERE author_id = ?1 ", nativeQuery = true)

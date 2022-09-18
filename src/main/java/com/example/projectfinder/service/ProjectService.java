@@ -35,4 +35,6 @@ public interface ProjectService {
     List<ProjectParticipant> currentProjectUploaders(Long currentProjectId);
 
     List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId);
+
+    List<ProjectEntity> findAllProjectsForConcretTehnology(Long id);
 }

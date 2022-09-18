@@ -26,7 +26,8 @@
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
                             <th scope="col">role</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col">Choose role</th>
+                            <th scope="col">Change role</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,7 +36,14 @@
                                 1
                             </th>
                             <td class="hover">
-                                <img src="/images/company.png" alt="profileIcon" width="45" height="45"
+                                <img th:if="${user.role == 'COMPANY'}"
+                                        src="/images/company.png" alt="profileIcon" width="45" height="45"
+                                     class="rounded-circle">
+                                <img th:if="${user.role == 'STUDENT'}"
+                                     src="/images/student.png" alt="profileIcon" width="45" height="45"
+                                     class="rounded-circle">
+                                <img th:if="${user.role == 'ADMIN'}"
+                                     src="/images/admin.png" alt="profileIcon" width="45" height="45"
                                      class="rounded-circle">
                                 <a th:href="@{/profile/{id}(id = *{user.id})}"
                                    th:text="*{user.name}" class="text-body">CompanyName</a>
@@ -53,7 +61,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">Change</button>
                                 </td>
                             </form>
 

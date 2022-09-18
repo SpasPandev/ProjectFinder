@@ -93,6 +93,11 @@ public class ProjectController {
             return "redirect:/login";
         }
 
+        if (userService.findUserRoleNameInString(currentUser.getId()).equals("STUDENT"))
+        {
+            return "redirect:/home";
+        }
+
         return "createProject";
     }
 
