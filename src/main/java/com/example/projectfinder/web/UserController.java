@@ -52,7 +52,7 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model)
     {
-        model.addAttribute("isExists", true);
+        
         return "login";
     }
 
@@ -70,30 +70,18 @@ public class UserController {
             return "redirect:/login";
         }
 
-        UserEntity userEntity = userRepository.findByUsername(userLoginBindingModel.getUsername()).get();
-
-        if (bindingResult.hasErrors() || passwordEncoder.matches(userLoginBindingModel.getPassword(), userEntity.getPassword()) == false)
+        if(userRepository.findByUsername(userLoginBindingModel.getUsername()).isEmpty() ||
+                passwordEncoder.matches(userLoginBindingModel.getPassword(), userRepository.findByUsername(userLoginBindingModel.getUsername()).get().getPassword()) == false)
         {
             redirectAttributes
+                    .addFlashAttribute("showErrorMess", true)
                     .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
                             bindingResult);
-
             return "redirect:/login";
         }
 
         UserServiceModel user = userService.findUserByUsername(userLoginBindingModel.getUsername());
-
-        if (user == null)
-        {
-            redirectAttributes
-                    .addFlashAttribute("isExists", false)
-                    .addFlashAttribute("UserLoginBindingModel", userLoginBindingModel)
-                    .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
-                            bindingResult);
-
-            return "redirect:/login";
-        }
 
         userService.loginUser(user.getId(), user.getUsername());
 

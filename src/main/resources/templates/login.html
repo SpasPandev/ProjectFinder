@@ -48,7 +48,7 @@
                 </p>
               </div>
 
-              <p th:if="${isExists == false}" class="alert alert-danger">
+              <p th:if="${showErrorMess} == true" class="alert alert-danger">
                 Invalid username or password.
               </p>
 
