@@ -132,7 +132,17 @@ public class UserController {
             return "redirect:/register";
         }
 
-        if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
+        if (!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword()))
+        {
+
+            redirectAttributes
+                    .addFlashAttribute("showPasswordsDontMatchError", true)
+                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+
+            return "redirect:/register";
+        }
+
+        if (bindingResult.hasErrors() ) {
 
             redirectAttributes
                     .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);

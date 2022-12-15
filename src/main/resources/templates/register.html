@@ -99,6 +99,10 @@
                                 </p>
                             </div>
 
+                            <p th:if="${showPasswordsDontMatchError} == true" class="alert alert-danger">
+                                The passwords didn't match.
+                            </p>
+
                             <hr>
 
                             <div>
