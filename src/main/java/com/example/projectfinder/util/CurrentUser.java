@@ -10,6 +10,7 @@ public class CurrentUser {
 
     private Long id;
     private String username;
+    private String email;
 
     public CurrentUser() {
     }
@@ -28,5 +29,13 @@ public class CurrentUser {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

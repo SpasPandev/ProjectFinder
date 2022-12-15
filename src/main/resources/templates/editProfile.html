@@ -58,6 +58,10 @@
                             <p class="invalid-feedback alert alert-danger" >
                                 Username is required.
                             </p>
+
+                            <p th:if="${showUsernameExistsError} == true" class="alert alert-danger">
+                                Username already exists.
+                            </p>
                         </div>
                         <div class="col-md-6">
                             <label for="email">Email</label>
@@ -68,6 +72,10 @@
                                     placeholder="email">
                             <p class="invalid-feedback alert alert-danger" >
                                 Email is required.
+                            </p>
+
+                            <p th:if="${showEmailExistsError} == true" class="alert alert-danger">
+                                Email already exists.
                             </p>
                         </div>
                     </div>

@@ -249,12 +249,31 @@ public class UserController {
             return "redirect:/profile/" + id + "/editProfile/errors";
         }
 
+        boolean isUsernameExists = userService.isUsernameExists(editProfileBindingModel.getUsername());
+        boolean isEmailExists = userService.isEmailExists(editProfileBindingModel.getEmail());
+
+        if (isUsernameExists && !currentUser.getUsername().equals(editProfileBindingModel.getUsername()))
+        {
+            redirectAttributes
+                    .addFlashAttribute("showUsernameExistsError", true)
+                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+
+            return "redirect:/profile/" + id + "/editProfile/errors";
+        }
+        else if (isEmailExists && !currentUser.getEmail().equals(editProfileBindingModel.getEmail()))
+        {
+            redirectAttributes
+                    .addFlashAttribute("showEmailExistsError", true)
+                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+
+            return "redirect:/profile/" + id + "/editProfile/errors";
+        }
+
         EditProfileServiceModel editProfileServiceModel = modelMapper.map(editProfileBindingModel, EditProfileServiceModel.class);
         editProfileServiceModel.setId(id);
         editProfileServiceModel.setPassword(passwordEncoder.encode(editProfileBindingModel.getPassword()));
 
         this.userService.updateProfile(editProfileServiceModel);
-
 
         return "redirect:/profile/" + id;
     }

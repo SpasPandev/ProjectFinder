@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
 
             currentUser.setId(id);
             currentUser.setUsername(username);
+            currentUser.setEmail(userRepository.findByUsername(username).get().getEmail());
     }
 
     @Override
@@ -81,6 +82,7 @@ public class UserServiceImpl implements UserService {
 
         currentUser.setId(null);
         currentUser.setUsername(null);
+        currentUser.setEmail(null);
     }
 
     @Override
