@@ -220,6 +220,18 @@ public class UserController {
     @GetMapping("/profile/{id}/editProfile/errors")
     public String editProfileErrors(@PathVariable Long id, Model model)
     {
+        if (id != currentUser.getId())
+        {
+            return "redirect:/home";
+        }
+
+        if (currentUser.getId() == null)
+        {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("currentUserRoleNameInString",
+                userService.findUserRoleNameInString(currentUser.getId()));
 
         return "editProfile";
     }
