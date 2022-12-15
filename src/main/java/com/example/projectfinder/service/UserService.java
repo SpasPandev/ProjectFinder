@@ -37,4 +37,6 @@ public interface UserService {
     boolean isAdmin(CurrentUser currentUser);
 
     String findUserRoleNameInString(Long currentUserId);
+
+    boolean isEmailExists(String email);
 }

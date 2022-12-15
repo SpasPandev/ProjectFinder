@@ -19,4 +19,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query(value = "SELECT roles_id FROM users_roles\n" +
             "WHERE user_entity_id = ?1 ", nativeQuery = true)
     Long findUserRoleId(Long userId);
+
+     Optional<UserEntity> findByEmail(String email);
 }

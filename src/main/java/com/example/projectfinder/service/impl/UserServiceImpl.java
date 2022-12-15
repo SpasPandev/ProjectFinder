@@ -208,6 +208,12 @@ public class UserServiceImpl implements UserService {
         return userRoleNameInString;
     }
 
+    @Override
+    public boolean isEmailExists(String email) {
+
+        return userRepository.findByEmail(email).isPresent();
+    }
+
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {
         EditProfileViewModel editProfileViewModel = modelMapper.map(userEntity, EditProfileViewModel.class);
 

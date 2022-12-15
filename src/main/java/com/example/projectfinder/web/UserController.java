@@ -52,7 +52,7 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model)
     {
-        
+
         return "login";
     }
 
@@ -98,6 +98,40 @@ public class UserController {
     public String register(@Valid UserRegisterBindingModel userRegisterBindingModel,
                            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
+        boolean isUsernameExists = userService.isUsernameExists(userRegisterBindingModel.getUsername());
+
+        boolean isEmailExists = userService.isEmailExists(userRegisterBindingModel.getEmail());
+
+        if (isUsernameExists && isEmailExists)
+        {
+            redirectAttributes
+                    .addFlashAttribute("showUsernameExistsError", true)
+                    .addFlashAttribute("showEmailExistsError", true)
+                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+
+            return "redirect:/register";
+        }
+        else if (isUsernameExists)
+        {
+            redirectAttributes
+                    .addFlashAttribute("showUsernameExistsError", true);
+
+            redirectAttributes
+                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+
+            return "redirect:/register";
+        }
+        else if (isEmailExists)
+        {
+            redirectAttributes
+                    .addFlashAttribute("showEmailExistsError", true);
+
+            redirectAttributes
+                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+
+            return "redirect:/register";
+        }
+
         if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
 
             redirectAttributes
@@ -108,13 +142,6 @@ public class UserController {
                             bindingResult);
 
             return "redirect:/register";
-        }
-
-        boolean isUsernameExists = userService.isUsernameExists(userRegisterBindingModel.getUsername());
-
-        if (isUsernameExists)
-        {
-            ///TODO
         }
 
         userService.registerUser(modelMapper.map(userRegisterBindingModel, UserServiceModel.class));

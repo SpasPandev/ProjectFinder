@@ -38,6 +38,10 @@
                                     <p class="invalid-feedback alert alert-danger">
                                         Username is required.
                                     </p>
+
+                                    <p th:if="${showUsernameExistsError} == true" class="alert alert-danger">
+                                        Username already exists.
+                                    </p>
                                 </div>
 
                                 <div class="form-floating mb-3">
@@ -62,6 +66,10 @@
 
                                 <p class="invalid-feedback alert alert-danger">
                                     Email is required.
+                                </p>
+
+                                <p th:if="${showEmailExistsError} == true" class="alert alert-danger">
+                                    Username already exists.
                                 </p>
                             </div>
 
