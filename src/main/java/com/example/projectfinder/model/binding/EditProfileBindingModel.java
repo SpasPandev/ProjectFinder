@@ -5,7 +5,7 @@ import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class EditProejectBindingModel {
+public class EditProfileBindingModel {
 
     private Long id;
     @NotEmpty
@@ -22,7 +22,7 @@ public class EditProejectBindingModel {
     @NotNull
     private TechnologyNameEnum technology;
 
-    public EditProejectBindingModel() {
+    public EditProfileBindingModel() {
     }
 
     public Long getId() {

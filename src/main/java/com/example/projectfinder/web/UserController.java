@@ -1,9 +1,8 @@
 package com.example.projectfinder.web;
 
-import com.example.projectfinder.model.binding.EditProejectBindingModel;
+import com.example.projectfinder.model.binding.EditProfileBindingModel;
 import com.example.projectfinder.model.binding.UserLoginBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
-import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
@@ -207,9 +206,9 @@ public class UserController {
         }
 
         EditProfileViewModel editProfileViewModel = this.userService.getById(id);
-        EditProejectBindingModel editProejectBindingModel = modelMapper.map(editProfileViewModel, EditProejectBindingModel.class);
+        EditProfileBindingModel editProfileBindingModel = modelMapper.map(editProfileViewModel, EditProfileBindingModel.class);
 
-        model.addAttribute("editProejectBindingModel", editProejectBindingModel);
+        model.addAttribute("editProfileBindingModel", editProfileBindingModel);
 
         model.addAttribute("currentUserId", currentUser.getId());
 
@@ -227,20 +226,20 @@ public class UserController {
 
     @PatchMapping("/profile/{id}/editProfile")
     public String editProfileConfirm(@PathVariable Long id,
-                                     @Valid EditProejectBindingModel editProejectBindingModel,
+                                     @Valid EditProfileBindingModel editProfileBindingModel,
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("editProejectBindingModel", editProejectBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProejectBindingModel", bindingResult);
+            redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfileBindingModel", bindingResult);
 
             return "redirect:/profile/" + id + "/editProfile/errors";
         }
 
-        EditProfileServiceModel editProfileServiceModel = modelMapper.map(editProejectBindingModel, EditProfileServiceModel.class);
+        EditProfileServiceModel editProfileServiceModel = modelMapper.map(editProfileBindingModel, EditProfileServiceModel.class);
         editProfileServiceModel.setId(id);
-        editProfileServiceModel.setPassword(passwordEncoder.encode(editProejectBindingModel.getPassword()));
+        editProfileServiceModel.setPassword(passwordEncoder.encode(editProfileBindingModel.getPassword()));
 
         this.userService.updateProfile(editProfileServiceModel);
 

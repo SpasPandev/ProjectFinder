@@ -15,7 +15,7 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div th:object="${editProejectBindingModel}" class="d-flex flex-column align-items-center text-center p-3 py-5">
+            <div th:object="${editProfileBindingModel}" class="d-flex flex-column align-items-center text-center p-3 py-5">
                 <img th:if="${currentUserRoleNameInString == 'STUDENT'}" class="rounded-circle mt-5" width="150px" src="/images/student.png" alt="profileIcon">
                 <img th:if="${currentUserRoleNameInString == 'COMPANY'}" class="rounded-circle mt-5" width="150px" src="/images/company.png" alt="profileIcon">
                 <img th:if="${currentUserRoleNameInString == 'ADMIN'}" class="rounded-circle mt-5" width="150px" src="/images/admin.png" alt="profileIcon">
@@ -31,7 +31,7 @@
 
             <form
                     th:method="patch"
-                    th:object="${editProejectBindingModel}"
+                    th:object="${editProfileBindingModel}"
                     th:action="@{/profile/{id}/editProfile(id = *{id})}">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
