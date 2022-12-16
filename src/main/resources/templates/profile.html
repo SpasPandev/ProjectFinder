@@ -19,9 +19,9 @@
       <!-- Profile Info -->
       <div th:object="${user}" class="d-flex flex-column justify-content-center align-items-center">
         <h2 th:if="${user.getId() == currentUserId}">My Profile</h2>
-        <img th:if="${currentUserRoleNameInString == 'STUDENT'}" src="/images/student.png" class="rounded-circle" alt="profileIcon" height="100" width="100">
-        <img th:if="${currentUserRoleNameInString== 'COMPANY'}" src="/images/company.png" class="rounded-circle" alt="profileIcon" height="100" width="100">
-        <img th:if="${currentUserRoleNameInString == 'ADMIN'}" src="/images/admin.png" class="rounded-circle" alt="profileIcon" height="100" width="100">
+        <img th:if="${userRoleNameInString == 'STUDENT'}" src="/images/student.png" class="rounded-circle" alt="profileIcon" height="100" width="100">
+        <img th:if="${userRoleNameInString== 'COMPANY'}" src="/images/company.png" class="rounded-circle" alt="profileIcon" height="100" width="100">
+        <img th:if="${userRoleNameInString == 'ADMIN'}" src="/images/admin.png" class="rounded-circle" alt="profileIcon" height="100" width="100">
 
         <h5 class="mt-3">Name</h5>
         <span th:text="*{name}">Name</span>

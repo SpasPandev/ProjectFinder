@@ -21,9 +21,19 @@
                 <button th:if="!${interests}" type="submit" class="btn btn-danger">
                     Order by interests
                 </button>
+                <div th:if="!${interests}" class="float-end">
+                    <span class="m-3">All available projects </span>
+                </div>
+
                 <button th:if="${interests}" type="submit" class="btn btn-danger">
                     Show all
                 </button>
+                <div th:if="${interests}" class="float-end">
+                    <span class="m-3">Projects order by your favourite technology: </span>
+                    <span th:text="${currentUserTechnologyNameInString}" class="fw-semibold">
+                        Favourite technology on current user
+                    </span>
+                </div>
             </form>
         </th:block>
 

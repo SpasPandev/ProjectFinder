@@ -174,11 +174,9 @@ public class UserController {
             return "redirect:/login";
         }
 
-        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("COMPANY"))
-        {
-            model.addAttribute("technologyNameInString",
-                    userService.findUserTechnologyNameInString(id));
-        }
+        model
+                .addAttribute("technologyNameInString", userService.findUserTechnologyNameInString(id))
+                .addAttribute("userRoleNameInString", userService.findUserRoleNameInString(id));
 
         model
                 .addAttribute("user", modelMapper
