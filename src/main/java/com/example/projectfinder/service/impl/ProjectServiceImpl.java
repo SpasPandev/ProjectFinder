@@ -135,7 +135,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public boolean isParticipant(Long id) {
 
-        boolean isParticipant = true;
+        boolean isParticipant = false;
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
         UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
@@ -145,7 +145,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         if (currentProjectWithCurrentUser != null)
         {
-            isParticipant = false;
+            isParticipant = true;
         }
 
         return isParticipant;
@@ -179,7 +179,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public boolean isSubmitted(Long id) {
 
-        boolean isSubmitted = true;
+        boolean isSubmitted = false;
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
         UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
@@ -189,7 +189,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         if (currentProjectWithCurrentUser.getLink() != null)
         {
-            isSubmitted = false;
+            isSubmitted = true;
         }
 
         return isSubmitted;
@@ -251,6 +251,25 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         return listOfAllProjectsForConcretTehnology;
+    }
+
+    @Override
+    public Long findProjectAuthorId(Long projectId) {
+
+        return projectRepository.findById(projectId).get().getAuthor().getId();
+    }
+
+    @Override
+    public boolean isAuthor(Long projectId) {
+
+        if (currentUser.getId() != findProjectAuthorId(projectId))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
 }

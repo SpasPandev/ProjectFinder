@@ -34,7 +34,9 @@
                                         <img src="/images/student.png" alt="profileIcon" width="45" height="45"
                                              class="rounded-circle">
                                         <div class="ms-3">
-                                            <span th:text="${projectUploader.getParticipant().name}" class="fw-bold mb-1">Name</span>
+                                            <a th:text="${projectUploader.getParticipant().name}"
+                                                  th:href="@{/profile/{id}(id = *{projectUploader.getParticipant().id})}"
+                                                  class="fw-bold text-body mb-1">Name</a>
                                             <p th:text="${projectUploader.getParticipant().username}" class="text-muted mb-0">username</p>
                                         </div>
                                     </div>

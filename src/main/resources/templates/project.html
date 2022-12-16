@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <th:block th:if="${isParticipant}">
+            <th:block th:if="!${isParticipant}">
                 <form th:if="${currentUserRoleNameInString != 'COMPANY'}"
                         th:method="post"
                       th:object="${projectId}"
@@ -102,17 +102,17 @@
                 </form>
             </th:block>
 
-            <th:block th:if="!${isParticipant}">
+            <th:block th:if="${isParticipant}">
 
                 <!-- Submit Button trigger modal -->
-                <th:block th:if="${isSubmitted}">
+                <th:block th:if="!${isSubmitted}">
                     <button type="button" class="btn btn-primary btn-outline-dark btn-lg m-4" data-bs-toggle="modal"
                             data-bs-target="#submitProject">
                         Submit
                     </button>
                 </th:block>
 
-                <th:block th:if="!${isSubmitted}">
+                <th:block th:if="${isSubmitted}">
                     <button class="btn btn-primary btn-outline-dark btn-lg m-4 disabled">Submitted</button>
                 </th:block>
 
@@ -144,7 +144,7 @@
 
             </th:block>
 
-            <th:block th:if="!${currentUserRoleNameInString.equals('STUDENT')}">
+            <th:block th:if="!${currentUserRoleNameInString.equals('STUDENT')} and ${isAuthor}">
                 <a th:href="@{/uploaded/{id}(id = *{projectId.id})}" class="btn btn-primary btn-outline-dark btn-lg m-4">Uploaded</a>
             </th:block>
         </div>

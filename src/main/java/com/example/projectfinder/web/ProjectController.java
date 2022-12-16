@@ -61,17 +61,22 @@ public class ProjectController {
         model
                 .addAttribute("isParticipant", projectService.isParticipant(id));
 
-
         model.addAttribute("technologyNameInString",
                 projectService.findProjectTechnologyNameInString(id));
 
-        if (projectService.isParticipant(id) != true)
+        if (projectService.isParticipant(id))
         {
             model.addAttribute("isSubmitted", projectService.isSubmitted(id));
         }
 
         model.addAttribute("currentUserRoleNameInString", userService.findUserRoleNameInString(currentUser.getId()));
 
+        boolean isAuthor = projectService.isAuthor(id);
+
+        if (isAuthor)
+        {
+            model.addAttribute("isAuthor", isAuthor);
+        }
 
         return "project";
     }

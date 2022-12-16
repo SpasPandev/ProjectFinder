@@ -37,4 +37,8 @@ public interface ProjectService {
     List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId);
 
     List<ProjectEntity> findAllProjectsForConcretTehnology(Long id);
+
+    Long findProjectAuthorId(Long projectId);
+
+    boolean isAuthor(Long projectId);
 }
