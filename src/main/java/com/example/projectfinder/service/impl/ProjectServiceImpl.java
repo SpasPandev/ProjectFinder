@@ -69,37 +69,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectViewModel> findProjectsByConcretTechnology() {
-
-        List<ProjectViewModel> allProjectViewsList =
-                this.projectRepository.findAll()
-                        .stream().map(projectEntity -> {
-                            ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
-
-                            return projectViewModel;
-                        })
-                        .collect(Collectors.toList());
-
-        List<ProjectViewModel> projectViewsListWithConcretTechnology = allProjectViewsList;
-
-        int k = -1;
-
-        for (int i = 0; i < allProjectViewsList.size(); i++)
-        {
-            k++;
-            if (!allProjectViewsList.get(i).getTechnologies().equals(TechnologyNameEnum.PYTHON))
-            {
-                projectViewsListWithConcretTechnology
-                        .remove(allProjectViewsList.get(k));
-                k--;
-                System.out.println("k = " + k);
-            }
-        }
-
-        return projectViewsListWithConcretTechnology;
-    }
-
-    @Override
     public void createNewProject(ProjectServiceModel projectServiceModel) {
 
         ProjectEntity projectEntity = modelMapper.map(projectServiceModel, ProjectEntity.class);
@@ -126,8 +95,6 @@ public class ProjectServiceImpl implements ProjectService {
 
         projectParticipant.setParticipant(userEntity);
         projectParticipant.setProject(projectEntity);
-
-        userEntity.addProjectForParticipant(projectParticipant);
 
         projectParticipantRepository.save(projectParticipant);
     }

@@ -1,9 +1,6 @@
 package com.example.projectfinder.model.service;
 
-import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
-
-import java.util.Set;
 
 public class EditProfileServiceModel {
     private Long id;

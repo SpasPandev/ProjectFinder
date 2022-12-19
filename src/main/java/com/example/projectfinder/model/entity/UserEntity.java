@@ -34,17 +34,6 @@ public class UserEntity extends BaseEntity{
     @OneToMany(mappedBy = "participant", fetch = FetchType.EAGER)
     private Set<ProjectParticipant> participant;
 
-    public void addProjectForParticipant(ProjectParticipant projectParticipant)
-    {
-        participant.add(projectParticipant);
-    }
-
-    public void addTechnologiesForUser(TechnologyEntity technologyEntity)
-    {
-
-        technologies.add(technologyEntity);
-    }
-
     public String getName() {
         return name;
     }

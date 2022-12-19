@@ -14,8 +14,6 @@ public interface ProjectService {
 
     List<ProjectViewModel> findAllProjectViewsOrderDescId();
 
-    List<ProjectViewModel> findProjectsByConcretTechnology();
-
     void createNewProject(ProjectServiceModel projectServiceModel);
 
     void participateInProject(Long id);

@@ -10,8 +10,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<UserEntity> findUserByUsernameAndPassword(String username, String password);
-
     Optional<UserEntity> findByUsername(String username);
     @Query(value = "SELECT technologies_id FROM users_technologies\n" +
             "WHERE user_entity_id = ?1 ", nativeQuery = true)
