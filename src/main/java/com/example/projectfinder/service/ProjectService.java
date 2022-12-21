@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ProjectService {
 
-    ProjectServiceModel findProjectId(Long id);
+    ProjectServiceModel findProjectById(Long id);
 
     List<ProjectViewModel> findAllProjectViewsOrderDescId();
 
@@ -20,7 +20,7 @@ public interface ProjectService {
 
     boolean isParticipant(Long id);
 
-    List<ProjectEntity> showCurrentUserProjects();
+    List<ProjectViewModel> showCurrentUserProjects();
 
     List<ProjectParticipant> showAllParticipants(Long id);
 

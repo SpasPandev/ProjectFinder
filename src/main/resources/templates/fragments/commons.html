@@ -32,9 +32,9 @@
                     <th:block th:if="${@currentUser.id != null}">
                         <a href="/home" class="btn btn-outline-light me-2">Home</a>
 
-                        <a th:href="@{/profile/{id}(id = *{id})}" class="btn btn-outline-light me-2">My Profile</a>
+                        <a th:object="${@currentUser}" th:href="@{/profile/{id}(id = *{id})}" class="btn btn-outline-light me-2">My Profile</a>
                         <a href="/tasks" class="btn btn-outline-light me-2">My Tasks</a>
-                        <a href="/admin" class="btn btn-outline-light me-2">Admin Panel</a>
+                        <a th:if="${@currentUser.roleName == 'ADMIN'}" href="/admin" class="btn btn-outline-light me-2">Admin Panel</a>
                         <a th:href="@{/logout}" class="btn btn-outline-light me-2">Logout</a>
                     </th:block>
 

@@ -56,8 +56,8 @@ public class ProjectController {
         model.addAttribute("allParticipants", projectService.showAllParticipants(id));
 
         model
-                .addAttribute("projectId", modelMapper
-                        .map(projectService.findProjectId(id), ProjectViewModel.class));
+                .addAttribute("project", modelMapper
+                        .map(projectService.findProjectById(id), ProjectViewModel.class));
         model
                 .addAttribute("isParticipant", projectService.isParticipant(id));
 

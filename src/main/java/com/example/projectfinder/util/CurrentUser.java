@@ -11,6 +11,7 @@ public class CurrentUser {
     private Long id;
     private String username;
     private String email;
+    private String roleName;
 
     public CurrentUser() {
     }
@@ -37,5 +38,13 @@ public class CurrentUser {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

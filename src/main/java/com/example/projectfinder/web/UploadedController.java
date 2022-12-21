@@ -26,7 +26,7 @@ public class UploadedController {
             return "redirect:/login";
         }
 
-        model.addAttribute("currentProject", projectService.findProjectId(id));
+        model.addAttribute("currentProject", projectService.findProjectById(id));
         model.addAttribute("listOfAllProjectParticipantsUploadedOnCurrentProject", projectService.currentProjectUploaders(id));
 
         return "uploaded";

@@ -14,7 +14,7 @@
     <!-- End Navigation -->
 
     <div class="container rounded bg-white mt-5 mb-5 p-3">
-        <div th:object="${projectId}" class="row justify-content-center">
+        <div th:object="${project}" class="row justify-content-center">
             <div class="col-md-8">
                 <h3 th:text="*{title}" class="text-center m-4">Title of the project</h3>
                 <h6 th:text="|Author:   *{author.name}|" class="text-end">Company name</h6>
@@ -96,7 +96,7 @@
             <th:block th:if="!${isParticipant}">
                 <form th:if="${currentUserRoleNameInString != 'COMPANY'}"
                         th:method="post"
-                      th:object="${projectId}"
+                      th:object="${project}"
                       th:action="@{/project/{id}(id = *{id})}">
                     <button type="submit" class="btn btn-primary btn-outline-dark btn-lg m-4">Participate</button>
                 </form>
@@ -126,7 +126,7 @@
                             </div>
 
                             <form th:method="post"
-                                  th:action="@{/submit/{id}(id = ${projectId.id})}"
+                                  th:action="@{/submit/{id}(id = ${project.id})}"
                                   th:object="${submitLinkBindingModel}" >
                                 <div class="modal-body">
                                     <label>Enter link for your github repository</label>
@@ -145,7 +145,7 @@
             </th:block>
 
             <th:block th:if="!${currentUserRoleNameInString.equals('STUDENT')} and ${isAuthor}">
-                <a th:href="@{/uploaded/{id}(id = *{projectId.id})}" class="btn btn-primary btn-outline-dark btn-lg m-4">Uploaded</a>
+                <a th:href="@{/uploaded/{id}(id = *{project.id})}" class="btn btn-primary btn-outline-dark btn-lg m-4">Uploaded</a>
             </th:block>
         </div>
     </div>

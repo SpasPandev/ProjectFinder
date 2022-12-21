@@ -45,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectServiceModel findProjectId(Long id) {
+    public ProjectServiceModel findProjectById(Long id) {
         return projectRepository
                 .findById(id)
                 .map(projectEntity -> modelMapper.map(projectEntity, ProjectServiceModel.class))
@@ -119,16 +119,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectEntity> showCurrentUserProjects()
+    public List<ProjectViewModel> showCurrentUserProjects()
     {
         List<Long> listOfAllProjectsIds = projectRepository.listOfAllProjectsIds(currentUser.getId());
 
-        List<ProjectEntity> listOfCurrentUserProjects = new ArrayList<>();
+        List<ProjectViewModel> listOfCurrentUserProjects = new ArrayList<>();
 
         for (int i = listOfAllProjectsIds.size() - 1; i >= 0; i--) {
 
             listOfCurrentUserProjects
-                    .add(projectRepository.findById(listOfAllProjectsIds.get(i)).get());
+                    .add(modelMapper.map(projectRepository.findById(listOfAllProjectsIds.get(i)).get(), ProjectViewModel.class));
         }
 
         return listOfCurrentUserProjects;

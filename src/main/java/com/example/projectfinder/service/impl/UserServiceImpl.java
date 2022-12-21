@@ -72,9 +72,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void loginUser(Long id, String username) {
 
-            currentUser.setId(id);
-            currentUser.setUsername(username);
-            currentUser.setEmail(userRepository.findByUsername(username).get().getEmail());
+        currentUser.setId(id);
+        currentUser.setUsername(username);
+        currentUser.setEmail(userRepository.findByUsername(username).get().getEmail());
+        currentUser.setRoleName(findUserRoleNameInString(id));
     }
 
     @Override
@@ -83,6 +84,7 @@ public class UserServiceImpl implements UserService {
         currentUser.setId(null);
         currentUser.setUsername(null);
         currentUser.setEmail(null);
+        currentUser.setRoleName(null);
     }
 
     @Override

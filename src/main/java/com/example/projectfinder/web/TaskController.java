@@ -1,6 +1,7 @@
 package com.example.projectfinder.web;
 
 import com.example.projectfinder.model.entity.ProjectEntity;
+import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
@@ -26,7 +27,7 @@ public class TaskController {
     @GetMapping("/tasks")
     public String tasks(Model model)
     {
-        List<ProjectEntity> allProjectsForCurrentUser = projectService.showCurrentUserProjects();
+        List<ProjectViewModel> allProjectsForCurrentUser = projectService.showCurrentUserProjects();
 
         model.addAttribute("allProjectsForCurrentUser", allProjectsForCurrentUser);
 

@@ -20,7 +20,7 @@ public class ProjectEntity extends BaseEntity{
     private UserEntity author;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
-    Set<ProjectParticipant> participant;
+    private Set<ProjectParticipant> participant;
 
     public String getTitle() {
         return title;

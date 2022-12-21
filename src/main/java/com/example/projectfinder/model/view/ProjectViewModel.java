@@ -23,7 +23,7 @@ public class ProjectViewModel {
 
     private UserEntity author;
 
-    Set<ProjectParticipant> participant;
+    private Set<ProjectParticipant> participant;
 
     public ProjectViewModel() {
     }
