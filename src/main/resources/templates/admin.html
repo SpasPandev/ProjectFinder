@@ -22,12 +22,13 @@
                     <table class="table table-centered mb-0">
                         <thead>
                         <tr>
-                            <th scope="col">№</th>
+                            <th scope="col">Id</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
                             <th scope="col">role</th>
                             <th scope="col">Choose role</th>
                             <th scope="col">Change role</th>
+                            <th scope="col">Delete user</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -61,7 +62,13 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-danger">Change</button>
+                                    <button type="submit" class="btn btn-info">Change</button>
+                                </td>
+                            </form>
+
+                            <form th:method="delete" th:action="@{/admin/{id}(id = *{user.id})}">
+                                <td>
+                                    <button th:if="${user.id != currentUserId}" class="btn btn-danger">Delete</button>
                                 </td>
                             </form>
 

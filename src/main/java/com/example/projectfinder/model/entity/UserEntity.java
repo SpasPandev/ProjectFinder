@@ -31,7 +31,7 @@ public class UserEntity extends BaseEntity{
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<TechnologyEntity> technologies;
 
-    @OneToMany(mappedBy = "participant", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "participant", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<ProjectParticipant> participant;
 
     public String getName() {

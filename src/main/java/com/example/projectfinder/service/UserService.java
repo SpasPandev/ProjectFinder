@@ -39,4 +39,6 @@ public interface UserService {
     String findUserRoleNameInString(Long currentUserId);
 
     boolean isEmailExists(String email);
+
+    void deleteUserById(Long userId);
 }

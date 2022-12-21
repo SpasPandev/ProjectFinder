@@ -51,6 +51,10 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model)
     {
+        if (currentUser.getId() != null)
+        {
+            return "redirect:/home";
+        }
 
         return "login";
     }
@@ -89,6 +93,11 @@ public class UserController {
 
     @GetMapping("/register")
     public String register() {
+
+        if (currentUser.getId() != null)
+        {
+            return "redirect:/home";
+        }
 
         return "register";
     }

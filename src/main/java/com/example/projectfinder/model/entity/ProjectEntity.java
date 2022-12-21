@@ -16,10 +16,10 @@ public class ProjectEntity extends BaseEntity{
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<TechnologyEntity> technologies;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private UserEntity author;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<ProjectParticipant> participant;
 
     public String getTitle() {

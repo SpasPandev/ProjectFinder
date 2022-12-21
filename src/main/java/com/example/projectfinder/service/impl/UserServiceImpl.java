@@ -29,13 +29,16 @@ public class UserServiceImpl implements UserService {
     private final TechnologyRepository technologyRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser, RoleRepository roleRepository, TechnologyRepository technologyRepository, PasswordEncoder passwordEncoder) {
+    private final ProjectRepository projectRepository;
+
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser, RoleRepository roleRepository, TechnologyRepository technologyRepository, PasswordEncoder passwordEncoder, ProjectRepository projectRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.currentUser = currentUser;
         this.roleRepository = roleRepository;
         this.technologyRepository = technologyRepository;
         this.passwordEncoder = passwordEncoder;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -216,6 +219,22 @@ public class UserServiceImpl implements UserService {
     public boolean isEmailExists(String email) {
 
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    public void deleteUserById(Long userId) {
+
+        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllProjectsForAuthor(userId);
+
+        if (!allProjectsForAuthor.isEmpty())
+        {
+            allProjectsForAuthor.forEach(poject ->
+                    projectRepository.deleteById(poject.getId()));
+        }
+        else {
+            userRepository.deleteById(userId);
+        }
+
     }
 
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {

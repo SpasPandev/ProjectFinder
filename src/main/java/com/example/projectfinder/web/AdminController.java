@@ -6,6 +6,7 @@ import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -34,17 +35,19 @@ public class AdminController {
     @GetMapping("/admin")
     public String adminPanel(Model model)
     {
-        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("ADMIN"))
-        {
-            return "redirect:/home";
-        }
-
         if (currentUser.getId() == null)
         {
             return "redirect:/login";
         }
 
+        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("ADMIN"))
+        {
+            return "redirect:/home";
+        }
+
         model.addAttribute("isAdmin", userService.isAdmin(currentUser));
+
+        model.addAttribute("currentUserId", currentUser.getId());
 
         model.addAttribute("allUsers", this.userService.findAllUsers());
 
@@ -68,6 +71,15 @@ public class AdminController {
         }
 
         userService.adminChangeUserRole(modelMapper.map(changeRoleBindingModel, UserServiceModel.class), id);
+
+        return "redirect:/admin";
+    }
+
+    @Transactional
+    @DeleteMapping("/admin/{id}")
+    public String deleteUser(@PathVariable Long id)
+    {
+        userService.deleteUserById(id);
 
         return "redirect:/admin";
     }
