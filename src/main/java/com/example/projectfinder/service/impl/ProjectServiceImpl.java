@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,7 +78,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectEntity.setTechnologies(projectServiceModel
                 .getTechnologies()
                 .stream()
-                .map(technologyService::findTechnologyByName)
+                .map((TechnologyNameEnum technologyNameEnum) -> technologyService.findTechnologyByName(technologyNameEnum))
                 .collect(Collectors.toSet()));
 
         projectRepository.save(projectEntity);
@@ -163,11 +163,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public String findProjectTechnologyNameInString(Long id) {
+    public List<String> findProjectTechnologyNameInString(Long id) {
 
-        Long currentProjectTechnologyId = projectRepository.findTechnologyIdByProjectId(id);
+        List<Long> currentProjectTechnologyId = projectRepository.findTechnologyIdByProjectId(id);
 
-        String currentProjectTechnologyName = technologyRepository.findTechnologyNameInStringById(currentProjectTechnologyId);
+        List<String> currentProjectTechnologyName = technologyRepository.findTechnologyNameInStringById(currentProjectTechnologyId);
 
         return currentProjectTechnologyName;
     }
@@ -205,16 +205,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectEntity> findAllProjectsForConcretTehnology(Long id)
+    public List<ProjectEntity> findAllProjectsForConcretTehnology(List<Long> id)
     {
-        List<Long> listOfProjectIds = projectRepository.findListOfProjectsIdsForConcretTehnology(id);
+        Set<Long> listOfProjectIds = projectRepository.findListOfProjectsIdsForConcretTehnologies(id);
 
         List<ProjectEntity> listOfAllProjectsForConcretTehnology = new ArrayList<>();
 
-        for (int i = 0; i < listOfProjectIds.size(); i++) {
+        for (Long element : listOfProjectIds) {
 
             listOfAllProjectsForConcretTehnology
-                    .add(projectRepository.findById(listOfProjectIds.get(i)).get());
+                    .add(projectRepository.findById(element).get());
         }
 
         return listOfAllProjectsForConcretTehnology;

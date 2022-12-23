@@ -110,6 +110,8 @@ public class UserController {
 
         boolean isEmailExists = userService.isEmailExists(userRegisterBindingModel.getEmail());
 
+        boolean isChoosenTechnologyListEmpty = userRegisterBindingModel.getTechnology().isEmpty();
+
         if (isUsernameExists && isEmailExists)
         {
             redirectAttributes
@@ -150,7 +152,18 @@ public class UserController {
             return "redirect:/register";
         }
 
+        if (isChoosenTechnologyListEmpty) {
+            redirectAttributes
+                    .addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty)
+                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+
+            return "redirect:/register";
+        }
+
         if (bindingResult.hasErrors() ) {
+
+            redirectAttributes
+                    .addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
 
             redirectAttributes
                     .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
@@ -249,9 +262,20 @@ public class UserController {
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes) {
 
+        boolean isChoosenTechnologyListEmpty = editProfileBindingModel.getTechnology().isEmpty();
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfileBindingModel", bindingResult);
+            redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
+
+            return "redirect:/profile/" + id + "/editProfile/errors";
+        }
+
+        if (isChoosenTechnologyListEmpty)
+        {
+            redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
+            redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
 
             return "redirect:/profile/" + id + "/editProfile/errors";
         }

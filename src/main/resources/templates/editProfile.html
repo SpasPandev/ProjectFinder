@@ -109,17 +109,16 @@
                     <div class="row">
                         <h6>Choose your favourite technology:</h6>
                         <div>
-                            <select th:field="*{technology}"
-                                    th:errorclass="is-invalid"
-                                    id="technology" class="form-select">
-                                <option value="" selected>Choose technology</option>
-                                <option th:each="t : ${T(com.example.projectfinder.model.entity.enums.TechnologyNameEnum).values()}"
-                                        th:value="${t}"
-                                        th:text="${t}">Technologies
-                                </option>
-                            </select>
+                            <label>Technologies:
+                                <input type="checkbox" class="ms-3 me-1"
+                                       th:each="t : ${T(com.example.projectfinder.model.entity.enums.TechnologyNameEnum).values()}"
+                                       th:text="${t}"
+                                       th:value="${t}"
+                                       th:field="*{technology}"
+                                />
+                            </label>
 
-                            <p class="invalid-feedback errors alert alert-danger">
+                            <p th:if="${isChoosenTechnologyListEmpty} == true" class="errors alert alert-danger">
                                 Technology is required.
                             </p>
                         </div>

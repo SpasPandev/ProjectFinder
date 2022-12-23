@@ -8,6 +8,7 @@ import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.util.CurrentUser;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
     void registerUser(UserServiceModel userServiceModel);
@@ -30,7 +31,7 @@ public interface UserService {
 
     List<UserViewModel> findAllUsers();
 
-    String findUserTechnologyNameInString(Long currentUserId);
+    List<String> findUserTechnologyNameInString(Long currentUserId);
 
     void adminChangeUserRole(UserServiceModel userServiceModel, Long id);
 

@@ -109,8 +109,11 @@ public class ProjectController {
     @PostMapping("/createProject")
     public String createProjectConfirm(@Valid CreateProjectBindingModel createProjectBindingModel, BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
+        boolean isChoosenTechnologyListEmpty = createProjectBindingModel.getTechnologies().isEmpty();
+
         if (bindingResult.hasErrors())
         {
+            redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
             redirectAttributes.addFlashAttribute("createProjectBindingModel", createProjectBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createProjectBindingModel", bindingResult);
 

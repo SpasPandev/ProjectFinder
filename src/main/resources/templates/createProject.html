@@ -52,21 +52,17 @@
                         <div class="row mt-3">
 
                             <div class="form-group mx-2 col">
-                                <label class="p-2">
-                                    Technologies:
+                                <label class="p-2">Technologies:
+                                    <input type="checkbox" class="ms-3 me-1"
+                                           th:each="t : ${T(com.example.projectfinder.model.entity.enums.TechnologyNameEnum).values()}"
+                                           th:text="${t}"
+                                           th:value="${t}"
+                                           th:field="*{technologies}"
+                                    />
                                 </label>
-                                <select th:field="*{technologies}"
-                                        th:errorclass="is-invalid"
-                                        id="technology" class="form-select">
-                                    <option value="" selected>Choose technology</option>
-                                    <option th:each="t : ${T(com.example.projectfinder.model.entity.enums.TechnologyNameEnum).values()}"
-                                            th:value="${t}"
-                                            th:text="${t}">Technologies
-                                    </option>
-                                </select>
 
-                                <p class="invalid-feedback errors alert alert-danger">
-                                    Mark the necessary technologies.
+                                <p th:if="${isChoosenTechnologyListEmpty} == true" class="errors alert alert-danger">
+                                    Technology is required.
                                 </p>
 
                             </div>

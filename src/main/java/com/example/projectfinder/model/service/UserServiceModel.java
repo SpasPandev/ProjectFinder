@@ -3,6 +3,8 @@ package com.example.projectfinder.model.service;
 import com.example.projectfinder.model.entity.enums.RoleNameEnum;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 
+import java.util.Set;
+
 public class UserServiceModel {
 
     private Long id;
@@ -13,8 +15,7 @@ public class UserServiceModel {
     private String description;
     private String profile_picture_url;
     private RoleNameEnum role;
-
-    private TechnologyNameEnum technology;
+    private Set<TechnologyNameEnum> technology;
     private String link;
 
     public UserServiceModel() {
@@ -84,11 +85,11 @@ public class UserServiceModel {
         this.role = role;
     }
 
-    public TechnologyNameEnum getTechnology() {
+    public Set<TechnologyNameEnum> getTechnology() {
         return technology;
     }
 
-    public void setTechnology(TechnologyNameEnum technology) {
+    public void setTechnology(Set<TechnologyNameEnum> technology) {
         this.technology = technology;
     }
 

@@ -24,7 +24,7 @@ public class UserRegisterBindingModel {
     @NotNull
     private RoleNameEnum role;
     @NotNull
-    private TechnologyNameEnum technology;
+    private Set<TechnologyNameEnum> technology;
 
     public UserRegisterBindingModel() {
     }
@@ -85,11 +85,11 @@ public class UserRegisterBindingModel {
         this.role = role;
     }
 
-    public TechnologyNameEnum getTechnology() {
+    public Set<TechnologyNameEnum> getTechnology() {
         return technology;
     }
 
-    public void setTechnology(TechnologyNameEnum technology) {
+    public void setTechnology(Set<TechnologyNameEnum> technology) {
         this.technology = technology;
     }
 }

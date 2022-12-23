@@ -44,7 +44,7 @@ public class HomeController {
         {
             model.addAttribute("allProjectsForConcretTehnology",
                     projectService.findAllProjectsForConcretTehnology(
-                            userRepository.findTechnologyIdByUserId(currentUser.getId())));
+                            userRepository.findTechnologyIdsByUserId(currentUser.getId())));
 
             model.addAttribute("currentUserTechnologyNameInString",
                     userService.findUserTechnologyNameInString(currentUser.getId()));

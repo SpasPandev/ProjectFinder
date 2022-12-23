@@ -7,6 +7,7 @@ import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.ProjectViewModel;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProjectService {
 
@@ -28,13 +29,13 @@ public interface ProjectService {
 
     boolean isSubmitted(Long id);
 
-    String findProjectTechnologyNameInString(Long id);
+    List<String> findProjectTechnologyNameInString(Long id);
 
     List<ProjectParticipant> currentProjectUploaders(Long currentProjectId);
 
     List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId);
 
-    List<ProjectEntity> findAllProjectsForConcretTehnology(Long id);
+    List<ProjectEntity> findAllProjectsForConcretTehnology(List<Long> id);
 
     Long findProjectAuthorId(Long projectId);
 

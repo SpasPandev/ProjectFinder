@@ -4,6 +4,7 @@ import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 public class EditProfileBindingModel {
 
@@ -20,7 +21,7 @@ public class EditProfileBindingModel {
     @NotEmpty
     private String description;
     @NotNull
-    private TechnologyNameEnum technology;
+    private Set<TechnologyNameEnum> technology;
 
     public EditProfileBindingModel() {
     }
@@ -81,11 +82,11 @@ public class EditProfileBindingModel {
         this.description = description;
     }
 
-    public TechnologyNameEnum getTechnology() {
+    public Set<TechnologyNameEnum> getTechnology() {
         return technology;
     }
 
-    public void setTechnology(TechnologyNameEnum technology) {
+    public void setTechnology(Set<TechnologyNameEnum> technology) {
         this.technology = technology;
     }
 }

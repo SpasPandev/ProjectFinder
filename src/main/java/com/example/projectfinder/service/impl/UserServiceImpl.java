@@ -48,9 +48,7 @@ public class UserServiceImpl implements UserService {
         Set<RoleEntity> roles = new HashSet<>();
         roles.add(userRole);
 
-        TechnologyEntity techno = technologyRepository.findByTechnologies(userServiceModel.getTechnology());
-        Set<TechnologyEntity> technologies = new HashSet<>();
-        technologies.add(techno);
+        Set<TechnologyEntity> technologies = technologyRepository.findTechnologyEntitiesByTechnologiesIn(userServiceModel.getTechnology());
 
         UserEntity userEntity = modelMapper.map(userServiceModel, UserEntity.class);
 
@@ -136,9 +134,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setPassword(editProfileServiceModel.getPassword());
         userEntity.setDescription(editProfileServiceModel.getDescription());
 
-        TechnologyEntity techno = technologyRepository.findByTechnologies(editProfileServiceModel.getTechnology());
-        Set<TechnologyEntity> technologies = new HashSet<>();
-        technologies.add(techno);
+        Set<TechnologyEntity> technologies = technologyRepository.findByTechnologiesIn(editProfileServiceModel.getTechnology());
 
         userEntity.setTechnologies(technologies);
 
@@ -167,13 +163,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String findUserTechnologyNameInString(Long currentUserId) {
+    public List<String> findUserTechnologyNameInString(Long currentUserId) {
 
-        Long currentUserTechnologyId = userRepository.findTechnologyIdByUserId(currentUserId);
+        List<Long> currentUserTechnologyId = userRepository.findTechnologyIdsByUserId(currentUserId);
 
-        String currentUserTechnologyName = technologyRepository.findTechnologyNameInStringById(currentUserTechnologyId);
+        List<String> currentUserTechnologyNames = technologyRepository.findTechnologyNameInStringById(currentUserTechnologyId);
 
-        return currentUserTechnologyName;
+        return currentUserTechnologyNames;
     }
 
     @Override

@@ -5,16 +5,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface TechnologyRepository extends JpaRepository<TechnologyEntity, Long> {
 
     Optional<TechnologyEntity> findTechnologyEntitiesByTechnologies(TechnologyNameEnum technologyNameEnum );
 
-    TechnologyEntity findByTechnologies(TechnologyNameEnum technologyName);
+    Set<TechnologyEntity> findByTechnologiesIn(Set<TechnologyNameEnum> technologyName);
+
     @Query(value = "SELECT technologies FROM technologies\n" +
-            "WHERE id = ?1 ", nativeQuery = true)
-    String findTechnologyNameInStringById(Long technologyId);
+            "WHERE id IN ?1 ", nativeQuery = true)
+    List<String> findTechnologyNameInStringById(List<Long> technologyId);
+
+    Set<TechnologyEntity> findTechnologyEntitiesByTechnologiesIn(Set<TechnologyNameEnum> technologyNameEnums);
 
 }

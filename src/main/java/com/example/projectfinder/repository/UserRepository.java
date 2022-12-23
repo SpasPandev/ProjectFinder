@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
@@ -13,7 +15,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUsername(String username);
     @Query(value = "SELECT technologies_id FROM users_technologies\n" +
             "WHERE user_entity_id = ?1 ", nativeQuery = true)
-    Long findTechnologyIdByUserId(Long userId);
+    List<Long> findTechnologyIdsByUserId(Long userId);
+
     @Query(value = "SELECT roles_id FROM users_roles\n" +
             "WHERE user_entity_id = ?1 ", nativeQuery = true)
     Long findUserRoleId(Long userId);
