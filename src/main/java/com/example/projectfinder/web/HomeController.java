@@ -34,6 +34,8 @@ public class HomeController {
             return "redirect:/login";
         }
 
+        if (currentUser.getRoleName().equals("COMPANY")) {interests = false;}
+
         model.addAttribute("interests", interests);
         
         model.addAttribute("projectsList", this.projectService.findAllProjectViewsOrderDescId());
