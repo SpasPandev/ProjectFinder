@@ -66,11 +66,13 @@
                                 </td>
                             </form>
 
-                            <form th:method="delete" th:action="@{/admin/{id}(id = *{user.id})}">
-                                <td>
-                                    <button th:if="${user.id != currentUserId}" class="btn btn-danger">Delete</button>
-                                </td>
-                            </form>
+                            <th:block th:if="${user.role != 'ADMIN'}">
+                                <form th:method="delete" th:action="@{/admin/{id}(id = *{user.id})}">
+                                    <td>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                </form>
+                            </th:block>
 
                         </tr>
 
