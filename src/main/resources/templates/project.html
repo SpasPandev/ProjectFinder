@@ -17,7 +17,10 @@
         <div th:object="${project}" class="row justify-content-center">
             <div class="col-md-8">
                 <h3 th:text="*{title}" class="text-center m-4">Title of the project</h3>
-                <h6 th:text="|Author:   *{author.name}|" class="text-end">Company name</h6>
+                <a th:href="@{/profile/{id}(id = *{author.getId()})}"
+                   class="text-decoration-none text-body">
+                    <h6 th:text="|Author:   *{author.name}|" class="text-end">Company name</h6>
+                </a>
                 <hr>
                 <p th:text="*{project_description}" class="mt-5">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
