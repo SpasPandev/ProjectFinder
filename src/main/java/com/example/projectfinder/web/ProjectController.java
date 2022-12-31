@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class ProjectController {
@@ -86,7 +88,7 @@ public class ProjectController {
     {
         projectService.participateInProject(id);
 
-        return "redirect:/home";
+        return "redirect:/project/{id}";
     }
 
 
@@ -132,6 +134,15 @@ public class ProjectController {
     public String submitProject(@PathVariable Long id, @Valid SubmitLinkBindingModel submitLinkBindingModel,
                                 BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
+        Pattern pattern = Pattern.compile("^(https?:\\/\\/github.com?\\/)\\w*(\\/)\\w*");
+        Matcher matcher = pattern.matcher(submitLinkBindingModel.getLink());
+        if (!matcher.matches()) {
+            redirectAttributes
+                    .addFlashAttribute("isLinkNotCorrect", true);
+
+            return "redirect:/project/{id}";
+        }
+
         if (bindingResult.hasErrors()) {
 
             redirectAttributes

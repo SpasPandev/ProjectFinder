@@ -43,7 +43,9 @@
                                 </a>
                             </td>
                             <td>
-                                <p th:text="${projectUploader.getLink()}" class="fw-normal mb-1">https://github.com</p>
+                                <a th:text="${projectUploader.getLink()}"
+                                   th:href="*{projectUploader.link}"
+                                   class="fw-normal mb-1">https://github.com</a>
                             </td>
                         </tr>
                 </tbody>

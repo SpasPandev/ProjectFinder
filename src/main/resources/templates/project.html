@@ -49,6 +49,11 @@
                 <div class="row">
                     <span th:text="${technologyNameInString}" class="col">Java</span>
                 </div>
+
+                <p th:if="${isLinkNotCorrect} == true" class="alert alert-danger">
+                    Please enter correct link for github repository like "https://github.com/{githubUsername}/{githubRepoName}"
+                </p>
+
             </div>
         </div>
 
@@ -133,7 +138,10 @@
                                   th:object="${submitLinkBindingModel}" >
                                 <div class="modal-body">
                                     <label>Enter link for your github repository</label>
-                                    <input th:field="*{link}" type="text" class="form-control" required autofocus>
+                                    <input th:field="*{link}" type="text"
+                                           th:errorclass="is-invalid" class="form-control" required autofocus>
+                                    <p th:if="${isLinkNotCorrect} == true" class="alert alert-danger">
+                                        Please enter correct link for github repository like "https://github.com/{githubUsername}/{githubRepoName}"                                    </p>
                                 </div>
 
                                 <div class="modal-footer">
