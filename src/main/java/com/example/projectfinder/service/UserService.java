@@ -42,4 +42,6 @@ public interface UserService {
     boolean isEmailExists(String email);
 
     void deleteUserById(Long userId);
+
+    void setIsDeleatedStatusTrue(Long id);
 }

@@ -25,6 +25,8 @@ public class ProjectViewModel {
 
     private Set<ProjectParticipant> participant;
 
+    private boolean isDeleted;
+
     public ProjectViewModel() {
     }
 
@@ -74,5 +76,13 @@ public class ProjectViewModel {
 
     public void setParticipant(Set<ProjectParticipant> participant) {
         this.participant = participant;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

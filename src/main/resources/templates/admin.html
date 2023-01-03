@@ -66,13 +66,17 @@
                                 </td>
                             </form>
 
-                            <th:block th:if="${user.role != 'ADMIN'}">
-                                <form th:method="delete" th:action="@{/admin/{id}(id = *{user.id})}">
+                            <th:block th:if="${user.role != 'ADMIN' && user.deleted == false}">
+                                <form th:method="patch" th:action="@{/admin/{id}(id = *{user.id})}">
                                     <td>
                                         <button class="btn btn-danger">Delete</button>
                                     </td>
                                 </form>
                             </th:block>
+
+                            <td th:if="${user.deleted == true}">
+                                <span>The user has been deleted</span>
+                            </td>
 
                         </tr>
 

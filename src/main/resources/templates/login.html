@@ -52,6 +52,10 @@
                 Invalid username or password.
               </p>
 
+              <p th:if="${showErrorMessDeletedUser} == true" class="alert alert-danger">
+                Your account has been deleted.
+              </p>
+
               <!-- Checkbox -->
               <div class="form-check d-flex justify-content-start mb-4">
                 <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">

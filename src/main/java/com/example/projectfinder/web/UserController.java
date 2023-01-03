@@ -86,6 +86,16 @@ public class UserController {
 
         UserServiceModel user = userService.findUserByUsername(userLoginBindingModel.getUsername());
 
+        if  (user.isDeleted())
+        {
+            redirectAttributes
+                    .addFlashAttribute("showErrorMessDeletedUser", true)
+                    .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
+                            bindingResult);
+            return "redirect:/login";
+        }
+
         userService.loginUser(user.getId(), user.getUsername());
 
         return "redirect:/home";

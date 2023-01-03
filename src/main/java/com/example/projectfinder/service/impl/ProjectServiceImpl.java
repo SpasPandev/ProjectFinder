@@ -57,7 +57,7 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectViewModel> findAllProjectViewsOrderDescId() {
 
         List<ProjectViewModel> allProjectViewsList =
-         this.projectRepository.findAllByOrderByIdDesc()
+         this.projectRepository.findAllByDeletedIsFalseOrderByIdDesc()
                 .stream().map(projectEntity -> {
                     ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
 
@@ -127,8 +127,11 @@ public class ProjectServiceImpl implements ProjectService {
 
         for (int i = listOfAllProjectsIds.size() - 1; i >= 0; i--) {
 
-            listOfCurrentUserProjects
-                    .add(modelMapper.map(projectRepository.findById(listOfAllProjectsIds.get(i)).get(), ProjectViewModel.class));
+            if (projectRepository.findById(listOfAllProjectsIds.get(i)).get().isDeleted() == false)
+            {
+                listOfCurrentUserProjects
+                        .add(modelMapper.map(projectRepository.findById(listOfAllProjectsIds.get(i)).get(), ProjectViewModel.class));
+            }
         }
 
         return listOfCurrentUserProjects;
@@ -139,6 +142,15 @@ public class ProjectServiceImpl implements ProjectService {
     {
         List<ProjectParticipant> allProjectParticipants = projectParticipantRepository
                 .findProjectParticipantByProject(projectRepository.findById(id).get());
+
+        for (int i = 0; i < allProjectParticipants.size(); i++) {
+
+            if (allProjectParticipants.get(i).getParticipant().isDeleted())
+            {
+                allProjectParticipants.remove(i);
+                i--;
+            }
+        }
 
         return allProjectParticipants;
     }
@@ -193,6 +205,15 @@ public class ProjectServiceImpl implements ProjectService {
         List<ProjectParticipant> listOfAllProjectParticipantsUploadedOnCurrentProject =
                 projectParticipantRepository.findAllProjectParticipantsUploadedOnCurrentProject(currentProjectId);
 
+        for (int i = 0; i < listOfAllProjectParticipantsUploadedOnCurrentProject.size(); i++) {
+
+            if (listOfAllProjectParticipantsUploadedOnCurrentProject.get(i).getParticipant().isDeleted())
+            {
+                listOfAllProjectParticipantsUploadedOnCurrentProject.remove(i);
+                i--;
+            }
+        }
+
         return listOfAllProjectParticipantsUploadedOnCurrentProject;
     }
 
@@ -213,8 +234,11 @@ public class ProjectServiceImpl implements ProjectService {
 
         for (Long element : listOfProjectIds) {
 
-            listOfAllProjectsForConcretTehnology
-                    .add(projectRepository.findById(element).get());
+            ProjectEntity project = projectRepository.findById(element).get();
+
+            if (project.isDeleted() == false) {
+                listOfAllProjectsForConcretTehnology.add(project);
+            }
         }
 
         return listOfAllProjectsForConcretTehnology;
@@ -237,6 +261,17 @@ public class ProjectServiceImpl implements ProjectService {
         {
             return true;
         }
+    }
+
+    @Override
+    public List<ProjectViewModel> findAllDeletedProjects() {
+        return projectRepository.findAllDeletedProjects()
+                .stream()
+                .map(projectEntity -> {
+                    ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
+                    return projectViewModel;
+                })
+                .collect(Collectors.toList());
     }
 
 }

@@ -9,6 +9,8 @@ public class UserViewModel {
     private String description;
     private String role;
 
+    private boolean isDeleted;
+
     public UserViewModel() {
     }
 
@@ -58,5 +60,13 @@ public class UserViewModel {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

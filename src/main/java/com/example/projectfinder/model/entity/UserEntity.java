@@ -34,6 +34,9 @@ public class UserEntity extends BaseEntity{
     @OneToMany(mappedBy = "participant", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<ProjectParticipant> participant;
 
+    @Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
+    private boolean isDeleted;
+
     public String getName() {
         return name;
     }
@@ -104,6 +107,14 @@ public class UserEntity extends BaseEntity{
 
     public void setParticipant(Set<ProjectParticipant> participant) {
         this.participant = participant;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public UserEntity() {

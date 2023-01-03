@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final TechnologyRepository technologyRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final ProjectRepository projectRepository;
 
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser, RoleRepository roleRepository, TechnologyRepository technologyRepository, PasswordEncoder passwordEncoder, ProjectRepository projectRepository) {
@@ -231,6 +230,25 @@ public class UserServiceImpl implements UserService {
             userRepository.deleteById(userId);
         }
 
+    }
+
+    @Override
+    public void setIsDeleatedStatusTrue(Long id) {
+
+        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllProjectsForAuthor(id);
+
+        if (!allProjectsForAuthor.isEmpty())
+        {
+            allProjectsForAuthor.forEach(project -> {
+                project.setDeleted(true);
+            });
+
+            userRepository.findById(id).get().setDeleted(true);
+        }
+        else
+        {
+            userRepository.findById(id).get().setDeleted(true);
+        }
     }
 
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {

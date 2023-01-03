@@ -19,6 +19,9 @@
       <!-- Profile Info -->
       <div th:object="${user}" class="d-flex flex-column justify-content-center align-items-center">
         <h2 th:if="${user.getId() == currentUserId}">My Profile</h2>
+        <p th:if="${user.deleted} == true" class="alert alert-danger">
+          This account has been deleted.
+        </p>
         <img th:if="${userRoleNameInString == 'STUDENT'}" src="/images/student.png" class="rounded-circle" alt="profileIcon" height="100" width="100">
         <img th:if="${userRoleNameInString== 'COMPANY'}" src="/images/company.png" class="rounded-circle" alt="profileIcon" height="100" width="100">
         <img th:if="${userRoleNameInString == 'ADMIN'}" src="/images/admin.png" class="rounded-circle" alt="profileIcon" height="100" width="100">

@@ -40,4 +40,6 @@ public interface ProjectService {
     Long findProjectAuthorId(Long projectId);
 
     boolean isAuthor(Long projectId);
+
+    List<ProjectViewModel> findAllDeletedProjects();
 }

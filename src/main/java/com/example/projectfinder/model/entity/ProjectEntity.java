@@ -22,6 +22,9 @@ public class ProjectEntity extends BaseEntity{
     @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<ProjectParticipant> participant;
 
+    @Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
+    private boolean isDeleted;
+
     public String getTitle() {
         return title;
     }
@@ -60,6 +63,14 @@ public class ProjectEntity extends BaseEntity{
 
     public void setParticipant(Set<ProjectParticipant> participant) {
         this.participant = participant;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public ProjectEntity() {

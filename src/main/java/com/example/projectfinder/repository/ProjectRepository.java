@@ -15,7 +15,8 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
             "WHERE technologies_id IN ?1 ", nativeQuery = true)
     Set<Long> findListOfProjectsIdsForConcretTehnologies(List<Long> tehnologyIds);
 
-    List<ProjectEntity> findAllByOrderByIdDesc();
+    @Query("select p from ProjectEntity p where p.isDeleted = false order by p.id DESC")
+    List<ProjectEntity> findAllByDeletedIsFalseOrderByIdDesc();
 
     @Query(value = "SELECT project_id FROM project_participant\n" +
             "WHERE participant_id = ?1 ", nativeQuery = true)
@@ -28,4 +29,7 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
     @Query(value = "SELECT * FROM project\n" +
             "WHERE author_id = ?1 ", nativeQuery = true)
     List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId);
+
+    @Query("select p from ProjectEntity p where p.isDeleted = true order by p.id DESC")
+    List<ProjectEntity> findAllDeletedProjects();
 }

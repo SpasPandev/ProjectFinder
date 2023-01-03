@@ -18,6 +18,8 @@ public class UserServiceModel {
     private Set<TechnologyNameEnum> technology;
     private String link;
 
+    private boolean isDeleted;
+
     public UserServiceModel() {
     }
 
@@ -99,5 +101,13 @@ public class UserServiceModel {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

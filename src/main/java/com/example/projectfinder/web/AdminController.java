@@ -76,10 +76,11 @@ public class AdminController {
     }
 
     @Transactional
-    @DeleteMapping("/admin/{id}")
+    @PatchMapping("/admin/{id}")
     public String deleteUser(@PathVariable Long id)
     {
-        userService.deleteUserById(id);
+//        userService.deleteUserById(id);
+        userService.setIsDeleatedStatusTrue(id);
 
         return "redirect:/admin";
     }

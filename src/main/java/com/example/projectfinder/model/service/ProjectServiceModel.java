@@ -20,6 +20,8 @@ public class ProjectServiceModel {
 
     private List<UserEntity> participants;
 
+    private boolean isDeleted;
+
     public ProjectServiceModel() {
     }
 
@@ -74,5 +76,13 @@ public class ProjectServiceModel {
     public void addParticipant(UserEntity userEntity)
     {
         participants.add(userEntity);
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
