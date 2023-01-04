@@ -110,13 +110,16 @@ INSERT INTO users_technologies (`user_entity_id`, `technologies_id`)
 VALUES (2, 1);
 
 INSERT INTO users_technologies (`user_entity_id`, `technologies_id`)
-VALUES (3, 1);
+VALUES (3, 1),
+       (3, 4);
 
 INSERT INTO users_technologies (`user_entity_id`, `technologies_id`)
 VALUES (4, 2);
 
 INSERT INTO users_technologies (`user_entity_id`, `technologies_id`)
-VALUES (5, 3);
+VALUES (5, 3),
+       (5, 5),
+       (5, 4);
 
 -- project
 INSERT INTO project (id, title, author_id, project_description)
@@ -169,7 +172,8 @@ VALUES (6, 'Bob''s third project title', 4, 'Bob''s third project description lo
 
 -- project technologies
 INSERT INTO project_technologies (`project_entity_id`, `technologies_id`)
-VALUES (1, 1);
+VALUES (1, 1),
+       (1, 3);
 
 INSERT INTO project_technologies (`project_entity_id`, `technologies_id`)
 VALUES (2, 3);
@@ -178,7 +182,9 @@ INSERT INTO project_technologies (`project_entity_id`, `technologies_id`)
 VALUES (3, 2);
 
 INSERT INTO project_technologies (`project_entity_id`, `technologies_id`)
-VALUES (4, 5);
+VALUES (4, 5),
+       (4, 2),
+       (4, 3);
 
 INSERT INTO project_technologies (`project_entity_id`, `technologies_id`)
 VALUES (5, 4);
@@ -188,16 +194,16 @@ VALUES (6, 1);
 
 -- project participant
 INSERT INTO project_participant (`project_id`, `participant_id`, `link`)
-VALUES (1, 2, 'https://github.com/');
+VALUES (1, 2, 'https://github.com/SpasPandev/ProjectFinder');
 
 INSERT INTO project_participant (`project_id`, `participant_id`)
 VALUES (2, 2);
 
 INSERT INTO project_participant (`project_id`, `participant_id`, `link`)
-VALUES (5, 2, 'https://github.com/');
+VALUES (5, 2, 'https://github.com/SpasPandev/ProjectFinder');
 
 INSERT INTO project_participant (`project_id`, `participant_id`, `link`)
-VALUES (2, 5, 'https://github.com/');
+VALUES (2, 5, 'https://github.com/SpasPandev/ProjectFinder');
 
 INSERT INTO project_participant (`project_id`, `participant_id`, `link`)
-VALUES (4, 5, 'https://github.com/');
+VALUES (4, 5, 'https://github.com/SpasPandev/ProjectFinder');
