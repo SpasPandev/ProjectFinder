@@ -17,7 +17,6 @@ public class EditProfileBindingModel {
     private String email;
     @NotEmpty
     private String password;
-    private String profile_picture_url;
     @NotEmpty
     private String description;
     @NotNull
@@ -64,14 +63,6 @@ public class EditProfileBindingModel {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getProfile_picture_url() {
-        return profile_picture_url;
-    }
-
-    public void setProfile_picture_url(String profile_picture_url) {
-        this.profile_picture_url = profile_picture_url;
     }
 
     public String getDescription() {

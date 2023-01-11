@@ -6,7 +6,6 @@ public class EditProfileViewModel {
     private String username;
     private String email;
     private String password;
-    private String profile_picture_url;
     private String description;
 
     public EditProfileViewModel() {
@@ -50,14 +49,6 @@ public class EditProfileViewModel {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getProfile_picture_url() {
-        return profile_picture_url;
-    }
-
-    public void setProfile_picture_url(String profile_picture_url) {
-        this.profile_picture_url = profile_picture_url;
     }
 
     public String getDescription() {

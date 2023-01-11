@@ -162,21 +162,16 @@ public class UserController {
             return "redirect:/register";
         }
 
-        if (isChoosenTechnologyListEmpty) {
-            redirectAttributes
-                    .addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty)
-                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
-
-            return "redirect:/register";
-        }
-
-        if (bindingResult.hasErrors() ) {
+        if (bindingResult.hasErrors() || isChoosenTechnologyListEmpty ) {
 
             redirectAttributes
                     .addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
 
             redirectAttributes
                     .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+
+            redirectAttributes
+                    .addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
 
             redirectAttributes
                     .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel",

@@ -10,14 +10,16 @@ import java.util.Set;
 
 public class CreateProjectBindingModel {
 
+    @NotEmpty
     private String title;
+    @NotEmpty
     private String project_description;
+    @NotEmpty
     private Set<TechnologyNameEnum> technologies;
 
     public CreateProjectBindingModel() {
     }
 
-    @NotEmpty
     public String getTitle() {
         return title;
     }
@@ -26,7 +28,6 @@ public class CreateProjectBindingModel {
         this.title = title;
     }
 
-    @NotEmpty
     public String getProject_description() {
         return project_description;
     }
@@ -35,7 +36,6 @@ public class CreateProjectBindingModel {
         this.project_description = project_description;
     }
 
-    @NotEmpty
     public Set<TechnologyNameEnum> getTechnologies() {
         return technologies;
     }

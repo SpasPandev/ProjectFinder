@@ -47,37 +47,41 @@
                                      src="/images/admin.png" alt="profileIcon" width="45" height="45"
                                      class="rounded-circle">
                                 <a th:href="@{/profile/{id}(id = *{user.id})}"
-                                   th:text="*{user.name}" class="text-body">CompanyName</a>
+                                   th:text="*{user.username}" class="text-body">CompanyUsername</a>
                             </td>
-                            <td
-                                    th:text="*{user.email}">email@email.com</td>
-                            <td th:text="*{user.role}">role</td>
 
-                            <form th:method="post" th:action="@{/admin/{id}(id = *{user.id})}">
-                                <td th:object="${changeRoleBindingModel}">
-                                    <select th:field="*{role}" class="form-select user-select" >
-                                        <option value="" selected>Choose role</option>
-                                        <option th:each="t : ${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).values()}"
-                                                th:value="${t}" th:text="${t}"></option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-info">Change</button>
-                                </td>
-                            </form>
-
-                            <th:block th:if="${user.role != 'ADMIN' && user.deleted == false}">
-                                <form th:method="patch" th:action="@{/admin/{id}(id = *{user.id})}">
-                                    <td>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                </form>
-                            </th:block>
+                            <td th:text="*{user.email}">email@email.com</td>
 
                             <td th:if="${user.deleted == true}">
-                                <span>The user has been deleted</span>
+                                <h6>The user has been deleted</h6>
                             </td>
 
+                            <th:block th:if="${user.deleted == false}">
+
+                                <td th:text="*{user.role}">role</td>
+
+                                <form th:method="post" th:action="@{/admin/{id}(id = *{user.id})}">
+                                    <td th:object="${changeRoleBindingModel}">
+                                        <select th:field="*{role}" class="form-select user-select" >
+                                            <option value="" selected>Choose role</option>
+                                            <option th:each="t : ${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).values()}"
+                                                    th:value="${t}" th:text="${t}"></option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-info">Change</button>
+                                    </td>
+                                </form>
+
+                                <th:block th:if="${user.role != 'ADMIN'}">
+                                    <form th:method="patch" th:action="@{/admin/{id}(id = *{user.id})}">
+                                        <td>
+                                            <button class="btn btn-danger">Delete</button>
+                                        </td>
+                                    </form>
+                                </th:block>
+
+                            </th:block>
                         </tr>
 
                         </tbody>
