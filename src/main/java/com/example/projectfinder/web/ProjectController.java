@@ -7,7 +7,6 @@ import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
-import com.example.projectfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +26,11 @@ public class ProjectController {
 
     private final ModelMapper modelMapper;
     private final ProjectService projectService;
-    private final CurrentUser currentUser;
     private final UserService userService;
 
-    public ProjectController(ModelMapper modelMapper, ProjectService projectService, CurrentUser currentUser, UserService userService) {
+    public ProjectController(ModelMapper modelMapper, ProjectService projectService, UserService userService) {
         this.modelMapper = modelMapper;
         this.projectService = projectService;
-        this.currentUser = currentUser;
         this.userService = userService;
     }
 
@@ -49,11 +46,6 @@ public class ProjectController {
     @GetMapping("/project/{id}")
     public String project(@PathVariable Long id, Model model)
     {
-
-        if(currentUser.getId() == null)
-        {
-            return "redirect:/login";
-        }
 
         model.addAttribute("allParticipants", projectService.showAllParticipants(id));
 
@@ -71,7 +63,8 @@ public class ProjectController {
             model.addAttribute("isSubmitted", projectService.isSubmitted(id));
         }
 
-        model.addAttribute("currentUserRoleNameInString", userService.findUserRoleNameInString(currentUser.getId()));
+//        TODO
+//        model.addAttribute("currentUserRoleNameInString", userService.findUserRoleNameInString(currentUser.getId()));
 
         boolean isAuthor = projectService.isAuthor(id);
 
@@ -95,15 +88,11 @@ public class ProjectController {
     @GetMapping("/createProject")
     public String createProject()
     {
-        if(currentUser.getId() == null)
-        {
-            return "redirect:/login";
-        }
-
-        if (userService.findUserRoleNameInString(currentUser.getId()).equals("STUDENT"))
-        {
-            return "redirect:/home";
-        }
+//        TODO
+//        if (userService.findUserRoleNameInString(currentUser.getId()).equals("STUDENT"))
+//        {
+//            return "redirect:/home";
+//        }
 
         return "createProject";
     }

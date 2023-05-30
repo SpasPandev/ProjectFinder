@@ -9,7 +9,6 @@ import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.repository.UserRepository;
 import com.example.projectfinder.service.UserService;
-import com.example.projectfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -25,14 +24,12 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
-    private final CurrentUser currentUser;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public UserController(UserService userService, ModelMapper modelMapper, CurrentUser currentUser, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserController(UserService userService, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.currentUser = currentUser;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
@@ -51,63 +48,12 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model)
     {
-        if (currentUser.getId() != null)
-        {
-            return "redirect:/home";
-        }
 
         return "login";
     }
 
-    @PostMapping("/login")
-    public String loginConfirm(@Valid UserLoginBindingModel userLoginBindingModel,
-                               BindingResult bindingResult, RedirectAttributes redirectAttributes)
-    {
-        if (bindingResult.hasErrors() )
-        {
-            redirectAttributes
-                    .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
-                    .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
-                            bindingResult);
-
-            return "redirect:/login";
-        }
-
-        if(userRepository.findByUsername(userLoginBindingModel.getUsername()).isEmpty() ||
-                passwordEncoder.matches(userLoginBindingModel.getPassword(), userRepository.findByUsername(userLoginBindingModel.getUsername()).get().getPassword()) == false)
-        {
-            redirectAttributes
-                    .addFlashAttribute("showErrorMess", true)
-                    .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
-                    .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
-                            bindingResult);
-            return "redirect:/login";
-        }
-
-        UserServiceModel user = userService.findUserByUsername(userLoginBindingModel.getUsername());
-
-        if  (user.isDeleted())
-        {
-            redirectAttributes
-                    .addFlashAttribute("showErrorMessDeletedUser", true)
-                    .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
-                    .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
-                            bindingResult);
-            return "redirect:/login";
-        }
-
-        userService.loginUser(user.getId(), user.getUsername());
-
-        return "redirect:/home";
-    }
-
     @GetMapping("/register")
     public String register() {
-
-        if (currentUser.getId() != null)
-        {
-            return "redirect:/home";
-        }
 
         return "register";
     }
@@ -185,21 +131,9 @@ public class UserController {
         return "redirect:login";
     }
 
-    @GetMapping("/logout")
-    public String logout()
-    {
-        userService.logoutUser();
-
-        return "redirect:/login";
-    }
-
     @GetMapping("/profile/{id}")
     private String profile(@PathVariable Long id, Model model)
     {
-        if (currentUser.getId() == null)
-        {
-            return "redirect:/login";
-        }
 
         model
                 .addAttribute("technologyNameInString", userService.findUserTechnologyNameInString(id))
@@ -209,10 +143,12 @@ public class UserController {
                 .addAttribute("user", modelMapper
                         .map(userService.findUserById(id), UserViewModel.class));
 
-        model.addAttribute("currentUserId", currentUser.getId());
+//        TODO
+//        model.addAttribute("currentUserId", currentUser.getId());
 
-        model.addAttribute("currentUserRoleNameInString",
-                userService.findUserRoleNameInString(currentUser.getId()));
+//        TODO
+//        model.addAttribute("currentUserRoleNameInString",
+//                userService.findUserRoleNameInString(currentUser.getId()));
 
         return "profile";
     }
@@ -220,43 +156,38 @@ public class UserController {
     @GetMapping("/profile/{id}/editProfile")
     public String editProfile(@PathVariable Long id, Model model)
     {
-        if (id != currentUser.getId())
-        {
-            return "redirect:/home";
-        }
-
-        if (currentUser.getId() == null)
-        {
-            return "redirect:/login";
-        }
+//        TODO
+//        if (id != currentUser.getId())
+//        {
+//            return "redirect:/home";
+//        }
 
         EditProfileViewModel editProfileViewModel = this.userService.getById(id);
         EditProfileBindingModel editProfileBindingModel = modelMapper.map(editProfileViewModel, EditProfileBindingModel.class);
 
         model.addAttribute("editProfileBindingModel", editProfileBindingModel);
 
-        model.addAttribute("currentUserId", currentUser.getId());
+//        TODO
+//        model.addAttribute("currentUserId", currentUser.getId());
 
-        model.addAttribute("currentUserRoleNameInString",
-                userService.findUserRoleNameInString(currentUser.getId()));
+//        TODO
+//        model.addAttribute("currentUserRoleNameInString",
+//                userService.findUserRoleNameInString(currentUser.getId()));
 
         return "editProfile";
     }
     @GetMapping("/profile/{id}/editProfile/errors")
     public String editProfileErrors(@PathVariable Long id, Model model)
     {
-        if (id != currentUser.getId())
-        {
-            return "redirect:/home";
-        }
+//        TODO
+//        if (id != currentUser.getId())
+//        {
+//            return "redirect:/home";
+//        }
 
-        if (currentUser.getId() == null)
-        {
-            return "redirect:/login";
-        }
-
-        model.addAttribute("currentUserRoleNameInString",
-                userService.findUserRoleNameInString(currentUser.getId()));
+//        TODO
+//        model.addAttribute("currentUserRoleNameInString",
+//                userService.findUserRoleNameInString(currentUser.getId()));
 
         return "editProfile";
     }
@@ -288,22 +219,23 @@ public class UserController {
         boolean isUsernameExists = userService.isUsernameExists(editProfileBindingModel.getUsername());
         boolean isEmailExists = userService.isEmailExists(editProfileBindingModel.getEmail());
 
-        if (isUsernameExists && !currentUser.getUsername().equals(editProfileBindingModel.getUsername()))
-        {
-            redirectAttributes
-                    .addFlashAttribute("showUsernameExistsError", true)
-                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
-
-            return "redirect:/profile/" + id + "/editProfile/errors";
-        }
-        else if (isEmailExists && !currentUser.getEmail().equals(editProfileBindingModel.getEmail()))
-        {
-            redirectAttributes
-                    .addFlashAttribute("showEmailExistsError", true)
-                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
-
-            return "redirect:/profile/" + id + "/editProfile/errors";
-        }
+//        TODO
+//        if (isUsernameExists && !currentUser.getUsername().equals(editProfileBindingModel.getUsername()))
+//        {
+//            redirectAttributes
+//                    .addFlashAttribute("showUsernameExistsError", true)
+//                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+//
+//            return "redirect:/profile/" + id + "/editProfile/errors";
+//        }
+//        else if (isEmailExists && !currentUser.getEmail().equals(editProfileBindingModel.getEmail()))
+//        {
+//            redirectAttributes
+//                    .addFlashAttribute("showEmailExistsError", true)
+//                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+//
+//            return "redirect:/profile/" + id + "/editProfile/errors";
+//        }
 
         EditProfileServiceModel editProfileServiceModel = modelMapper.map(editProfileBindingModel, EditProfileServiceModel.class);
         editProfileServiceModel.setId(id);

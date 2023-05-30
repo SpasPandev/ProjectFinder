@@ -7,7 +7,6 @@ import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.repository.*;
 import com.example.projectfinder.service.UserService;
-import com.example.projectfinder.util.CurrentUser;
 import com.example.projectfinder.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,16 +23,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final CurrentUser currentUser;
     private final RoleRepository roleRepository;
     private final TechnologyRepository technologyRepository;
     private final PasswordEncoder passwordEncoder;
     private final ProjectRepository projectRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser, RoleRepository roleRepository, TechnologyRepository technologyRepository, PasswordEncoder passwordEncoder, ProjectRepository projectRepository) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, RoleRepository roleRepository, TechnologyRepository technologyRepository, PasswordEncoder passwordEncoder, ProjectRepository projectRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.currentUser = currentUser;
         this.roleRepository = roleRepository;
         this.technologyRepository = technologyRepository;
         this.passwordEncoder = passwordEncoder;
@@ -70,24 +67,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void loginUser(Long id, String username) {
-
-        currentUser.setId(id);
-        currentUser.setUsername(username);
-        currentUser.setEmail(userRepository.findByUsername(username).get().getEmail());
-        currentUser.setRoleName(findUserRoleNameInString(id));
-    }
-
-    @Override
-    public void logoutUser() {
-
-        currentUser.setId(null);
-        currentUser.setUsername(null);
-        currentUser.setEmail(null);
-        currentUser.setRoleName(null);
-    }
-
-    @Override
     public UserServiceModel findUserById(Long id) {
 
         return userRepository
@@ -104,12 +83,16 @@ public class UserServiceImpl implements UserService {
                 .findByUsername(username).isPresent();
     }
 
+
     @Override
     public UserEntity findCurrentLoginUserEntity() {
 
-        return userRepository
-                .findById(currentUser.getId())
-                .orElse(null);
+//        TODO
+//        return userRepository
+//                .findById(currentUser.getId())
+//                .orElse(null);
+
+        return null;
     }
 
     @Override
@@ -183,22 +166,6 @@ public class UserServiceImpl implements UserService {
         userEntity.setRoles(roles);
 
         userRepository.save(userEntity);
-    }
-
-    @Override
-    public boolean isAdmin(CurrentUser currentUser) {
-
-        Long currentUserRoleId = userRepository.findUserRoleId(currentUser.getId());
-        String currentUserRoleNameInString = roleRepository.findRoleName(currentUserRoleId);
-
-        if (currentUserRoleNameInString.equals("ADMIN"))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.example.projectfinder.web;
 import com.example.projectfinder.model.binding.ChangeRoleBindingModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.service.UserService;
-import com.example.projectfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +18,10 @@ public class AdminController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
-    private final CurrentUser currentUser;
 
-    public AdminController(UserService userService, ModelMapper modelMapper, CurrentUser currentUser) {
+    public AdminController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.currentUser = currentUser;
     }
 
     @ModelAttribute
@@ -35,19 +32,18 @@ public class AdminController {
     @GetMapping("/admin")
     public String adminPanel(Model model)
     {
-        if (currentUser.getId() == null)
-        {
-            return "redirect:/login";
-        }
 
-        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("ADMIN"))
-        {
-            return "redirect:/home";
-        }
+//        TODO
+//        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("ADMIN"))
+//        {
+//            return "redirect:/home";
+//        }
 
-        model.addAttribute("isAdmin", userService.isAdmin(currentUser));
+//        TODO
+//        model.addAttribute("isAdmin", userService.isAdmin(currentUser));
 
-        model.addAttribute("currentUserId", currentUser.getId());
+//        TODO
+//        model.addAttribute("currentUserId", currentUser.getId());
 
         model.addAttribute("allUsers", this.userService.findAllUsers());
 

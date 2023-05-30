@@ -11,7 +11,6 @@ import com.example.projectfinder.repository.*;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.TechnologyService;
 import com.example.projectfinder.service.UserService;
-import com.example.projectfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -29,17 +28,15 @@ public class ProjectServiceImpl implements ProjectService {
     private final UserService userService;
     private final TechnologyService technologyService;
     private final UserRepository userRepository;
-    private final CurrentUser currentUser;
     private final ProjectParticipantRepository projectParticipantRepository;
     private final TechnologyRepository technologyRepository;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ModelMapper modelMapper, UserService userService, TechnologyService technologyService, UserRepository userRepository, CurrentUser currentUser, ProjectParticipantRepository projectParticipantRepository, TechnologyRepository technologyRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ModelMapper modelMapper, UserService userService, TechnologyService technologyService, UserRepository userRepository, ProjectParticipantRepository projectParticipantRepository, TechnologyRepository technologyRepository) {
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
         this.userService = userService;
         this.technologyService = technologyService;
         this.userRepository = userRepository;
-        this.currentUser = currentUser;
         this.projectParticipantRepository = projectParticipantRepository;
         this.technologyRepository = technologyRepository;
     }
@@ -89,7 +86,8 @@ public class ProjectServiceImpl implements ProjectService {
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
 
-        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
+//        TODO
+//        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
 
         ProjectParticipant projectParticipant = new ProjectParticipant();
 
@@ -105,7 +103,8 @@ public class ProjectServiceImpl implements ProjectService {
         boolean isParticipant = false;
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
-        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
+//        TODO
+//        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findCurrentUserAndCurrentProject(projectEntity, userEntity);
@@ -121,7 +120,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectViewModel> showCurrentUserProjects()
     {
-        List<Long> listOfAllProjectsIds = projectRepository.listOfAllProjectsIds(currentUser.getId());
+//        TODO
+//        List<Long> listOfAllProjectsIds = projectRepository.listOfAllProjectsIds(currentUser.getId());
 
         List<ProjectViewModel> listOfCurrentUserProjects = new ArrayList<>();
 
@@ -161,7 +161,9 @@ public class ProjectServiceImpl implements ProjectService {
         boolean isSubmitted = false;
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
-        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
+
+//        TODO
+//        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findCurrentUserAndCurrentProject(projectEntity, userEntity);
@@ -189,7 +191,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 
         ProjectEntity currentProject = projectRepository.findById(id).get();
-        UserEntity currentUserEntity = userRepository.findById(currentUser.getId()).get();
+//        TODO
+//        UserEntity currentUserEntity = userRepository.findById(currentUser.getId()).get();
 
         ProjectParticipant projectParticipant = projectParticipantRepository
                 .findCurrentUserAndCurrentProject(currentProject, currentUserEntity);
@@ -253,14 +256,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public boolean isAuthor(Long projectId) {
 
-        if (currentUser.getId() != findProjectAuthorId(projectId))
-        {
-            return false;
-        }
-        else
-        {
+//        TODO
+//        if (currentUser.getId() != findProjectAuthorId(projectId))
+//        {
+//            return false;
+//        }
+//        else
+//        {
             return true;
-        }
+//        }
     }
 
     @Override

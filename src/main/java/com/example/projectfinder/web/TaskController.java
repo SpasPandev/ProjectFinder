@@ -1,10 +1,8 @@
 package com.example.projectfinder.web;
 
-import com.example.projectfinder.model.entity.ProjectEntity;
 import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
-import com.example.projectfinder.util.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +14,10 @@ public class TaskController {
 
     private final ProjectService projectService;
     private final UserService userService;
-    private final CurrentUser currentUser;
 
-    public TaskController(ProjectService projectService, UserService userService, CurrentUser currentUser) {
+    public TaskController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
         this.userService = userService;
-        this.currentUser = currentUser;
     }
 
     @GetMapping("/tasks")
@@ -31,9 +27,11 @@ public class TaskController {
 
         model.addAttribute("allProjectsForCurrentUser", allProjectsForCurrentUser);
 
-        model.addAttribute("currentUserRoleNameInString", userService.findUserRoleNameInString(currentUser.getId()));
+//        TODO
+//        model.addAttribute("currentUserRoleNameInString", userService.findUserRoleNameInString(currentUser.getId()));
 
-        model.addAttribute("allProjectsForAuthor", projectService.findAllProjectsForAuthor(currentUser.getId()));
+//        TODO
+//        model.addAttribute("allProjectsForAuthor", projectService.findAllProjectsForAuthor(currentUser.getId()));
 
         return "tasks";
     }
