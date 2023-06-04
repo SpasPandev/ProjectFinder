@@ -28,13 +28,11 @@ public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
 
-    public UserController(UserService userService, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserController(UserService userService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
     }
 
     @ModelAttribute
@@ -43,8 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model)
-    {
+    public String login() {
 
         return "login";
     }
@@ -53,13 +50,12 @@ public class UserController {
     public String failedLogin(
             @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
             @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY) String password,
-            RedirectAttributes redirectAttributes)
-    {
+            RedirectAttributes redirectAttributes) {
 
         Optional<UserServiceModel> userOpt = userService.findUserByUsername(username);
 
         if (userOpt.isPresent() && userOpt.get().isDeleted() &&
-                passwordEncoder.matches(password, userOpt.get().getPassword())){
+                passwordEncoder.matches(password, userOpt.get().getPassword())) {
 
             redirectAttributes.addFlashAttribute("showErrorMessDeletedUser", true);
             return "redirect:/login";
@@ -86,38 +82,31 @@ public class UserController {
 
         boolean isChoosenTechnologyListEmpty = userRegisterBindingModel.getTechnology().isEmpty();
 
-        if (isUsernameExists && isEmailExists)
-        {
+        if (isUsernameExists && isEmailExists) {
             redirectAttributes
                     .addFlashAttribute("showUsernameExistsError", true)
                     .addFlashAttribute("showEmailExistsError", true)
                     .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
 
             return "redirect:/register";
-        }
-        else if (isUsernameExists)
-        {
-            redirectAttributes
-                    .addFlashAttribute("showUsernameExistsError", true);
+        } else if (isUsernameExists) {
 
-            redirectAttributes
-                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+            redirectAttributes.addFlashAttribute("showUsernameExistsError", true);
+
+            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
 
             return "redirect:/register";
-        }
-        else if (isEmailExists)
-        {
-            redirectAttributes
-                    .addFlashAttribute("showEmailExistsError", true);
 
-            redirectAttributes
-                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+        } else if (isEmailExists) {
+
+            redirectAttributes.addFlashAttribute("showEmailExistsError", true);
+
+            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
 
             return "redirect:/register";
         }
 
-        if (!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword()))
-        {
+        if (!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
 
             redirectAttributes
                     .addFlashAttribute("showPasswordsDontMatchError", true)
@@ -126,7 +115,7 @@ public class UserController {
             return "redirect:/register";
         }
 
-        if (bindingResult.hasErrors() || isChoosenTechnologyListEmpty ) {
+        if (bindingResult.hasErrors() || isChoosenTechnologyListEmpty) {
 
             redirectAttributes
                     .addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
@@ -151,8 +140,7 @@ public class UserController {
 
     @GetMapping("/profile/{id}")
     private String profile(@PathVariable Long id, @AuthenticationPrincipal ApplicationUser currentUser,
-                           Model model)
-    {
+                           Model model) {
 
         model
                 .addAttribute("technologyNameInString", userService.findUserTechnologyNameInString(id))
@@ -172,10 +160,9 @@ public class UserController {
 
     @GetMapping("/profile/{id}/editProfile")
     public String editProfile(@PathVariable Long id, @AuthenticationPrincipal ApplicationUser currentUser,
-                              Model model)
-    {
-        if (!id.equals(currentUser.getId()))
-        {
+                              Model model) {
+
+        if (!id.equals(currentUser.getId())) {
             return "redirect:/home";
         }
 
@@ -204,8 +191,7 @@ public class UserController {
             return "redirect:/profile/" + id + "/editProfile";
         }
 
-        if (isChoosenTechnologyListEmpty)
-        {
+        if (isChoosenTechnologyListEmpty) {
             redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
             redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
 
@@ -215,16 +201,13 @@ public class UserController {
         boolean isUsernameExists = userService.isUsernameExists(editProfileBindingModel.getUsername());
         boolean isEmailExists = userService.isEmailExists(editProfileBindingModel.getEmail());
 
-        if (isUsernameExists && !currentUser.getUsername().equals(editProfileBindingModel.getUsername()))
-        {
+        if (isUsernameExists && !currentUser.getUsername().equals(editProfileBindingModel.getUsername())) {
             redirectAttributes
                     .addFlashAttribute("showUsernameExistsError", true)
                     .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
 
             return "redirect:/profile/" + id + "/editProfile";
-        }
-        else if (isEmailExists && !currentUser.getEmail().equals(editProfileBindingModel.getEmail()))
-        {
+        } else if (isEmailExists && !currentUser.getEmail().equals(editProfileBindingModel.getEmail())) {
             redirectAttributes
                     .addFlashAttribute("showEmailExistsError", true)
                     .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);

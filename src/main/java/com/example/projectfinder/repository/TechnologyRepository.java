@@ -1,4 +1,5 @@
 package com.example.projectfinder.repository;
+
 import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ import java.util.Set;
 @Repository
 public interface TechnologyRepository extends JpaRepository<TechnologyEntity, Long> {
 
-    Optional<TechnologyEntity> findTechnologyEntitiesByTechnologies(TechnologyNameEnum technologyNameEnum );
+    Optional<TechnologyEntity> findTechnologyEntitiesByTechnologies(TechnologyNameEnum technologyNameEnum);
 
     Set<TechnologyEntity> findByTechnologiesIn(Set<TechnologyNameEnum> technologyName);
 

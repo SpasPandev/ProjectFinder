@@ -38,33 +38,31 @@ public class ProjectController {
     }
 
     @ModelAttribute
-    public CreateProjectBindingModel createProjectBindingModel()
-    {
+    public CreateProjectBindingModel createProjectBindingModel() {
         return new CreateProjectBindingModel();
     }
 
     @ModelAttribute
-    public SubmitLinkBindingModel submitLinkBindingModel () { return new SubmitLinkBindingModel(); }
+    public SubmitLinkBindingModel submitLinkBindingModel() {
+        return new SubmitLinkBindingModel();
+    }
 
     @GetMapping("/project/{id}")
     public String project(@PathVariable Long id, @AuthenticationPrincipal ApplicationUser currentUser,
-                          Model model)
-    {
+                          Model model) {
         boolean isParticipant = projectService.isParticipant(id, currentUser.getId());
 
         model.addAttribute("allParticipants", projectService.showAllParticipants(id));
 
-        model
-                .addAttribute("project", modelMapper
-                        .map(projectService.findProjectById(id), ProjectViewModel.class));
-        model
-                .addAttribute("isParticipant", isParticipant);
+        model.addAttribute("project",
+                modelMapper.map(projectService.findProjectById(id), ProjectViewModel.class));
+
+        model.addAttribute("isParticipant", isParticipant);
 
         model.addAttribute("technologyNameInString",
                 projectService.findProjectTechnologyNameInString(id));
 
-        if (isParticipant)
-        {
+        if (isParticipant) {
             model.addAttribute("isSubmitted", projectService.isSubmitted(id, currentUser.getId()));
         }
 
@@ -72,8 +70,7 @@ public class ProjectController {
 
         boolean isAuthor = projectService.isAuthor(id, currentUser.getId());
 
-        if (isAuthor)
-        {
+        if (isAuthor) {
             model.addAttribute("isAuthor", isAuthor);
         }
 
@@ -81,8 +78,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{id}")
-    public String participate(@PathVariable Long id, @AuthenticationPrincipal ApplicationUser currentUser)
-    {
+    public String participate(@PathVariable Long id, @AuthenticationPrincipal ApplicationUser currentUser) {
+
         projectService.participateInProject(id, currentUser.getId());
 
         return "redirect:/project/{id}";
@@ -90,8 +87,8 @@ public class ProjectController {
 
     @PreAuthorize("!hasRole('STUDENT')")
     @GetMapping("/createProject")
-    public String createProject()
-    {
+    public String createProject() {
+
         return "createProject";
     }
 
@@ -99,12 +96,11 @@ public class ProjectController {
     @PostMapping("/createProject")
     public String createProjectConfirm(@Valid CreateProjectBindingModel createProjectBindingModel,
                                        BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                                       @AuthenticationPrincipal ApplicationUser currentUser)
-    {
+                                       @AuthenticationPrincipal ApplicationUser currentUser) {
+
         boolean isChoosenTechnologyListEmpty = createProjectBindingModel.getTechnologies().isEmpty();
 
-        if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
             redirectAttributes.addFlashAttribute("createProjectBindingModel", createProjectBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createProjectBindingModel", bindingResult);
@@ -112,8 +108,8 @@ public class ProjectController {
             return "redirect:createProject";
         }
 
-        ProjectServiceModel projectServiceModel = modelMapper
-                .map(createProjectBindingModel, ProjectServiceModel.class);
+        ProjectServiceModel projectServiceModel =
+                modelMapper.map(createProjectBindingModel, ProjectServiceModel.class);
 
         projectService.createNewProject(projectServiceModel, currentUser.getId());
 
@@ -123,31 +119,30 @@ public class ProjectController {
     @PostMapping("/submit/{id}")
     public String submitProject(@PathVariable Long id, @Valid SubmitLinkBindingModel submitLinkBindingModel,
                                 BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                                @AuthenticationPrincipal ApplicationUser currentUser)
-    {
+                                @AuthenticationPrincipal ApplicationUser currentUser) {
+
         Pattern pattern = Pattern.compile("^(https?:\\/\\/github.com?\\/)\\w*(\\/)\\w*");
         Matcher matcher = pattern.matcher(submitLinkBindingModel.getLink());
+
         if (!matcher.matches()) {
-            redirectAttributes
-                    .addFlashAttribute("isLinkNotCorrect", true);
+
+            redirectAttributes.addFlashAttribute("isLinkNotCorrect", true);
 
             return "redirect:/project/{id}";
         }
 
         if (bindingResult.hasErrors()) {
 
-            redirectAttributes
-                    .addFlashAttribute("submitLinkBindingModel", submitLinkBindingModel);
+            redirectAttributes.addFlashAttribute("submitLinkBindingModel", submitLinkBindingModel);
 
-            redirectAttributes
-                    .addFlashAttribute("org.springframework.validation.BindingResult.submitLinkBindingModel",
-                            bindingResult);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.submitLinkBindingModel",
+                    bindingResult);
 
             return "redirect:/project/{id}";
         }
 
-        projectService.submitLink(modelMapper.map(submitLinkBindingModel, UserServiceModel.class), id, currentUser.getId());
-
+        projectService.submitLink(modelMapper.map(submitLinkBindingModel, UserServiceModel.class),
+                id, currentUser.getId());
 
         return "redirect:/project/{id}";
     }

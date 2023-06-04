@@ -26,19 +26,19 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(@AuthenticationPrincipal ApplicationUser currentUser, Model model)
-    {
+    public String home(@AuthenticationPrincipal ApplicationUser currentUser, Model model) {
 
         String currentUserRoleNameInString = userService.findUserRoleNameInString(currentUser.getId());
 
-        if (currentUserRoleNameInString.equals("COMPANY")) {interests = false;}
+        if (currentUserRoleNameInString.equals("COMPANY")) {
+            interests = false;
+        }
 
         model.addAttribute("interests", interests);
 
         model.addAttribute("projectsList", this.projectService.findAllProjectViewsOrderDescId());
 
-        if (!currentUserRoleNameInString.equals("COMPANY"))
-        {
+        if (!currentUserRoleNameInString.equals("COMPANY")) {
             model.addAttribute("allProjectsForConcretTehnology",
                     projectService.findAllProjectsForConcretTehnology(
                             userRepository.findTechnologyIdsByUserId(currentUser.getId())));
@@ -51,14 +51,11 @@ public class HomeController {
     }
 
     @PostMapping("/home")
-    public String changeViewOfPresentedProjects(Model model)
-    {
-        if (interests == false)
-        {
+    public String changeViewOfPresentedProjects(Model model) {
+
+        if (interests == false) {
             interests = true;
-        }
-        else
-        {
+        } else {
             interests = false;
         }
 

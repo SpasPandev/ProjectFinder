@@ -73,8 +73,7 @@ public class ProjectServiceModel {
         this.participants = participants;
     }
 
-    public void addParticipant(UserEntity userEntity)
-    {
+    public void addParticipant(UserEntity userEntity) {
         participants.add(userEntity);
     }
 

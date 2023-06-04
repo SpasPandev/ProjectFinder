@@ -8,88 +8,90 @@
 
 <body>
 
-  <!-- Navigation -->
-  <header th:replace="fragments/commons::navigation">
-  </header>
-  <!-- End Navigation -->
+<!-- Navigation -->
+<header th:replace="fragments/commons::navigation">
+</header>
+<!-- End Navigation -->
 
-  <div class="card mx-4 my-4 border border-dark H">
+<div class="card mx-4 my-4 border border-dark H">
     <div class="row gx-0">
-      <div class="col px-5 py-2 d-flex">
+        <div class="col px-5 py-2 d-flex">
 
-        <th:block sec:authorize="!hasRole('COMPANY')">
-            <form th:method="post" th:action="@{/home}">
-                <button th:if="!${interests}" type="submit" class="btn btn-danger">
-                    Order by interests
-                </button>
-                <div th:if="!${interests}" class="float-end">
-                    <span class="m-3">All available projects </span>
-                </div>
+            <th:block sec:authorize="!hasRole('COMPANY')">
+                <form th:method="post" th:action="@{/home}">
+                    <button th:if="!${interests}" type="submit" class="btn btn-danger">
+                        Order by interests
+                    </button>
+                    <div th:if="!${interests}" class="float-end">
+                        <span class="m-3">All available projects </span>
+                    </div>
 
-                <button th:if="${interests}" type="submit" class="btn btn-danger">
-                    Show all
-                </button>
-                <div th:if="${interests}" class="float-end">
-                    <span class="m-3">Projects order by your favourite technology: </span>
-                    <span th:text="${currentUserTechnologyNameInString}" class="fw-semibold">
+                    <button th:if="${interests}" type="submit" class="btn btn-danger">
+                        Show all
+                    </button>
+                    <div th:if="${interests}" class="float-end">
+                        <span class="m-3">Projects order by your favourite technology: </span>
+                        <span th:text="${currentUserTechnologyNameInString}" class="fw-semibold">
                         Favourite technology on current user
                     </span>
-                </div>
-            </form>
-        </th:block>
+                    </div>
+                </form>
+            </th:block>
 
-      </div>
-      <br>
-      <div sec:authorize="!hasRole('STUDENT')" class="col px-5 py-2 text-end">
-        <a th:href="@{/createProject}" class="btn btn-danger w-50 mt-1">Add Project</a>
-      </div>
-      <br>
+        </div>
+        <br>
+        <div sec:authorize="!hasRole('STUDENT')" class="col px-5 py-2 text-end">
+            <a th:href="@{/createProject}" class="btn btn-danger w-50 mt-1">Add Project</a>
+        </div>
+        <br>
     </div>
 
     <div class="row gx-0 overflow-auto">
-      <div class="table-responsive">
-        <table class="table table-centered mb-0">
-          <tbody>
-            <th:block th:if="!${interests}">
-                <h5 th:if="${projectsList.isEmpty()}"
-                    class="text-center mt-5">No projects available!</h5>
-                <tr th:each="project : ${projectsList}" th:object="${project}">
-                    <td class="hover border">
-                        <img src="/images/company.png" alt="profileIcon" width="32" height="32"
-                             class="rounded-circle m-1">
-                        <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}"
-                           class="text-body">CompanyName</a>
-                    </td>
-                    <td class="hover border">
-                        <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
-                            <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
-                        </a>
-                    </td>
-                </tr>
-            </th:block>
+        <div class="table-responsive">
+            <table class="table table-centered mb-0">
+                <tbody>
+                <th:block th:if="!${interests}">
+                    <h5 th:if="${projectsList.isEmpty()}"
+                        class="text-center mt-5">No projects available!</h5>
+                    <tr th:each="project : ${projectsList}" th:object="${project}">
+                        <td class="hover border">
+                            <img src="/images/company.png" alt="profileIcon" width="32" height="32"
+                                 class="rounded-circle m-1">
+                            <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}"
+                               class="text-body">CompanyName</a>
+                        </td>
+                        <td class="hover border">
+                            <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
+                                <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
 
-            <th:block th:if="${interests}">
-                <h5 th:if="${allProjectsForConcretTehnology.isEmpty()}"
-                    class="text-center mt-5">No projects available for your favorite technologies!</h5>
-                <tr th:each="project : ${allProjectsForConcretTehnology}" th:object="${project}">
-                    <td class="hover border">
-                        <img src="/images/company.png" alt="profileIcon" width="32" height="32" class="rounded-circle m-1">
-                        <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}" class="text-body">CompanyName</a>
-                    </td>
-                    <td class="hover border">
-                        <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
-                            <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
-                        </a>
-                    </td>
-                </tr>
-            </th:block>
+                <th:block th:if="${interests}">
+                    <h5 th:if="${allProjectsForConcretTehnology.isEmpty()}"
+                        class="text-center mt-5">No projects available for your favorite technologies!</h5>
+                    <tr th:each="project : ${allProjectsForConcretTehnology}" th:object="${project}">
+                        <td class="hover border">
+                            <img src="/images/company.png" alt="profileIcon" width="32" height="32"
+                                 class="rounded-circle m-1">
+                            <a th:text="*{author.name}" th:href="@{/profile/{id}(id = *{author.getId()})}"
+                               class="text-body">CompanyName</a>
+                        </td>
+                        <td class="hover border">
+                            <a th:href="@{/project/{id}(id = *{id})}" class="nav-link">
+                                <h6 th:text="*{title}" class="mb-0">List group item heading</h6>
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
 
-          </tbody>
-        </table>
-      </div>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-  </div>
+</div>
 </body>
 
 </html>

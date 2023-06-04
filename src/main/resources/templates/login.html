@@ -7,60 +7,60 @@
 
 <body>
 
-  <!-- Navigation -->
-  <header th:replace="fragments/commons::navigation">
-  </header>
-  <!-- End Navigation -->
+<!-- Navigation -->
+<header th:replace="fragments/commons::navigation">
+</header>
+<!-- End Navigation -->
 
-  <section >
+<section>
     <div class=" container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card shadow-2-strong">
-          <div class="card-body p-5 text-center">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong">
+                    <div class="card-body p-5 text-center">
 
-            <h3 class="mb-5">Wellcome !</h3>
+                        <h3 class="mb-5">Wellcome !</h3>
 
-            <form
-                    th:action="@{/login}"
-                    th:method="post">
-              <div class="form-outline mb-4">
-                <input type="text"
-                        name="username" class="form-control form-control-lg"
-                  placeholder="Enter username">
-              </div>
+                        <form
+                                th:action="@{/login}"
+                                th:method="post">
+                            <div class="form-outline mb-4">
+                                <input type="text"
+                                       name="username" class="form-control form-control-lg"
+                                       placeholder="Enter username">
+                            </div>
 
-              <div class="form-outline mb-4">
-                <input type="password"
-                       name="password" class="form-control form-control-lg"
-                  placeholder="Enter password">
-              </div>
+                            <div class="form-outline mb-4">
+                                <input type="password"
+                                       name="password" class="form-control form-control-lg"
+                                       placeholder="Enter password">
+                            </div>
 
-              <p th:if="${showErrorMess}" class="alert alert-danger">
-                Invalid username or password.
-              </p>
+                            <p th:if="${showErrorMess}" class="alert alert-danger">
+                                Invalid username or password.
+                            </p>
 
-              <p th:if="${showErrorMessDeletedUser}" class="alert alert-danger">
-                Your account has been deleted.
-              </p>
+                            <p th:if="${showErrorMessDeletedUser}" class="alert alert-danger">
+                                Your account has been deleted.
+                            </p>
 
-              <!-- Checkbox -->
-              <div class="form-check d-flex justify-content-start mb-4">
-                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                <label class="form-check-label" for="rememberPasswordCheck"> Remember password </label>
-              </div>
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-start mb-4">
+                                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                                <label class="form-check-label" for="rememberPasswordCheck"> Remember password </label>
+                            </div>
 
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
 
-            </form>
+                        </form>
 
-            <a class="d-block text-center mt-2 small" href="/register">Need an account?</a>
-          </div>
+                        <a class="d-block text-center mt-2 small" href="/register">Need an account?</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    </div>
-  </section>
+</section>
 </body>
 
 </html>

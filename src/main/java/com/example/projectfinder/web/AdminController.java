@@ -31,8 +31,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String adminPanel(Model model)
-    {
+    public String adminPanel(Model model) {
 
         model.addAttribute("allUsers", this.userService.findAllUsers());
 
@@ -42,7 +41,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/{id}")
     public String adminChangeUserRole(@PathVariable Long id, @Valid ChangeRoleBindingModel changeRoleBindingModel,
-                           BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                                      BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
 
@@ -64,8 +63,8 @@ public class AdminController {
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/admin/{id}")
-    public String deleteUser(@PathVariable Long id)
-    {
+    public String deleteUser(@PathVariable Long id) {
+
 //        userService.deleteUserById(id);
         userService.setIsDeleatedStatusTrue(id);
 

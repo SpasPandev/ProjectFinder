@@ -7,86 +7,86 @@
 
 <body>
 
-    <!-- Navigation -->
-    <header th:replace="fragments/commons::navigation">
-    </header>
-    <!-- End Navigation -->
+<!-- Navigation -->
+<header th:replace="fragments/commons::navigation">
+</header>
+<!-- End Navigation -->
 
-    <h2 class="text-center pt-3">Admin panel</h2>
+<h2 class="text-center pt-3">Admin panel</h2>
 
-        <div class="row p-4">
-            <div class="card card-body">
-                <div class="table-responsive">
-                    <table class="table table-centered mb-0">
-                        <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">role</th>
-                            <th scope="col">Choose role</th>
-                            <th scope="col">Change role</th>
-                            <th scope="col">Delete user</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user : ${allUsers}">
-                            <th th:text="*{user.id}" scope="row">
-                                1
-                            </th>
-                            <td class="hover">
-                                <img th:if="${user.role == 'COMPANY'}"
-                                        src="/images/company.png" alt="profileIcon" width="45" height="45"
-                                     class="rounded-circle">
-                                <img th:if="${user.role == 'STUDENT'}"
-                                     src="/images/student.png" alt="profileIcon" width="45" height="45"
-                                     class="rounded-circle">
-                                <img th:if="${user.role == 'ADMIN'}"
-                                     src="/images/admin.png" alt="profileIcon" width="45" height="45"
-                                     class="rounded-circle">
-                                <a th:href="@{/profile/{id}(id = *{user.id})}"
-                                   th:text="*{user.username}" class="text-body">CompanyUsername</a>
+<div class="row p-4">
+    <div class="card card-body">
+        <div class="table-responsive">
+            <table class="table table-centered mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">role</th>
+                    <th scope="col">Choose role</th>
+                    <th scope="col">Change role</th>
+                    <th scope="col">Delete user</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${allUsers}">
+                    <th th:text="*{user.id}" scope="row">
+                        1
+                    </th>
+                    <td class="hover">
+                        <img th:if="${user.role == 'COMPANY'}"
+                             src="/images/company.png" alt="profileIcon" width="45" height="45"
+                             class="rounded-circle">
+                        <img th:if="${user.role == 'STUDENT'}"
+                             src="/images/student.png" alt="profileIcon" width="45" height="45"
+                             class="rounded-circle">
+                        <img th:if="${user.role == 'ADMIN'}"
+                             src="/images/admin.png" alt="profileIcon" width="45" height="45"
+                             class="rounded-circle">
+                        <a th:href="@{/profile/{id}(id = *{user.id})}"
+                           th:text="*{user.username}" class="text-body">CompanyUsername</a>
+                    </td>
+
+                    <td th:text="*{user.email}">email@email.com</td>
+
+                    <td th:if="${user.deleted == true}">
+                        <h6>The user has been deleted</h6>
+                    </td>
+
+                    <th:block th:if="${user.deleted == false}">
+
+                        <td th:text="*{user.role}">role</td>
+
+                        <form th:method="post" th:action="@{/admin/{id}(id = *{user.id})}">
+                            <td th:object="${changeRoleBindingModel}">
+                                <select th:field="*{role}" class="form-select user-select">
+                                    <option value="" selected>Choose role</option>
+                                    <option th:each="t : ${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).values()}"
+                                            th:value="${t}" th:text="${t}"></option>
+                                </select>
                             </td>
-
-                            <td th:text="*{user.email}">email@email.com</td>
-
-                            <td th:if="${user.deleted == true}">
-                                <h6>The user has been deleted</h6>
+                            <td>
+                                <button type="submit" class="btn btn-info">Change</button>
                             </td>
+                        </form>
 
-                            <th:block th:if="${user.deleted == false}">
+                        <th:block th:if="${user.role != 'ADMIN'}">
+                            <form th:method="patch" th:action="@{/admin/{id}(id = *{user.id})}">
+                                <td>
+                                    <button class="btn btn-danger">Delete</button>
+                                </td>
+                            </form>
+                        </th:block>
 
-                                <td th:text="*{user.role}">role</td>
+                    </th:block>
+                </tr>
 
-                                <form th:method="post" th:action="@{/admin/{id}(id = *{user.id})}">
-                                    <td th:object="${changeRoleBindingModel}">
-                                        <select th:field="*{role}" class="form-select user-select" >
-                                            <option value="" selected>Choose role</option>
-                                            <option th:each="t : ${T(com.example.projectfinder.model.entity.enums.RoleNameEnum).values()}"
-                                                    th:value="${t}" th:text="${t}"></option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-info">Change</button>
-                                    </td>
-                                </form>
-
-                                <th:block th:if="${user.role != 'ADMIN'}">
-                                    <form th:method="patch" th:action="@{/admin/{id}(id = *{user.id})}">
-                                        <td>
-                                            <button class="btn btn-danger">Delete</button>
-                                        </td>
-                                    </form>
-                                </th:block>
-
-                            </th:block>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
+    </div>
+</div>
 
 </body>
 

@@ -8,74 +8,74 @@
 
 <body>
 
-    <!-- Navigation -->
-    <header th:replace="fragments/commons::navigation">
-    </header>
-    <!-- End Navigation -->
+<!-- Navigation -->
+<header th:replace="fragments/commons::navigation">
+</header>
+<!-- End Navigation -->
 
-    <div class="container rounded bg-white mt-5 mb-5">
-        <div class="row justify-content-center">
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row justify-content-center">
 
-            <div class="col-md-8">
-                <div class="p-3 py-5">
-                    <h3>Create Project</h3>
+        <div class="col-md-8">
+            <div class="p-3 py-5">
+                <h3>Create Project</h3>
+                <br>
+
+                <form
+                        th:action="@{createProject}"
+                        th:method="post"
+                        th:object="${createProjectBindingModel}">
+                    <div class="row mt-3">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input th:field="*{title}"
+                                   th:errorclass="'is-invalid'"
+                                   class="form-control" type="text" id="title" placeholder="Title of the project">
+
+                            <p class="invalid-feedback alert alert-danger">
+                                Title is required.
+                            </p>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label for="description">Description</label>
+                            <textarea th:field="*{project_description}"
+                                      th:errorclass="'is-invalid'"
+                                      class="form-control" id="description" rows="13"
+                                      placeholder="Description of the project"></textarea>
+                            <p class="invalid-feedback alert alert-danger">
+                                Description is required.
+                            </p>
+                        </div>
+                    </div>
                     <br>
+                    <p>Choose tehnologies</p>
+                    <div class="row mt-3">
 
-                    <form
-                    th:action="@{createProject}"
-                    th:method="post"
-                    th:object="${createProjectBindingModel}">
-                        <div class="row mt-3">
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input th:field="*{title}"
-                                       th:errorclass="'is-invalid'"
-                                       class="form-control" type="text" id="title" placeholder="Title of the project">
+                        <div class="form-group mx-2 col">
+                            <label class="p-2">Technologies:
+                                <input type="checkbox" class="ms-3 me-1"
+                                       th:each="t : ${T(com.example.projectfinder.model.entity.enums.TechnologyNameEnum).values()}"
+                                       th:text="${t}"
+                                       th:value="${t}"
+                                       th:field="*{technologies}"
+                                />
+                            </label>
 
-                                <p class="invalid-feedback alert alert-danger" >
-                                 Title is required.
-                                </p>
-                            </div>
-                            <div class="form-group mt-4">
-                                <label for="description">Description</label>
-                                <textarea th:field="*{project_description}"
-                                          th:errorclass="'is-invalid'"
-                                          class="form-control" id="description" rows="13"
-                                          placeholder="Description of the project"></textarea>
-                                <p class="invalid-feedback alert alert-danger">
-                                    Description is required.
-                                </p>
-                            </div>
+                            <p th:if="${isChoosenTechnologyListEmpty} == true" class="errors alert alert-danger">
+                                Technology is required.
+                            </p>
+
                         </div>
-                        <br>
-                        <p>Choose tehnologies</p>
-                        <div class="row mt-3">
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button class="btn btn-primary profile-button" type="submit">Create Project</button>
+                    </div>
 
-                            <div class="form-group mx-2 col">
-                                <label class="p-2">Technologies:
-                                    <input type="checkbox" class="ms-3 me-1"
-                                           th:each="t : ${T(com.example.projectfinder.model.entity.enums.TechnologyNameEnum).values()}"
-                                           th:text="${t}"
-                                           th:value="${t}"
-                                           th:field="*{technologies}"
-                                    />
-                                </label>
-
-                                <p th:if="${isChoosenTechnologyListEmpty} == true" class="errors alert alert-danger">
-                                    Technology is required.
-                                </p>
-
-                            </div>
-                        </div>
-                        <div class="mt-4 text-center">
-                            <button class="btn btn-primary profile-button" type="submit">Create Project</button>
-                        </div>
-
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </body>
 
 </html>

@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "technologies")
-public class TechnologyEntity extends BaseEntity{
+public class TechnologyEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private TechnologyNameEnum technologies;

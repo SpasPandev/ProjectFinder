@@ -15,8 +15,7 @@ public class HistoryController {
     }
 
     @GetMapping("/history")
-    public String history(Model model)
-    {
+    public String history(Model model) {
 
         model.addAttribute("listOfAllDeletedProjects", projectService.findAllDeletedProjects());
         return "history";

@@ -1,11 +1,8 @@
 package com.example.projectfinder.model.binding;
 
-import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Set;
 
 public class CreateProjectBindingModel {

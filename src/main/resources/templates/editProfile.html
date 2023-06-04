@@ -16,10 +16,14 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div th:object="${editProfileBindingModel}" class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img sec:authorize="hasRole('STUDENT')" class="rounded-circle mt-5" width="150px" src="/images/student.png" alt="profileIcon">
-                <img sec:authorize="hasRole('COMPANY')" class="rounded-circle mt-5" width="150px" src="/images/company.png" alt="profileIcon">
-                <img sec:authorize="hasRole('ADMIN')" class="rounded-circle mt-5" width="150px" src="/images/admin.png" alt="profileIcon">
+            <div th:object="${editProfileBindingModel}"
+                 class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img sec:authorize="hasRole('STUDENT')" class="rounded-circle mt-5" width="150px"
+                     src="/images/student.png" alt="profileIcon">
+                <img sec:authorize="hasRole('COMPANY')" class="rounded-circle mt-5" width="150px"
+                     src="/images/company.png" alt="profileIcon">
+                <img sec:authorize="hasRole('ADMIN')" class="rounded-circle mt-5" width="150px" src="/images/admin.png"
+                     alt="profileIcon">
                 <div class="mt-3">
                     <span th:text="|Name: *{name}|" class="font-weight-bold">Name</span>
                 </div>
@@ -45,7 +49,7 @@
                                     th:field="*{name}"
                                     th:errorclass="is-invalid"
                                     type="text" id="name" class="form-control" placeholder="Name" value="">
-                            <p class="invalid-feedback alert alert-danger" >
+                            <p class="invalid-feedback alert alert-danger">
                                 Name is required.
                             </p>
                         </div>
@@ -56,7 +60,7 @@
                                     th:errorclass="is-invalid"
                                     type="text" id="username" class="form-control" value=""
                                     placeholder="username">
-                            <p class="invalid-feedback alert alert-danger" >
+                            <p class="invalid-feedback alert alert-danger">
                                 Username is required.
                             </p>
 
@@ -71,7 +75,7 @@
                                     th:errorclass="is-invalid"
                                     type="email" id="email" class="form-control" value=""
                                     placeholder="email">
-                            <p class="invalid-feedback alert alert-danger" >
+                            <p class="invalid-feedback alert alert-danger">
                                 Email is required.
                             </p>
 
@@ -88,7 +92,7 @@
                                     th:errorclass="is-invalid"
                                     type="password" id="password" class="form-control" value=""
                                     placeholder="Enter password">
-                            <p class="invalid-feedback alert alert-danger" >
+                            <p class="invalid-feedback alert alert-danger">
                                 Password is required.
                             </p>
                         </div>
@@ -101,7 +105,7 @@
                                     th:field="*{description}"
                                     th:errorclass="is-invalid"
                                     class="form-control" id="description" rows="13"></textarea>
-                            <p class="invalid-feedback alert alert-danger" >
+                            <p class="invalid-feedback alert alert-danger">
                                 Description is required.
                             </p>
                         </div>

@@ -31,7 +31,7 @@ public class ApplicationUserDetailsServiceImpl implements UserDetailsService {
 
     private UserDetails mapToUserDetails(UserEntity userEntity) {
 
-        Set<SimpleGrantedAuthority> grantedAuthorities  = userEntity
+        Set<SimpleGrantedAuthority> grantedAuthorities = userEntity
                 .getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().name()))

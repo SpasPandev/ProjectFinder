@@ -19,11 +19,9 @@ public class UploadedController {
 
     @GetMapping("/uploaded/{id}")
     public String uploaded(@PathVariable Long id, @AuthenticationPrincipal ApplicationUser currentUser,
-                           Model model)
-    {
+                           Model model) {
 
-        if  (!projectService.isAuthor(id, currentUser.getId()))
-        {
+        if (!projectService.isAuthor(id, currentUser.getId())) {
             return "redirect:/home";
         }
 

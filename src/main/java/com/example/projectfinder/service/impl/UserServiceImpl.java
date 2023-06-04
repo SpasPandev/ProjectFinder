@@ -120,10 +120,11 @@ public class UserServiceImpl implements UserService {
     public List<UserViewModel> findAllUsers() {
 
         List<UserViewModel> userViewModelList = userRepository.findAll().stream()
-                .map(userEntity -> {UserViewModel userViewModel = modelMapper
-                        .map(userEntity, UserViewModel.class);
+                .map(userEntity -> {
+                    UserViewModel userViewModel = modelMapper
+                            .map(userEntity, UserViewModel.class);
 
-                return userViewModel;
+                    return userViewModel;
                 })
                 .collect(Collectors.toList());
 
@@ -162,8 +163,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String findUserRoleNameInString(Long currentUserId)
-    {
+    public String findUserRoleNameInString(Long currentUserId) {
+
         Long userRoleId = userRepository.findUserRoleId(currentUserId);
         String userRoleNameInString = roleRepository.findRoleName(userRoleId);
 
@@ -181,12 +182,10 @@ public class UserServiceImpl implements UserService {
 
         List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllProjectsForAuthor(userId);
 
-        if (!allProjectsForAuthor.isEmpty())
-        {
+        if (!allProjectsForAuthor.isEmpty()) {
             allProjectsForAuthor.forEach(poject ->
                     projectRepository.deleteById(poject.getId()));
-        }
-        else {
+        } else {
             userRepository.deleteById(userId);
         }
 
@@ -197,21 +196,19 @@ public class UserServiceImpl implements UserService {
 
         List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllProjectsForAuthor(id);
 
-        if (!allProjectsForAuthor.isEmpty())
-        {
+        if (!allProjectsForAuthor.isEmpty()) {
             allProjectsForAuthor.forEach(project -> {
                 project.setDeleted(true);
             });
 
             userRepository.findById(id).get().setDeleted(true);
-        }
-        else
-        {
+        } else {
             userRepository.findById(id).get().setDeleted(true);
         }
     }
 
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {
+
         EditProfileViewModel editProfileViewModel = modelMapper.map(userEntity, EditProfileViewModel.class);
 
         editProfileViewModel.setName(userEntity.getName());

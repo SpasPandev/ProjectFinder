@@ -15,16 +15,14 @@ import java.util.List;
 public class TaskController {
 
     private final ProjectService projectService;
-    private final UserService userService;
 
-    public TaskController(ProjectService projectService, UserService userService) {
+    public TaskController(ProjectService projectService) {
         this.projectService = projectService;
-        this.userService = userService;
     }
 
     @GetMapping("/tasks")
-    public String tasks(@AuthenticationPrincipal ApplicationUser currentUser, Model model)
-    {
+    public String tasks(@AuthenticationPrincipal ApplicationUser currentUser, Model model) {
+
         List<ProjectViewModel> allProjectsForCurrentUser = projectService.showCurrentUserProjects(currentUser.getId());
 
         model.addAttribute("allProjectsForCurrentUser", allProjectsForCurrentUser);

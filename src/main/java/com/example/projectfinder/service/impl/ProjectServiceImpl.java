@@ -43,6 +43,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectServiceModel findProjectById(Long id) {
+
         ProjectServiceModel projectServiceModel = projectRepository
                 .findById(id)
                 .map(projectEntity -> modelMapper.map(projectEntity, ProjectServiceModel.class))
@@ -55,13 +56,13 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectViewModel> findAllProjectViewsOrderDescId() {
 
         List<ProjectViewModel> allProjectViewsList =
-         this.projectRepository.findAllByDeletedIsFalseOrderByIdDesc()
-                .stream().map(projectEntity -> {
-                    ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
+                this.projectRepository.findAllByDeletedIsFalseOrderByIdDesc()
+                        .stream().map(projectEntity -> {
+                            ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
 
-                    return projectViewModel;
-                })
-                .collect(Collectors.toList());
+                            return projectViewModel;
+                        })
+                        .collect(Collectors.toList());
 
         return allProjectViewsList;
     }
@@ -109,8 +110,7 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findCurrentUserAndCurrentProject(projectEntity, userEntity);
 
-        if (currentProjectWithCurrentUser != null)
-        {
+        if (currentProjectWithCurrentUser != null) {
             isParticipant = true;
         }
 
@@ -118,16 +118,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectViewModel> showCurrentUserProjects(Long currentUserId)
-    {
+    public List<ProjectViewModel> showCurrentUserProjects(Long currentUserId) {
+
         List<Long> listOfAllProjectsIds = projectRepository.listOfAllProjectsIds(currentUserId);
 
         List<ProjectViewModel> listOfCurrentUserProjects = new ArrayList<>();
 
         for (int i = listOfAllProjectsIds.size() - 1; i >= 0; i--) {
 
-            if (!projectRepository.findById(listOfAllProjectsIds.get(i)).get().isDeleted())
-            {
+            if (!projectRepository.findById(listOfAllProjectsIds.get(i)).get().isDeleted()) {
                 listOfCurrentUserProjects
                         .add(modelMapper.map(projectRepository.findById(listOfAllProjectsIds.get(i)).get(), ProjectViewModel.class));
             }
@@ -137,15 +136,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectParticipant> showAllParticipants(Long id)
-    {
+    public List<ProjectParticipant> showAllParticipants(Long id) {
+
         List<ProjectParticipant> allProjectParticipants = projectParticipantRepository
                 .findProjectParticipantByProject(projectRepository.findById(id).get());
 
         for (int i = 0; i < allProjectParticipants.size(); i++) {
 
-            if (allProjectParticipants.get(i).getParticipant().isDeleted())
-            {
+            if (allProjectParticipants.get(i).getParticipant().isDeleted()) {
                 allProjectParticipants.remove(i);
                 i--;
             }
@@ -166,8 +164,7 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findCurrentUserAndCurrentProject(projectEntity, userEntity);
 
-        if (currentProjectWithCurrentUser.getLink() != null)
-        {
+        if (currentProjectWithCurrentUser.getLink() != null) {
             isSubmitted = true;
         }
 
@@ -200,15 +197,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectParticipant> currentProjectUploaders(Long currentProjectId)
-    {
+    public List<ProjectParticipant> currentProjectUploaders(Long currentProjectId) {
+
         List<ProjectParticipant> listOfAllProjectParticipantsUploadedOnCurrentProject =
                 projectParticipantRepository.findAllProjectParticipantsUploadedOnCurrentProject(currentProjectId);
 
         for (int i = 0; i < listOfAllProjectParticipantsUploadedOnCurrentProject.size(); i++) {
 
-            if (listOfAllProjectParticipantsUploadedOnCurrentProject.get(i).getParticipant().isDeleted())
-            {
+            if (listOfAllProjectParticipantsUploadedOnCurrentProject.get(i).getParticipant().isDeleted()) {
                 listOfAllProjectParticipantsUploadedOnCurrentProject.remove(i);
                 i--;
             }
@@ -218,16 +214,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId)
-    {
-        List<ProjectEntity> allProjectsForAuthor =  projectRepository.findAllProjectsForAuthor(currentUserId);
+    public List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId) {
+
+        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllProjectsForAuthor(currentUserId);
 
         return allProjectsForAuthor;
     }
 
     @Override
-    public List<ProjectEntity> findAllProjectsForConcretTehnology(List<Long> id)
-    {
+    public List<ProjectEntity> findAllProjectsForConcretTehnology(List<Long> id) {
+
         Set<Long> listOfProjectIds = projectRepository.findListOfProjectsIdsForConcretTehnologies(id);
 
         List<ProjectEntity> listOfAllProjectsForConcretTehnology = new ArrayList<>();
@@ -258,12 +254,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectViewModel> findAllDeletedProjects() {
+
         return projectRepository.findAllDeletedProjects()
                 .stream()
-                .map(projectEntity -> {
-                    ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
-                    return projectViewModel;
-                })
+                .map(projectEntity -> modelMapper.map(projectEntity, ProjectViewModel.class))
                 .collect(Collectors.toList());
     }
 

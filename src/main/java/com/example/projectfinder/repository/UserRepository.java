@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUsername(String username);
+
     @Query(value = "SELECT technologies_id FROM users_technologies\n" +
             "WHERE user_entity_id = ?1 ", nativeQuery = true)
     List<Long> findTechnologyIdsByUserId(Long userId);
@@ -21,5 +21,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "WHERE user_entity_id = ?1 ", nativeQuery = true)
     Long findUserRoleId(Long userId);
 
-     Optional<UserEntity> findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
 }

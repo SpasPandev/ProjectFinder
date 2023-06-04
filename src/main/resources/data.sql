@@ -1,6 +1,7 @@
 -- users
 INSERT INTO users (id, name, username, password, email, description)
-VALUES (1, 'Admin', 'admin', '7a14f34ef6dc5e473ef71fcd030f23766ca43c1489f6212324cc20a222024e34f4f1bd18d75e18b5', 'admin@admin', 'Description for Admin lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
+VALUES (1, 'Admin', 'admin', '7a14f34ef6dc5e473ef71fcd030f23766ca43c1489f6212324cc20a222024e34f4f1bd18d75e18b5',
+        'admin@admin', 'Description for Admin lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
@@ -13,7 +14,8 @@ VALUES (1, 'Admin', 'admin', '7a14f34ef6dc5e473ef71fcd030f23766ca43c1489f6212324
                     adipisicing elit. ');
 
 INSERT INTO users (id, name, username, password, email, description)
-VALUES (2, 'Pesho', 'pesho', '256caf9c9234ca98ad0a53421308b6252ee8f307625b7d7be5e75342f28895878a1275a5bbd9a958', 'pesho@pesho', 'Description for Pesho lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
+VALUES (2, 'Pesho', 'pesho', '256caf9c9234ca98ad0a53421308b6252ee8f307625b7d7be5e75342f28895878a1275a5bbd9a958',
+        'pesho@pesho', 'Description for Pesho lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
@@ -26,7 +28,8 @@ VALUES (2, 'Pesho', 'pesho', '256caf9c9234ca98ad0a53421308b6252ee8f307625b7d7be5
                     adipisicing elit. ');
 
 INSERT INTO users (id, name, username, password, email, description)
-VALUES (3, 'Gosho', 'gosho', 'dd6a9f096592da9c2bb841c9ef838296383d709d03842f477f3af6ba99bd717582e323de9ba9c163', 'gosho@gosho', 'Description for Gosho lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
+VALUES (3, 'Gosho', 'gosho', 'dd6a9f096592da9c2bb841c9ef838296383d709d03842f477f3af6ba99bd717582e323de9ba9c163',
+        'gosho@gosho', 'Description for Gosho lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
@@ -52,7 +55,8 @@ VALUES (4, 'Bob', 'bob', '4cf5d1c3c2e13b4066ea8f9e468a221c6dd736fa9f7f4c522b257f
                     adipisicing elit. ');
 
 INSERT INTO users (id, name, username, password, email, description)
-VALUES (5, 'Dimo', 'dimo', 'bb8b8a9953add115ee701a02c6bf4f4b5b14ca86b3de9ffca4f885794031e24ab76bac477469dbf0', 'dimo@dimo', 'Description for Dimo lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
+VALUES (5, 'Dimo', 'dimo', 'bb8b8a9953add115ee701a02c6bf4f4b5b14ca86b3de9ffca4f885794031e24ab76bac477469dbf0',
+        'dimo@dimo', 'Description for Dimo lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint

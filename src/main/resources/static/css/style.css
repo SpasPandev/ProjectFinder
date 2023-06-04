@@ -1,15 +1,12 @@
-body
-{
+body {
     background: #e9ecef;
 }
 
-.hover:hover
-{
+.hover:hover {
     background-color: #edeced;
     text-decoration: underline;
 }
 
-.H
-{
+.H {
     height: 539px;
 }
