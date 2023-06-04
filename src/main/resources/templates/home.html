@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/commons::head">
 </head>
@@ -16,7 +17,7 @@
     <div class="row gx-0">
       <div class="col px-5 py-2 d-flex">
 
-        <th:block th:if="${currentUserRoleInString != 'COMPANY'}">
+        <th:block sec:authorize="!hasRole('COMPANY')">
             <form th:method="post" th:action="@{/home}">
                 <button th:if="!${interests}" type="submit" class="btn btn-danger">
                     Order by interests
@@ -39,8 +40,8 @@
 
       </div>
       <br>
-      <div th:if="${currentUserRoleInString != 'STUDENT'}" class="col px-5 py-2 text-end">
-        <a href="/createProject" class="btn btn-danger w-50 mt-1">Add Project</a>
+      <div sec:authorize="!hasRole('STUDENT')" class="col px-5 py-2 text-end">
+        <a th:href="@{/createProject}" class="btn btn-danger w-50 mt-1">Add Project</a>
       </div>
       <br>
     </div>

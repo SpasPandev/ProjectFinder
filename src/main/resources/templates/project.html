@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/commons::head">
 </head>
@@ -106,7 +107,7 @@
                 </div>
 
                 <th:block th:if="!${isParticipant}">
-                    <form th:if="${currentUserRoleNameInString != 'COMPANY'}"
+                    <form sec:authorize="!hasRole('COMPANY')"
                           th:method="post"
                           th:object="${project}"
                           th:action="@{/project/{id}(id = *{id})}">
@@ -160,7 +161,8 @@
                 </th:block>
 
                 <th:block th:if="!${currentUserRoleNameInString.equals('STUDENT')} and ${isAuthor}">
-                    <a th:href="@{/uploaded/{id}(id = *{project.id})}" class="btn btn-primary btn-outline-dark btn-lg m-4">Uploaded</a>
+                    <a th:href="@{/uploaded/{id}(id = *{project.id})}"
+                       class="btn btn-primary btn-outline-dark btn-lg m-4">Uploaded</a>
                 </th:block>
             </div>
         </th:block>

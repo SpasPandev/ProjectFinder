@@ -14,19 +14,19 @@ public interface ProjectService {
 
     List<ProjectViewModel> findAllProjectViewsOrderDescId();
 
-    void createNewProject(ProjectServiceModel projectServiceModel);
+    void createNewProject(ProjectServiceModel projectServiceModel, Long currentUserId);
 
-    void participateInProject(Long id);
+    void participateInProject(Long id, Long currentUserId);
 
-    boolean isParticipant(Long id);
+    boolean isParticipant(Long id, Long currentUserId);
 
-    List<ProjectViewModel> showCurrentUserProjects();
+    List<ProjectViewModel> showCurrentUserProjects(Long currentUserId);
 
     List<ProjectParticipant> showAllParticipants(Long id);
 
-    void submitLink(UserServiceModel userServiceModel, Long id);
+    void submitLink(UserServiceModel userServiceModel, Long id, Long currentUserId);
 
-    boolean isSubmitted(Long id);
+    boolean isSubmitted(Long id, Long currentUserId);
 
     List<String> findProjectTechnologyNameInString(Long id);
 
@@ -38,7 +38,7 @@ public interface ProjectService {
 
     Long findProjectAuthorId(Long projectId);
 
-    boolean isAuthor(Long projectId);
+    boolean isAuthor(Long projectId, Long currentUserId);
 
     List<ProjectViewModel> findAllDeletedProjects();
 }

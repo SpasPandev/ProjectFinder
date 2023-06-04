@@ -7,17 +7,18 @@ import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     void registerUser(UserServiceModel userServiceModel);
 
-    UserServiceModel findUserByUsername(String username);
+    Optional<UserServiceModel> findUserByUsername(String username);
 
     UserServiceModel findUserById(Long id);
 
     boolean isUsernameExists(String username);
 
-    UserEntity findCurrentLoginUserEntity();
+    UserEntity findCurrentLoginUserEntity(Long currentUserId);
 
     EditProfileViewModel getById(Long id);
 

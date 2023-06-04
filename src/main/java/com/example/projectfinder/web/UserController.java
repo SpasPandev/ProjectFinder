@@ -1,7 +1,6 @@
 package com.example.projectfinder.web;
 
 import com.example.projectfinder.model.binding.EditProfileBindingModel;
-import com.example.projectfinder.model.binding.UserLoginBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
@@ -9,8 +8,11 @@ import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.repository.UserRepository;
 import com.example.projectfinder.service.UserService;
+import com.example.projectfinder.service.impl.ApplicationUser;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -39,17 +42,32 @@ public class UserController {
         return new UserRegisterBindingModel();
     }
 
-    @ModelAttribute
-    public UserLoginBindingModel userLoginBindingModel()
-    {
-        return new UserLoginBindingModel();
-    }
-
     @GetMapping("/login")
     public String login(Model model)
     {
 
         return "login";
+    }
+
+    @PostMapping("/login-error")
+    public String failedLogin(
+            @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
+            @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY) String password,
+            RedirectAttributes redirectAttributes)
+    {
+
+        Optional<UserServiceModel> userOpt = userService.findUserByUsername(username);
+
+        if (userOpt.isPresent() && userOpt.get().isDeleted() &&
+                passwordEncoder.matches(password, userOpt.get().getPassword())){
+
+            redirectAttributes.addFlashAttribute("showErrorMessDeletedUser", true);
+            return "redirect:/login";
+        }
+
+        redirectAttributes.addFlashAttribute("showErrorMess", true);
+
+        return "redirect:/login";
     }
 
     @GetMapping("/register")
@@ -132,7 +150,8 @@ public class UserController {
     }
 
     @GetMapping("/profile/{id}")
-    private String profile(@PathVariable Long id, Model model)
+    private String profile(@PathVariable Long id, @AuthenticationPrincipal ApplicationUser currentUser,
+                           Model model)
     {
 
         model
@@ -143,57 +162,34 @@ public class UserController {
                 .addAttribute("user", modelMapper
                         .map(userService.findUserById(id), UserViewModel.class));
 
-//        TODO
-//        model.addAttribute("currentUserId", currentUser.getId());
+        model.addAttribute("currentUserId", currentUser.getId());
 
-//        TODO
-//        model.addAttribute("currentUserRoleNameInString",
-//                userService.findUserRoleNameInString(currentUser.getId()));
+        model.addAttribute("currentUserRoleNameInString",
+                userService.findUserRoleNameInString(currentUser.getId()));
 
         return "profile";
     }
 
     @GetMapping("/profile/{id}/editProfile")
-    public String editProfile(@PathVariable Long id, Model model)
+    public String editProfile(@PathVariable Long id, @AuthenticationPrincipal ApplicationUser currentUser,
+                              Model model)
     {
-//        TODO
-//        if (id != currentUser.getId())
-//        {
-//            return "redirect:/home";
-//        }
+        if (!id.equals(currentUser.getId()))
+        {
+            return "redirect:/home";
+        }
 
         EditProfileViewModel editProfileViewModel = this.userService.getById(id);
         EditProfileBindingModel editProfileBindingModel = modelMapper.map(editProfileViewModel, EditProfileBindingModel.class);
 
         model.addAttribute("editProfileBindingModel", editProfileBindingModel);
 
-//        TODO
-//        model.addAttribute("currentUserId", currentUser.getId());
-
-//        TODO
-//        model.addAttribute("currentUserRoleNameInString",
-//                userService.findUserRoleNameInString(currentUser.getId()));
-
-        return "editProfile";
-    }
-    @GetMapping("/profile/{id}/editProfile/errors")
-    public String editProfileErrors(@PathVariable Long id, Model model)
-    {
-//        TODO
-//        if (id != currentUser.getId())
-//        {
-//            return "redirect:/home";
-//        }
-
-//        TODO
-//        model.addAttribute("currentUserRoleNameInString",
-//                userService.findUserRoleNameInString(currentUser.getId()));
-
         return "editProfile";
     }
 
     @PatchMapping("/profile/{id}/editProfile")
     public String editProfileConfirm(@PathVariable Long id,
+                                     @AuthenticationPrincipal ApplicationUser currentUser,
                                      @Valid EditProfileBindingModel editProfileBindingModel,
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes) {
@@ -205,7 +201,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfileBindingModel", bindingResult);
             redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
 
-            return "redirect:/profile/" + id + "/editProfile/errors";
+            return "redirect:/profile/" + id + "/editProfile";
         }
 
         if (isChoosenTechnologyListEmpty)
@@ -213,29 +209,28 @@ public class UserController {
             redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
             redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
 
-            return "redirect:/profile/" + id + "/editProfile/errors";
+            return "redirect:/profile/" + id + "/editProfile";
         }
 
         boolean isUsernameExists = userService.isUsernameExists(editProfileBindingModel.getUsername());
         boolean isEmailExists = userService.isEmailExists(editProfileBindingModel.getEmail());
 
-//        TODO
-//        if (isUsernameExists && !currentUser.getUsername().equals(editProfileBindingModel.getUsername()))
-//        {
-//            redirectAttributes
-//                    .addFlashAttribute("showUsernameExistsError", true)
-//                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
-//
-//            return "redirect:/profile/" + id + "/editProfile/errors";
-//        }
-//        else if (isEmailExists && !currentUser.getEmail().equals(editProfileBindingModel.getEmail()))
-//        {
-//            redirectAttributes
-//                    .addFlashAttribute("showEmailExistsError", true)
-//                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
-//
-//            return "redirect:/profile/" + id + "/editProfile/errors";
-//        }
+        if (isUsernameExists && !currentUser.getUsername().equals(editProfileBindingModel.getUsername()))
+        {
+            redirectAttributes
+                    .addFlashAttribute("showUsernameExistsError", true)
+                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+
+            return "redirect:/profile/" + id + "/editProfile";
+        }
+        else if (isEmailExists && !currentUser.getEmail().equals(editProfileBindingModel.getEmail()))
+        {
+            redirectAttributes
+                    .addFlashAttribute("showEmailExistsError", true)
+                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+
+            return "redirect:/profile/" + id + "/editProfile";
+        }
 
         EditProfileServiceModel editProfileServiceModel = modelMapper.map(editProfileBindingModel, EditProfileServiceModel.class);
         editProfileServiceModel.setId(id);

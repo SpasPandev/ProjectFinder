@@ -12,10 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,12 +55,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel findUserByUsername(String username) {
+    public Optional<UserServiceModel> findUserByUsername(String username) {
 
         return userRepository
                 .findByUsername(username)
-                .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
-                .orElse(null);
+                .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class));
     }
 
     @Override
@@ -85,14 +81,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserEntity findCurrentLoginUserEntity() {
+    public UserEntity findCurrentLoginUserEntity(Long currentUserId) {
 
-//        TODO
-//        return userRepository
-//                .findById(currentUser.getId())
-//                .orElse(null);
-
-        return null;
+        return userRepository
+                .findById(currentUserId)
+                .orElseThrow(() -> new ObjectNotFoundException("User was not Found!"));
     }
 
     @Override

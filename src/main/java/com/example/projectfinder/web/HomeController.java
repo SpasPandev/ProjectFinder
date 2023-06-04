@@ -3,6 +3,8 @@ package com.example.projectfinder.web;
 import com.example.projectfinder.repository.UserRepository;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
+import com.example.projectfinder.service.impl.ApplicationUser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,29 +26,26 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(Model model)
+    public String home(@AuthenticationPrincipal ApplicationUser currentUser, Model model)
     {
-//        TODO
-//        if (currentUser.getRoleName().equals("COMPANY")) {interests = false;}
+
+        String currentUserRoleNameInString = userService.findUserRoleNameInString(currentUser.getId());
+
+        if (currentUserRoleNameInString.equals("COMPANY")) {interests = false;}
 
         model.addAttribute("interests", interests);
-        
+
         model.addAttribute("projectsList", this.projectService.findAllProjectViewsOrderDescId());
 
-//        TODO
-//        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("COMPANY"))
-//        {
-//            model.addAttribute("allProjectsForConcretTehnology",
-//                    projectService.findAllProjectsForConcretTehnology(
-//                            userRepository.findTechnologyIdsByUserId(currentUser.getId())));
-//
-//            model.addAttribute("currentUserTechnologyNameInString",
-//                    userService.findUserTechnologyNameInString(currentUser.getId()));
-//        }
+        if (!currentUserRoleNameInString.equals("COMPANY"))
+        {
+            model.addAttribute("allProjectsForConcretTehnology",
+                    projectService.findAllProjectsForConcretTehnology(
+                            userRepository.findTechnologyIdsByUserId(currentUser.getId())));
 
-//        TODO
-//        model.addAttribute("currentUserRoleInString",
-//                userService.findUserRoleNameInString(currentUser.getId()));
+            model.addAttribute("currentUserTechnologyNameInString",
+                    userService.findUserTechnologyNameInString(currentUser.getId()));
+        }
 
         return "home";
     }

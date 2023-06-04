@@ -22,37 +22,25 @@
             <h3 class="mb-5">Wellcome !</h3>
 
             <form
-                    th:object="${userLoginBindingModel}"
                     th:action="@{/login}"
                     th:method="post">
               <div class="form-outline mb-4">
-                <input
-                        th:field="*{username}"
-                        th:errorclass="is-invalid"
-                        type="text"
-                        id="username" class="form-control form-control-lg"
+                <input type="text"
+                        name="username" class="form-control form-control-lg"
                   placeholder="Enter username">
-                <p class="invalid-feedback alert alert-danger">
-                  Invalid username!
-                </p>
               </div>
 
               <div class="form-outline mb-4">
-                <input
-                        th:field="*{password}"
-                        th:errorclass="is-invalid"
-                        type="password" id="password" class="form-control form-control-lg"
+                <input type="password"
+                       name="password" class="form-control form-control-lg"
                   placeholder="Enter password">
-                <p class="invalid-feedback alert alert-danger">
-                  Invalid password!
-                </p>
               </div>
 
-              <p th:if="${showErrorMess} == true" class="alert alert-danger">
+              <p th:if="${showErrorMess}" class="alert alert-danger">
                 Invalid username or password.
               </p>
 
-              <p th:if="${showErrorMessDeletedUser} == true" class="alert alert-danger">
+              <p th:if="${showErrorMessDeletedUser}" class="alert alert-danger">
                 Your account has been deleted.
               </p>
 

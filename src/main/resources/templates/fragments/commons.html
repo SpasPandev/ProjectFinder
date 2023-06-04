@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,23 +30,24 @@
 
                 <div class="text-end ms-auto">
 
-                    <th:block>
-<!--                    <th:block th:if="${@currentUser.id != null}">-->
-                        <a href="/home" class="btn btn-outline-light me-2">Home</a>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a th:href="@{/home}" class="btn btn-outline-light me-2">Home</a>
 
-                        <a th:href="@{/profile/{id}}" class="btn btn-outline-light me-2">My Profile</a>
-<!--                        <a th:object="${@currentUser}" th:href="@{/profile/{id}(id = *{id})}" class="btn btn-outline-light me-2">My Profile</a>-->
-                        <a href="/tasks" class="btn btn-outline-light me-2">My Tasks</a>
-                        <a href="/history" class="btn btn-outline-light me-2">History</a>
-                        <a href="/admin" class="btn btn-outline-light me-2">Admin Panel</a>
-<!--                        <a th:if="${@currentUser.roleName == 'ADMIN'}" href="/admin" class="btn btn-outline-light me-2">Admin Panel</a>-->
-                        <a th:href="@{/logout}" class="btn btn-outline-light me-2">Logout</a>
+                        <a th:href="@{/profile/{id}(id = ${#authentication.principal.id})}"
+                           class="btn btn-outline-light me-2">My Profile</a>
+                        <a th:href="@{/tasks}" class="btn btn-outline-light me-2">My Tasks</a>
+                        <a th:href="@{/history}" class="btn btn-outline-light me-2">History</a>
+                        <a sec:authorize="hasRole('ADMIN')"
+                           th:href="@{/admin}" class="btn btn-outline-light me-2">Admin Panel</a>
+                        <form th:action="@{/logout}"
+                              th:method="post" class="d-inline-block">
+                            <input class="btn btn-outline-light me-2" type="submit" value="Logout">
+                        </form>
                     </th:block>
 
-                    <th:block>
-<!--                    <th:block th:if="${@currentUser.id == null}">-->
-                        <a href="/login" class="btn btn-outline-light me-2">Login</a>
-                        <a href="/register" class="btn btn-warning">Sign-up</a>
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/login}" class="btn btn-outline-light me-2">Login</a>
+                        <a th:href="@{/register}" class="btn btn-warning">Sign-up</a>
                     </th:block>
 
                 </div>

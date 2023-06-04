@@ -4,6 +4,7 @@ import com.example.projectfinder.model.binding.ChangeRoleBindingModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -33,23 +34,12 @@ public class AdminController {
     public String adminPanel(Model model)
     {
 
-//        TODO
-//        if (!userService.findUserRoleNameInString(currentUser.getId()).equals("ADMIN"))
-//        {
-//            return "redirect:/home";
-//        }
-
-//        TODO
-//        model.addAttribute("isAdmin", userService.isAdmin(currentUser));
-
-//        TODO
-//        model.addAttribute("currentUserId", currentUser.getId());
-
         model.addAttribute("allUsers", this.userService.findAllUsers());
 
         return "admin";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/{id}")
     public String adminChangeUserRole(@PathVariable Long id, @Valid ChangeRoleBindingModel changeRoleBindingModel,
                            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -72,6 +62,7 @@ public class AdminController {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/admin/{id}")
     public String deleteUser(@PathVariable Long id)
     {

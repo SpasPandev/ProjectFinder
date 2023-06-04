@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/commons::head">
 </head>
@@ -17,7 +18,7 @@
     <h2 class="text-center pt-3">My Tasks</h2>
 
 <!--    FOR STUDENT-->
-    <th:block th:if="${currentUserRoleNameInString.equals('STUDENT')}">
+    <th:block sec:authorize="hasRole('STUDENT')">
 
       <th:block th:if="${allProjectsForCurrentUser.isEmpty()}">
         <h5 class="text-center mt-5">You don't have any tasks!</h5>
@@ -51,7 +52,7 @@
     </th:block>
 
 <!--    FOR COMPANY-->
-    <th:block th:if="${currentUserRoleNameInString.equals('COMPANY')}">
+    <th:block sec:authorize="hasRole('COMPANY')">
 
       <th:block th:if="${allProjectsForAuthor.isEmpty()}">
         <h5 class="text-center mt-5">You don't have any projects!</h5>

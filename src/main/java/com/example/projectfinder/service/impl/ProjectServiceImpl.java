@@ -43,10 +43,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectServiceModel findProjectById(Long id) {
-        return projectRepository
+        ProjectServiceModel projectServiceModel = projectRepository
                 .findById(id)
                 .map(projectEntity -> modelMapper.map(projectEntity, ProjectServiceModel.class))
                 .orElse(null);
+        return projectServiceModel;
 
     }
 
@@ -66,11 +67,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void createNewProject(ProjectServiceModel projectServiceModel) {
+    public void createNewProject(ProjectServiceModel projectServiceModel, Long currentUserId) {
 
         ProjectEntity projectEntity = modelMapper.map(projectServiceModel, ProjectEntity.class);
 
-        projectEntity.setAuthor(userService.findCurrentLoginUserEntity());
+        projectEntity.setAuthor(userService.findCurrentLoginUserEntity(currentUserId));
 
         projectEntity.setTechnologies(projectServiceModel
                 .getTechnologies()
@@ -82,12 +83,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void participateInProject(Long id) {
+    public void participateInProject(Long id, Long currentUserId) {
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
 
-//        TODO
-//        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
+        UserEntity userEntity = userRepository.findById(currentUserId).get();
 
         ProjectParticipant projectParticipant = new ProjectParticipant();
 
@@ -98,13 +98,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public boolean isParticipant(Long id) {
+    public boolean isParticipant(Long id, Long currentUserId) {
 
         boolean isParticipant = false;
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
-//        TODO
-//        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
+
+        UserEntity userEntity = userRepository.findById(currentUserId).get();
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findCurrentUserAndCurrentProject(projectEntity, userEntity);
@@ -118,16 +118,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectViewModel> showCurrentUserProjects()
+    public List<ProjectViewModel> showCurrentUserProjects(Long currentUserId)
     {
-//        TODO
-//        List<Long> listOfAllProjectsIds = projectRepository.listOfAllProjectsIds(currentUser.getId());
+        List<Long> listOfAllProjectsIds = projectRepository.listOfAllProjectsIds(currentUserId);
 
         List<ProjectViewModel> listOfCurrentUserProjects = new ArrayList<>();
 
         for (int i = listOfAllProjectsIds.size() - 1; i >= 0; i--) {
 
-            if (projectRepository.findById(listOfAllProjectsIds.get(i)).get().isDeleted() == false)
+            if (!projectRepository.findById(listOfAllProjectsIds.get(i)).get().isDeleted())
             {
                 listOfCurrentUserProjects
                         .add(modelMapper.map(projectRepository.findById(listOfAllProjectsIds.get(i)).get(), ProjectViewModel.class));
@@ -156,14 +155,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public boolean isSubmitted(Long id) {
+    public boolean isSubmitted(Long id, Long currentUserId) {
 
         boolean isSubmitted = false;
 
         ProjectEntity projectEntity = projectRepository.findById(id).get();
 
-//        TODO
-//        UserEntity userEntity = userRepository.findById(currentUser.getId()).get();
+        UserEntity userEntity = userRepository.findById(currentUserId).get();
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findCurrentUserAndCurrentProject(projectEntity, userEntity);
@@ -187,12 +185,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void submitLink(UserServiceModel userServiceModel, Long id) {
-
+    public void submitLink(UserServiceModel userServiceModel, Long id, Long currentUserId) {
 
         ProjectEntity currentProject = projectRepository.findById(id).get();
-//        TODO
-//        UserEntity currentUserEntity = userRepository.findById(currentUser.getId()).get();
+
+        UserEntity currentUserEntity = userRepository.findById(currentUserId).get();
 
         ProjectParticipant projectParticipant = projectParticipantRepository
                 .findCurrentUserAndCurrentProject(currentProject, currentUserEntity);
@@ -254,17 +251,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public boolean isAuthor(Long projectId) {
+    public boolean isAuthor(Long projectId, Long currentUserId) {
 
-//        TODO
-//        if (currentUser.getId() != findProjectAuthorId(projectId))
-//        {
-//            return false;
-//        }
-//        else
-//        {
-            return true;
-//        }
+        return currentUserId.equals(findProjectAuthorId(projectId));
     }
 
     @Override
