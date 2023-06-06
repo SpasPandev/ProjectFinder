@@ -1,7 +1,7 @@
 package com.example.projectfinder.model.entity;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,14 +22,14 @@ public class UserEntity extends BaseEntity{
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<RoleEntity> roles;
+    @ManyToMany
+    private List<RoleEntity> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<TechnologyEntity> technologies;
+    @ManyToMany
+    private List<TechnologyEntity> technologies;
 
-    @OneToMany(mappedBy = "participant", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private Set<ProjectParticipant> participant;
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.REMOVE)
+    private List<ProjectParticipant> participant;
 
     @Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
     private boolean isDeleted;
@@ -74,28 +74,31 @@ public class UserEntity extends BaseEntity{
         this.description = description;
     }
 
-    public Set<RoleEntity> getRoles() {
+    public List<RoleEntity> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<RoleEntity> roles) {
+    public UserEntity setRoles(List<RoleEntity> roles) {
         this.roles = roles;
+        return this;
     }
 
-    public Set<TechnologyEntity> getTechnologies() {
+    public List<TechnologyEntity> getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(Set<TechnologyEntity> technologies) {
+    public UserEntity setTechnologies(List<TechnologyEntity> technologies) {
         this.technologies = technologies;
+        return this;
     }
 
-    public Set<ProjectParticipant> getParticipant() {
+    public List<ProjectParticipant> getParticipant() {
         return participant;
     }
 
-    public void setParticipant(Set<ProjectParticipant> participant) {
+    public UserEntity setParticipant(List<ProjectParticipant> participant) {
         this.participant = participant;
+        return this;
     }
 
     public boolean isDeleted() {

@@ -1,7 +1,7 @@
 package com.example.projectfinder.model.entity;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -13,14 +13,14 @@ public class ProjectEntity extends BaseEntity {
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String project_description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<TechnologyEntity> technologies;
+    @ManyToMany
+    private List<TechnologyEntity> technologies;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     private UserEntity author;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private Set<ProjectParticipant> participant;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<ProjectParticipant> participant;
 
     @Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
     private boolean isDeleted;
@@ -41,12 +41,13 @@ public class ProjectEntity extends BaseEntity {
         this.project_description = project_description;
     }
 
-    public Set<TechnologyEntity> getTechnologies() {
+    public List<TechnologyEntity> getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(Set<TechnologyEntity> technologies) {
+    public ProjectEntity setTechnologies(List<TechnologyEntity> technologies) {
         this.technologies = technologies;
+        return this;
     }
 
     public UserEntity getAuthor() {
@@ -57,12 +58,13 @@ public class ProjectEntity extends BaseEntity {
         this.author = author;
     }
 
-    public Set<ProjectParticipant> getParticipant() {
+    public List<ProjectParticipant> getParticipant() {
         return participant;
     }
 
-    public void setParticipant(Set<ProjectParticipant> participant) {
+    public ProjectEntity setParticipant(List<ProjectParticipant> participant) {
         this.participant = participant;
+        return this;
     }
 
     public boolean isDeleted() {

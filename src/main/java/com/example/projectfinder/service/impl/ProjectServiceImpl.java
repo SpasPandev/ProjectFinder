@@ -13,6 +13,7 @@ import com.example.projectfinder.service.TechnologyService;
 import com.example.projectfinder.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class ProjectServiceImpl implements ProjectService {
         this.technologyRepository = technologyRepository;
     }
 
+    @Transactional
     @Override
     public ProjectServiceModel findProjectById(Long id) {
 
@@ -52,6 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     }
 
+    @Transactional
     @Override
     public List<ProjectViewModel> findAllProjectViewsOrderDescId() {
 
@@ -78,7 +81,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .getTechnologies()
                 .stream()
                 .map((TechnologyNameEnum technologyNameEnum) -> technologyService.findTechnologyByName(technologyNameEnum))
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toList()));
 
         projectRepository.save(projectEntity);
     }
@@ -117,6 +120,7 @@ public class ProjectServiceImpl implements ProjectService {
         return isParticipant;
     }
 
+    @Transactional
     @Override
     public List<ProjectViewModel> showCurrentUserProjects(Long currentUserId) {
 
@@ -252,6 +256,7 @@ public class ProjectServiceImpl implements ProjectService {
         return currentUserId.equals(findProjectAuthorId(projectId));
     }
 
+    @Transactional
     @Override
     public List<ProjectViewModel> findAllDeletedProjects() {
 

@@ -38,10 +38,10 @@ public class UserServiceImpl implements UserService {
     public void registerUser(UserServiceModel userServiceModel) {
 
         RoleEntity userRole = this.roleRepository.findByRole(userServiceModel.getRole());
-        Set<RoleEntity> roles = new HashSet<>();
+        List<RoleEntity> roles = new ArrayList<>();
         roles.add(userRole);
 
-        Set<TechnologyEntity> technologies = technologyRepository.findTechnologyEntitiesByTechnologiesIn(userServiceModel.getTechnology());
+        List<TechnologyEntity> technologies = technologyRepository.findTechnologyEntitiesByTechnologiesIn(userServiceModel.getTechnology());
 
         UserEntity userEntity = modelMapper.map(userServiceModel, UserEntity.class);
 
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setPassword(editProfileServiceModel.getPassword());
         userEntity.setDescription(editProfileServiceModel.getDescription());
 
-        Set<TechnologyEntity> technologies = technologyRepository.findByTechnologiesIn(editProfileServiceModel.getTechnology());
+        List<TechnologyEntity> technologies = technologyRepository.findByTechnologiesIn(editProfileServiceModel.getTechnology());
 
         userEntity.setTechnologies(technologies);
 
@@ -152,7 +152,7 @@ public class UserServiceImpl implements UserService {
     public void adminChangeUserRole(UserServiceModel userServiceModel, Long id) {
 
         RoleEntity userRole = this.roleRepository.findByRole(userServiceModel.getRole());
-        Set<RoleEntity> roles = new HashSet<>();
+        List<RoleEntity> roles = new ArrayList<>();
         roles.add(userRole);
 
         UserEntity userEntity = userRepository.findById(id).get();

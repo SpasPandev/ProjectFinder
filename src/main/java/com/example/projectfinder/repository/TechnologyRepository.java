@@ -15,12 +15,12 @@ public interface TechnologyRepository extends JpaRepository<TechnologyEntity, Lo
 
     Optional<TechnologyEntity> findTechnologyEntitiesByTechnologies(TechnologyNameEnum technologyNameEnum);
 
-    Set<TechnologyEntity> findByTechnologiesIn(Set<TechnologyNameEnum> technologyName);
+    List<TechnologyEntity> findByTechnologiesIn(Set<TechnologyNameEnum> technologyName);
 
     @Query(value = "SELECT technologies FROM technologies\n" +
             "WHERE id IN ?1 ", nativeQuery = true)
     List<String> findTechnologyNameInStringById(List<Long> technologyId);
 
-    Set<TechnologyEntity> findTechnologyEntitiesByTechnologiesIn(Set<TechnologyNameEnum> technologyNameEnums);
+    List<TechnologyEntity> findTechnologyEntitiesByTechnologiesIn(Set<TechnologyNameEnum> technologyNameEnums);
 
 }
