@@ -18,8 +18,8 @@ public interface ProjectParticipantRepository extends JpaRepository<ProjectParti
     @Query(value = "SELECT * FROM project_participant\n" +
             "WHERE project_id = ?1 AND participant_id = ?2 ", nativeQuery = true)
     ProjectParticipant findCurrentUserAndCurrentProject(ProjectEntity currentProject, UserEntity currentUser);
+    ProjectParticipant findAllByProjectAndParticipant(ProjectEntity currentProject, UserEntity currentUser);
 
-    @Query(value = "SELECT * FROM project_participant\n" +
-            "HAVING project_id = ?1 AND link IS NOT NULL ", nativeQuery = true)
-    List<ProjectParticipant> findAllProjectParticipantsUploadedOnCurrentProject(Long currentProjectId);
+    List<ProjectParticipant> findAllByProject_IdAndLinkIsNotNull(Long currentProjectId);
+
 }

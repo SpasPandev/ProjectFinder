@@ -11,25 +11,21 @@ import java.util.Set;
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
 
-    @Query(value = "SELECT project_entity_id FROM project_technologies\n" +
-            "WHERE technologies_id IN ?1 ", nativeQuery = true)
+    @Query("SELECT p.id FROM ProjectEntity AS p JOIN p.technologies AS t WHERE t.id IN ?1")
     Set<Long> findListOfProjectsIdsForConcretTehnologies(List<Long> tehnologyIds);
 
-    @Query("select p from ProjectEntity p where p.isDeleted = false order by p.id DESC")
+    @Query("SELECT p FROM ProjectEntity AS p WHERE p.isDeleted = false ORDER BY p.id DESC")
     List<ProjectEntity> findAllByDeletedIsFalseOrderByIdDesc();
 
-    @Query(value = "SELECT project_id FROM project_participant\n" +
-            "WHERE participant_id = ?1 ", nativeQuery = true)
+    @Query("SELECT p.id FROM ProjectEntity AS p JOIN p.participant AS par WHERE par.participant.id = ?1")
     List<Long> listOfAllProjectsIds(Long currentUserId);
 
-    @Query(value = "SELECT technologies_id FROM project_technologies\n" +
-            "WHERE project_entity_id = ?1 ", nativeQuery = true)
+    @Query("SELECT t.id FROM ProjectEntity AS p JOIN p.technologies AS t WHERE p.id = ?1")
     List<Long> findTechnologyIdByProjectId(Long projectId);
 
-    @Query(value = "SELECT * FROM project\n" +
-            "WHERE author_id = ?1 ", nativeQuery = true)
-    List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId);
+    List<ProjectEntity> findAllByAuthor_Id(Long currentUserId);
 
-    @Query("select p from ProjectEntity p where p.isDeleted = true order by p.id DESC")
+    @Query("SELECT p from ProjectEntity AS p where p.isDeleted = true ORDER BY p.id DESC")
     List<ProjectEntity> findAllDeletedProjects();
+
 }

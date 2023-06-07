@@ -180,7 +180,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Long userId) {
 
-        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllProjectsForAuthor(userId);
+        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllByAuthor_Id(userId);
 
         if (!allProjectsForAuthor.isEmpty()) {
             allProjectsForAuthor.forEach(poject ->
@@ -194,7 +194,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setIsDeleatedStatusTrue(Long id) {
 
-        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllProjectsForAuthor(id);
+        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllByAuthor_Id(id);
 
         if (!allProjectsForAuthor.isEmpty()) {
             allProjectsForAuthor.forEach(project -> {

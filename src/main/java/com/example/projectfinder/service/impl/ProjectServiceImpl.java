@@ -111,7 +111,7 @@ public class ProjectServiceImpl implements ProjectService {
         UserEntity userEntity = userRepository.findById(currentUserId).get();
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
-                .findCurrentUserAndCurrentProject(projectEntity, userEntity);
+                .findAllByProjectAndParticipant(projectEntity, userEntity);
 
         if (currentProjectWithCurrentUser != null) {
             isParticipant = true;
@@ -166,7 +166,7 @@ public class ProjectServiceImpl implements ProjectService {
         UserEntity userEntity = userRepository.findById(currentUserId).get();
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
-                .findCurrentUserAndCurrentProject(projectEntity, userEntity);
+                .findAllByProjectAndParticipant(projectEntity, userEntity);
 
         if (currentProjectWithCurrentUser.getLink() != null) {
             isSubmitted = true;
@@ -193,7 +193,7 @@ public class ProjectServiceImpl implements ProjectService {
         UserEntity currentUserEntity = userRepository.findById(currentUserId).get();
 
         ProjectParticipant projectParticipant = projectParticipantRepository
-                .findCurrentUserAndCurrentProject(currentProject, currentUserEntity);
+                .findAllByProjectAndParticipant(currentProject, currentUserEntity);
 
         projectParticipant.setLink(userServiceModel.getLink());
 
@@ -204,7 +204,7 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectParticipant> currentProjectUploaders(Long currentProjectId) {
 
         List<ProjectParticipant> listOfAllProjectParticipantsUploadedOnCurrentProject =
-                projectParticipantRepository.findAllProjectParticipantsUploadedOnCurrentProject(currentProjectId);
+                projectParticipantRepository.findAllByProject_IdAndLinkIsNotNull(currentProjectId);
 
         for (int i = 0; i < listOfAllProjectParticipantsUploadedOnCurrentProject.size(); i++) {
 
@@ -220,7 +220,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId) {
 
-        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllProjectsForAuthor(currentUserId);
+        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllByAuthor_Id(currentUserId);
 
         return allProjectsForAuthor;
     }

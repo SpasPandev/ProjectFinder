@@ -11,8 +11,7 @@ public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
     RoleEntity findByRole(RoleNameEnum role);
 
-    @Query(value = "SELECT role FROM roles\n" +
-            "WHERE id = ?1 ", nativeQuery = true)
+    @Query("SELECT r.role FROM RoleEntity AS r WHERE r.id = ?1")
     String findRoleName(Long roleId);
 
 
