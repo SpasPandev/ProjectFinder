@@ -25,6 +25,9 @@ public class ProjectEntity extends BaseEntity {
     @Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
     private boolean isDeleted;
 
+    @Column(name = "views_count", nullable = false)
+    private int viewsCount;
+
     public String getTitle() {
         return title;
     }
@@ -73,6 +76,15 @@ public class ProjectEntity extends BaseEntity {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public int getViewsCount() {
+        return viewsCount;
+    }
+
+    public ProjectEntity setViewsCount(int viewsCount) {
+        this.viewsCount = viewsCount;
+        return this;
     }
 
     public ProjectEntity() {

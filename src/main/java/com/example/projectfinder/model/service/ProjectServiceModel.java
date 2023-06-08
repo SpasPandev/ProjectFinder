@@ -22,6 +22,8 @@ public class ProjectServiceModel {
 
     private boolean isDeleted;
 
+    private int viewsCount;
+
     public ProjectServiceModel() {
     }
 
@@ -83,5 +85,14 @@ public class ProjectServiceModel {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public int getViewsCount() {
+        return viewsCount;
+    }
+
+    public ProjectServiceModel setViewsCount(int viewsCount) {
+        this.viewsCount = viewsCount;
+        return this;
     }
 }

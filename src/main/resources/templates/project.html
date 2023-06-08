@@ -50,8 +50,10 @@
             </p>
             <hr>
             <h5>Tehnologies:</h5>
-            <div class="row">
-                <span th:text="${technologyNameInString}" class="col">Java</span>
+            <div class="row justify-content-between">
+                <span th:text="${technologyNameInString}" class="col-auto text-left">Java</span>
+                <span th:text="|Views count this week: | + *{viewsCount}"
+                      class="col-auto text-right ml-auto">Number of views</span>
             </div>
 
             <p th:if="${isLinkNotCorrect} == true" class="alert alert-danger">

@@ -4,11 +4,6 @@ import com.example.projectfinder.model.entity.ProjectParticipant;
 import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.UserEntity;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import java.util.List;
 import java.util.Set;
 
 public class ProjectViewModel {
@@ -26,6 +21,8 @@ public class ProjectViewModel {
     private Set<ProjectParticipant> participant;
 
     private boolean isDeleted;
+
+    private int viewsCount;
 
     public ProjectViewModel() {
     }
@@ -84,5 +81,14 @@ public class ProjectViewModel {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public int getViewsCount() {
+        return viewsCount;
+    }
+
+    public ProjectViewModel setViewsCount(int viewsCount) {
+        this.viewsCount = viewsCount;
+        return this;
     }
 }

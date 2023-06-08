@@ -28,4 +28,7 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
     @Query("SELECT p from ProjectEntity AS p where p.isDeleted = true ORDER BY p.id DESC")
     List<ProjectEntity> findAllDeletedProjects();
 
+    @Query("SELECT COUNT(p) > 0 FROM ProjectEntity AS p WHERE p.author.id = ?1 AND p.id = ?2")
+    boolean isCurrentUserAuthorForThisProject(Long currentUserId, Long currentProjectId);
+
 }
