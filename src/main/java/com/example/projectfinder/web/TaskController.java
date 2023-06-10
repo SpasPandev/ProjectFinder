@@ -2,7 +2,6 @@ package com.example.projectfinder.web;
 
 import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.service.ProjectService;
-import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.service.impl.ApplicationUser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

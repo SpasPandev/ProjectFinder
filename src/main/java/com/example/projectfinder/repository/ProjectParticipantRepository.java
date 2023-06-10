@@ -13,13 +13,13 @@ import java.util.List;
 @Repository
 public interface ProjectParticipantRepository extends JpaRepository<ProjectParticipant, ProjectParticipantKey> {
 
-    List<ProjectParticipant> findProjectParticipantByProject(ProjectEntity projectEntity);
+    @Query("select p from ProjectParticipant p where p.project = ?1 and p.participant.isDeleted IS false ")
+    List<ProjectParticipant> findAllUndeletedProjectParticipantsByProject(ProjectEntity projectEntity);
 
-    @Query(value = "SELECT * FROM project_participant\n" +
-            "WHERE project_id = ?1 AND participant_id = ?2 ", nativeQuery = true)
-    ProjectParticipant findCurrentUserAndCurrentProject(ProjectEntity currentProject, UserEntity currentUser);
     ProjectParticipant findAllByProjectAndParticipant(ProjectEntity currentProject, UserEntity currentUser);
 
-    List<ProjectParticipant> findAllByProject_IdAndLinkIsNotNull(Long currentProjectId);
+    @Query("SELECT p FROM ProjectParticipant AS p " +
+            "WHERE p.project.id = ?1 AND p.link IS NOT NULL AND p.participant.isDeleted IS false ")
+    List<ProjectParticipant> findAllByProjectIdAndLinkIsNotNullAndParticipantIsUndeleted(Long currentProjectId);
 
 }

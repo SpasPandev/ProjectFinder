@@ -6,19 +6,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
 
-    @Query("SELECT p.id FROM ProjectEntity AS p JOIN p.technologies AS t WHERE t.id IN ?1")
-    Set<Long> findListOfProjectsIdsForConcretTehnologies(List<Long> tehnologyIds);
+    @Query("SELECT p FROM ProjectEntity AS p JOIN FETCH p.technologies AS t " +
+            "WHERE t.id in ?1 AND p.isDeleted IS false")
+    List<ProjectEntity> findAllUndeletedProjectsByTechnologiesIn(List<Long> technologiesIds);
 
     @Query("SELECT p FROM ProjectEntity AS p WHERE p.isDeleted = false ORDER BY p.id DESC")
     List<ProjectEntity> findAllByDeletedIsFalseOrderByIdDesc();
 
-    @Query("SELECT p.id FROM ProjectEntity AS p JOIN p.participant AS par WHERE par.participant.id = ?1")
-    List<Long> listOfAllProjectsIds(Long currentUserId);
+    @Query("SELECT p FROM ProjectEntity AS p JOIN p.participant AS par " +
+            "WHERE par.participant.id = ?1 AND p.isDeleted IS false")
+    List<ProjectEntity> findAllUndeletedProjectsByCurrentUserId(Long currentUserId);
 
     @Query("SELECT t.id FROM ProjectEntity AS p JOIN p.technologies AS t WHERE p.id = ?1")
     List<Long> findTechnologyIdByProjectId(Long projectId);

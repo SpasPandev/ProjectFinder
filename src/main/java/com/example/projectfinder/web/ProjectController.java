@@ -70,9 +70,7 @@ public class ProjectController {
 
         boolean isAuthor = projectService.isAuthor(id, currentUser.getId());
 
-        if (isAuthor) {
-            model.addAttribute("isAuthor", isAuthor);
-        }
+        model.addAttribute("isAuthor", isAuthor);
 
         return "project";
     }
@@ -98,10 +96,10 @@ public class ProjectController {
                                        BindingResult bindingResult, RedirectAttributes redirectAttributes,
                                        @AuthenticationPrincipal ApplicationUser currentUser) {
 
-        boolean isChoosenTechnologyListEmpty = createProjectBindingModel.getTechnologies().isEmpty();
+        boolean isChosenTechnologyListEmpty = createProjectBindingModel.getTechnologies().isEmpty();
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
+            redirectAttributes.addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
             redirectAttributes.addFlashAttribute("createProjectBindingModel", createProjectBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createProjectBindingModel", bindingResult);
 

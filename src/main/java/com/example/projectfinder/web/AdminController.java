@@ -66,7 +66,7 @@ public class AdminController {
     public String deleteUser(@PathVariable Long id) {
 
 //        userService.deleteUserById(id);
-        userService.setIsDeleatedStatusTrue(id);
+        userService.setIsDeletedStatusTrue(id);
 
         return "redirect:/admin";
     }

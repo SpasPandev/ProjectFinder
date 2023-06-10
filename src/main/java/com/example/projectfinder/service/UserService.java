@@ -36,5 +36,7 @@ public interface UserService {
 
     void deleteUserById(Long userId);
 
-    void setIsDeleatedStatusTrue(Long id);
+    void setIsDeletedStatusTrue(Long id);
+
+    List<Long> finsUserTechnologiesIdsByUserId(Long userId);
 }

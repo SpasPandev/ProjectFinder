@@ -1,6 +1,5 @@
 package com.example.projectfinder.web;
 
-import com.example.projectfinder.repository.UserRepository;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.service.impl.ApplicationUser;
@@ -15,14 +14,12 @@ public class HomeController {
 
     private final ProjectService projectService;
     private final UserService userService;
-    private final UserRepository userRepository;
 
     private boolean interests = false;
 
-    public HomeController(ProjectService projectService, UserService userService, UserRepository userRepository) {
+    public HomeController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/home")
@@ -39,9 +36,9 @@ public class HomeController {
         model.addAttribute("projectsList", this.projectService.findAllProjectViewsOrderDescId());
 
         if (!currentUserRoleNameInString.equals("COMPANY")) {
-            model.addAttribute("allProjectsForConcretTehnology",
-                    projectService.findAllProjectsForConcretTehnology(
-                            userRepository.findTechnologyIdsByUserId(currentUser.getId())));
+            model.addAttribute("allProjectsForConcreteTechnologies",
+                    projectService.findAllProjectsForConcreteTechnologies(
+                            userService.finsUserTechnologiesIdsByUserId(currentUser.getId())));
 
             model.addAttribute("currentUserTechnologyNameInString",
                     userService.findUserTechnologyNameInString(currentUser.getId()));
@@ -51,13 +48,9 @@ public class HomeController {
     }
 
     @PostMapping("/home")
-    public String changeViewOfPresentedProjects(Model model) {
+    public String changeViewOfPresentedProjects() {
 
-        if (interests == false) {
-            interests = true;
-        } else {
-            interests = false;
-        }
+        interests = !interests;
 
         return "redirect:/home";
     }

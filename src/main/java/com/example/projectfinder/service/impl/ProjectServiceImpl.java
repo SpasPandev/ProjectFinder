@@ -3,7 +3,6 @@ package com.example.projectfinder.service.impl;
 import com.example.projectfinder.model.entity.ProjectEntity;
 import com.example.projectfinder.model.entity.ProjectParticipant;
 import com.example.projectfinder.model.entity.UserEntity;
-import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import com.example.projectfinder.model.service.ProjectServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.ProjectViewModel;
@@ -11,20 +10,18 @@ import com.example.projectfinder.repository.*;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.TechnologyService;
 import com.example.projectfinder.service.UserService;
+import com.example.projectfinder.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
-
     private final ModelMapper modelMapper;
     private final UserService userService;
     private final TechnologyService technologyService;
@@ -46,28 +43,20 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectServiceModel findProjectById(Long id) {
 
-        ProjectServiceModel projectServiceModel = projectRepository
+        return projectRepository
                 .findById(id)
                 .map(projectEntity -> modelMapper.map(projectEntity, ProjectServiceModel.class))
-                .orElse(null);
-        return projectServiceModel;
-
+                .orElseThrow();
     }
 
     @Transactional
     @Override
     public List<ProjectViewModel> findAllProjectViewsOrderDescId() {
 
-        List<ProjectViewModel> allProjectViewsList =
-                this.projectRepository.findAllByDeletedIsFalseOrderByIdDesc()
-                        .stream().map(projectEntity -> {
-                            ProjectViewModel projectViewModel = modelMapper.map(projectEntity, ProjectViewModel.class);
-
-                            return projectViewModel;
-                        })
-                        .collect(Collectors.toList());
-
-        return allProjectViewsList;
+        return this.projectRepository.findAllByDeletedIsFalseOrderByIdDesc()
+                .stream()
+                .map(projectEntity -> modelMapper.map(projectEntity, ProjectViewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -80,7 +69,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectEntity.setTechnologies(projectServiceModel
                 .getTechnologies()
                 .stream()
-                .map((TechnologyNameEnum technologyNameEnum) -> technologyService.findTechnologyByName(technologyNameEnum))
+                .map(technologyService::findTechnologyByName)
                 .collect(Collectors.toList()));
 
         projectRepository.save(projectEntity);
@@ -89,9 +78,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void participateInProject(Long id, Long currentUserId) {
 
-        ProjectEntity projectEntity = projectRepository.findById(id).get();
+        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("ProjectEntity was not found!"));
 
-        UserEntity userEntity = userRepository.findById(currentUserId).get();
+        UserEntity userEntity = userRepository.findById(currentUserId).orElseThrow(() ->
+                new ObjectNotFoundException("UserEntity was not found!"));
 
         ProjectParticipant projectParticipant = new ProjectParticipant();
 
@@ -106,9 +97,11 @@ public class ProjectServiceImpl implements ProjectService {
 
         boolean isParticipant = false;
 
-        ProjectEntity projectEntity = projectRepository.findById(id).get();
+        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("ProjectEntity was not found!"));
 
-        UserEntity userEntity = userRepository.findById(currentUserId).get();
+        UserEntity userEntity = userRepository.findById(currentUserId).orElseThrow(() ->
+                new ObjectNotFoundException("UserEntity was not found!"));
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findAllByProjectAndParticipant(projectEntity, userEntity);
@@ -124,36 +117,22 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectViewModel> showCurrentUserProjects(Long currentUserId) {
 
-        List<Long> listOfAllProjectsIds = projectRepository.listOfAllProjectsIds(currentUserId);
+        List<ProjectEntity> allNotDeletedProjectsForCurrentUser =
+                projectRepository.findAllUndeletedProjectsByCurrentUserId(currentUserId);
 
-        List<ProjectViewModel> listOfCurrentUserProjects = new ArrayList<>();
-
-        for (int i = listOfAllProjectsIds.size() - 1; i >= 0; i--) {
-
-            if (!projectRepository.findById(listOfAllProjectsIds.get(i)).get().isDeleted()) {
-                listOfCurrentUserProjects
-                        .add(modelMapper.map(projectRepository.findById(listOfAllProjectsIds.get(i)).get(), ProjectViewModel.class));
-            }
-        }
-
-        return listOfCurrentUserProjects;
+        return allNotDeletedProjectsForCurrentUser
+                .stream()
+                .map(project -> modelMapper.map(project, ProjectViewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<ProjectParticipant> showAllParticipants(Long id) {
 
-        List<ProjectParticipant> allProjectParticipants = projectParticipantRepository
-                .findProjectParticipantByProject(projectRepository.findById(id).get());
+        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("Project was not found!"));
 
-        for (int i = 0; i < allProjectParticipants.size(); i++) {
-
-            if (allProjectParticipants.get(i).getParticipant().isDeleted()) {
-                allProjectParticipants.remove(i);
-                i--;
-            }
-        }
-
-        return allProjectParticipants;
+        return projectParticipantRepository.findAllUndeletedProjectParticipantsByProject(projectEntity);
     }
 
     @Override
@@ -161,9 +140,11 @@ public class ProjectServiceImpl implements ProjectService {
 
         boolean isSubmitted = false;
 
-        ProjectEntity projectEntity = projectRepository.findById(id).get();
+        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("ProjectEntity was not found!"));
 
-        UserEntity userEntity = userRepository.findById(currentUserId).get();
+        UserEntity userEntity = userRepository.findById(currentUserId).orElseThrow(() ->
+                new ObjectNotFoundException("UserEntity was not found!"));
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findAllByProjectAndParticipant(projectEntity, userEntity);
@@ -180,17 +161,17 @@ public class ProjectServiceImpl implements ProjectService {
 
         List<Long> currentProjectTechnologyId = projectRepository.findTechnologyIdByProjectId(id);
 
-        List<String> currentProjectTechnologyName = technologyRepository.findTechnologyNameInStringById(currentProjectTechnologyId);
-
-        return currentProjectTechnologyName;
+        return technologyRepository.findTechnologyNameInStringById(currentProjectTechnologyId);
     }
 
     @Override
     public void submitLink(UserServiceModel userServiceModel, Long id, Long currentUserId) {
 
-        ProjectEntity currentProject = projectRepository.findById(id).get();
+        ProjectEntity currentProject = projectRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("Project was not found!"));
 
-        UserEntity currentUserEntity = userRepository.findById(currentUserId).get();
+        UserEntity currentUserEntity = userRepository.findById(currentUserId).orElseThrow(() ->
+                new ObjectNotFoundException("User was not found!"));
 
         ProjectParticipant projectParticipant = projectParticipantRepository
                 .findAllByProjectAndParticipant(currentProject, currentUserEntity);
@@ -203,51 +184,28 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectParticipant> currentProjectUploaders(Long currentProjectId) {
 
-        List<ProjectParticipant> listOfAllProjectParticipantsUploadedOnCurrentProject =
-                projectParticipantRepository.findAllByProject_IdAndLinkIsNotNull(currentProjectId);
-
-        for (int i = 0; i < listOfAllProjectParticipantsUploadedOnCurrentProject.size(); i++) {
-
-            if (listOfAllProjectParticipantsUploadedOnCurrentProject.get(i).getParticipant().isDeleted()) {
-                listOfAllProjectParticipantsUploadedOnCurrentProject.remove(i);
-                i--;
-            }
-        }
-
-        return listOfAllProjectParticipantsUploadedOnCurrentProject;
+        return projectParticipantRepository
+                .findAllByProjectIdAndLinkIsNotNullAndParticipantIsUndeleted(currentProjectId);
     }
 
     @Override
     public List<ProjectEntity> findAllProjectsForAuthor(Long currentUserId) {
 
-        List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllByAuthor_Id(currentUserId);
-
-        return allProjectsForAuthor;
+        return projectRepository.findAllByAuthor_Id(currentUserId);
     }
 
     @Override
-    public List<ProjectEntity> findAllProjectsForConcretTehnology(List<Long> id) {
+    public List<ProjectEntity> findAllProjectsForConcreteTechnologies(List<Long> id) {
 
-        Set<Long> listOfProjectIds = projectRepository.findListOfProjectsIdsForConcretTehnologies(id);
-
-        List<ProjectEntity> listOfAllProjectsForConcretTehnology = new ArrayList<>();
-
-        for (Long element : listOfProjectIds) {
-
-            ProjectEntity project = projectRepository.findById(element).get();
-
-            if (project.isDeleted() == false) {
-                listOfAllProjectsForConcretTehnology.add(project);
-            }
-        }
-
-        return listOfAllProjectsForConcretTehnology;
+        return projectRepository.findAllUndeletedProjectsByTechnologiesIn(id);
     }
 
     @Override
     public Long findProjectAuthorId(Long projectId) {
 
-        return projectRepository.findById(projectId).get().getAuthor().getId();
+        return projectRepository.findById(projectId).orElseThrow(() ->
+                        new ObjectNotFoundException("Project was not found!"))
+                .getAuthor().getId();
     }
 
     @Override

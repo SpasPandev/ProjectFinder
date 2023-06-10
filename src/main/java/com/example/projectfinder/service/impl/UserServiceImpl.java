@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
         return userRepository
                 .findById(id)
                 .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
-                .orElse(null);
+                .orElseThrow();
 
     }
 
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 
         return this.userRepository.findById(id)
                 .map(this::mapProfileDetailsView)
-                .orElse(null);
+                .orElseThrow();
     }
 
     @Override
@@ -119,23 +119,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserViewModel> findAllUsers() {
 
-        List<UserViewModel> userViewModelList = userRepository.findAll().stream()
+        return userRepository.findAllUserWithFetchedRoles()
+                .stream()
                 .map(userEntity -> {
-                    UserViewModel userViewModel = modelMapper
-                            .map(userEntity, UserViewModel.class);
-
+                    UserViewModel userViewModel = modelMapper.map(userEntity, UserViewModel.class);
+                    userViewModel.setRole(userEntity
+                            .getRoles()
+                            .stream()
+                            .findFirst()
+                            .orElseThrow()
+                            .getRole()
+                            .name());
                     return userViewModel;
                 })
                 .collect(Collectors.toList());
-
-        List<Long> listOfIds = new ArrayList<>();
-
-        for (int i = 0; i < userViewModelList.size(); i++) {
-            listOfIds.add(userRepository.findUserRoleId(userViewModelList.get(i).getId()));
-            userViewModelList.get(i).setRole(roleRepository.findRoleName(listOfIds.get(i)));
-        }
-
-        return userViewModelList;
     }
 
     @Override
@@ -143,9 +140,7 @@ public class UserServiceImpl implements UserService {
 
         List<Long> currentUserTechnologyId = userRepository.findTechnologyIdsByUserId(currentUserId);
 
-        List<String> currentUserTechnologyNames = technologyRepository.findTechnologyNameInStringById(currentUserTechnologyId);
-
-        return currentUserTechnologyNames;
+        return technologyRepository.findTechnologyNameInStringById(currentUserTechnologyId);
     }
 
     @Override
@@ -155,7 +150,8 @@ public class UserServiceImpl implements UserService {
         List<RoleEntity> roles = new ArrayList<>();
         roles.add(userRole);
 
-        UserEntity userEntity = userRepository.findById(id).get();
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("User was not Found!"));
 
         userEntity.setRoles(roles);
 
@@ -166,9 +162,7 @@ public class UserServiceImpl implements UserService {
     public String findUserRoleNameInString(Long currentUserId) {
 
         Long userRoleId = userRepository.findUserRoleId(currentUserId);
-        String userRoleNameInString = roleRepository.findRoleName(userRoleId);
-
-        return userRoleNameInString;
+        return roleRepository.findRoleName(userRoleId);
     }
 
     @Override
@@ -183,8 +177,8 @@ public class UserServiceImpl implements UserService {
         List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllByAuthor_Id(userId);
 
         if (!allProjectsForAuthor.isEmpty()) {
-            allProjectsForAuthor.forEach(poject ->
-                    projectRepository.deleteById(poject.getId()));
+            allProjectsForAuthor.forEach(project ->
+                    projectRepository.deleteById(project.getId()));
         } else {
             userRepository.deleteById(userId);
         }
@@ -192,19 +186,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void setIsDeleatedStatusTrue(Long id) {
+    public void setIsDeletedStatusTrue(Long id) {
 
         List<ProjectEntity> allProjectsForAuthor = projectRepository.findAllByAuthor_Id(id);
 
         if (!allProjectsForAuthor.isEmpty()) {
-            allProjectsForAuthor.forEach(project -> {
-                project.setDeleted(true);
-            });
-
-            userRepository.findById(id).get().setDeleted(true);
-        } else {
-            userRepository.findById(id).get().setDeleted(true);
+            allProjectsForAuthor.forEach(project -> project.setDeleted(true));
         }
+
+        userRepository.getReferenceById(id).setDeleted(true);
+    }
+
+    @Override
+    public List<Long> finsUserTechnologiesIdsByUserId(Long userId) {
+
+        return userRepository.findTechnologyIdsByUserId(userId);
     }
 
     private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {

@@ -80,7 +80,7 @@ public class UserController {
 
         boolean isEmailExists = userService.isEmailExists(userRegisterBindingModel.getEmail());
 
-        boolean isChoosenTechnologyListEmpty = userRegisterBindingModel.getTechnology().isEmpty();
+        boolean isChosenTechnologyListEmpty = userRegisterBindingModel.getTechnology().isEmpty();
 
         if (isUsernameExists && isEmailExists) {
             redirectAttributes
@@ -115,16 +115,16 @@ public class UserController {
             return "redirect:/register";
         }
 
-        if (bindingResult.hasErrors() || isChoosenTechnologyListEmpty) {
+        if (bindingResult.hasErrors() || isChosenTechnologyListEmpty) {
 
             redirectAttributes
-                    .addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
+                    .addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
 
             redirectAttributes
                     .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
 
             redirectAttributes
-                    .addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
+                    .addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
 
             redirectAttributes
                     .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel",
@@ -181,18 +181,18 @@ public class UserController {
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes) {
 
-        boolean isChoosenTechnologyListEmpty = editProfileBindingModel.getTechnology().isEmpty();
+        boolean isChosenTechnologyListEmpty = editProfileBindingModel.getTechnology().isEmpty();
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfileBindingModel", bindingResult);
-            redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
+            redirectAttributes.addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
 
             return "redirect:/profile/" + id + "/editProfile";
         }
 
-        if (isChoosenTechnologyListEmpty) {
-            redirectAttributes.addFlashAttribute("isChoosenTechnologyListEmpty", isChoosenTechnologyListEmpty);
+        if (isChosenTechnologyListEmpty) {
+            redirectAttributes.addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
             redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
 
             return "redirect:/profile/" + id + "/editProfile";

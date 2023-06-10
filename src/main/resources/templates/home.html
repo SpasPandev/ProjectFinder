@@ -69,9 +69,9 @@
                 </th:block>
 
                 <th:block th:if="${interests}">
-                    <h5 th:if="${allProjectsForConcretTehnology.isEmpty()}"
+                    <h5 th:if="${allProjectsForConcreteTechnologies.isEmpty()}"
                         class="text-center mt-5">No projects available for your favorite technologies!</h5>
-                    <tr th:each="project : ${allProjectsForConcretTehnology}" th:object="${project}">
+                    <tr th:each="project : ${allProjectsForConcreteTechnologies}" th:object="${project}">
                         <td class="hover border">
                             <img src="/images/company.png" alt="profileIcon" width="32" height="32"
                                  class="rounded-circle m-1">

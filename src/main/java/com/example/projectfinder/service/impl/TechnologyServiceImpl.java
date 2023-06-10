@@ -4,6 +4,7 @@ import com.example.projectfinder.model.entity.TechnologyEntity;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import com.example.projectfinder.repository.TechnologyRepository;
 import com.example.projectfinder.service.TechnologyService;
+import com.example.projectfinder.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 
         return technologyRepository
                 .findTechnologyEntitiesByTechnologies(technologyNameEnum)
-                .orElse(null);
+                .orElseThrow(() -> new ObjectNotFoundException("Technologies were not found!"));
     }
 }
