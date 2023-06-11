@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons::head"></head>
+
+<body>
+
+<!-- Navigation -->
+<header th:replace="fragments/commons::navigation"></header>
+<!-- End Navigation -->
+
+
+    <div class="text-center pt-5">
+        <img src="/images/error.png" alt="errorIcon" height="150" width="150">
+        <h1 class="fw-bold" th:text="${status}"> Status code </h1>
+        <p class="fs-3"> Sorry, something get wrong! </p>
+        <p class="fs-4" th:text="|Message: ${message} |"> Error message </p>
+    </div>
+
+</body>
+</html>
