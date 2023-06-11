@@ -43,10 +43,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectServiceModel findProjectById(Long id) {
 
-        return projectRepository
-                .findById(id)
-                .map(projectEntity -> modelMapper.map(projectEntity, ProjectServiceModel.class))
-                .orElseThrow();
+        ProjectEntity projectEntity = findProjectEntityById(id);
+
+        return modelMapper.map(projectEntity, ProjectServiceModel.class);
     }
 
     @Transactional
@@ -78,11 +77,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void participateInProject(Long id, Long currentUserId) {
 
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() ->
-                new ObjectNotFoundException("ProjectEntity was not found!"));
+        ProjectEntity projectEntity = findProjectEntityById(id);
 
-        UserEntity userEntity = userRepository.findById(currentUserId).orElseThrow(() ->
-                new ObjectNotFoundException("UserEntity was not found!"));
+        UserEntity userEntity = findUserEntityById(currentUserId);
 
         ProjectParticipant projectParticipant = new ProjectParticipant();
 
@@ -97,11 +94,9 @@ public class ProjectServiceImpl implements ProjectService {
 
         boolean isParticipant = false;
 
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() ->
-                new ObjectNotFoundException("ProjectEntity was not found!"));
+        ProjectEntity projectEntity = findProjectEntityById(id);
 
-        UserEntity userEntity = userRepository.findById(currentUserId).orElseThrow(() ->
-                new ObjectNotFoundException("UserEntity was not found!"));
+        UserEntity userEntity = findUserEntityById(currentUserId);
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findAllByProjectAndParticipant(projectEntity, userEntity);
@@ -129,8 +124,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectParticipant> showAllParticipants(Long id) {
 
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() ->
-                new ObjectNotFoundException("Project was not found!"));
+        ProjectEntity projectEntity = findProjectEntityById(id);
 
         return projectParticipantRepository.findAllUndeletedProjectParticipantsByProject(projectEntity);
     }
@@ -140,11 +134,9 @@ public class ProjectServiceImpl implements ProjectService {
 
         boolean isSubmitted = false;
 
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() ->
-                new ObjectNotFoundException("ProjectEntity was not found!"));
+        ProjectEntity projectEntity = findProjectEntityById(id);
 
-        UserEntity userEntity = userRepository.findById(currentUserId).orElseThrow(() ->
-                new ObjectNotFoundException("UserEntity was not found!"));
+        UserEntity userEntity = findUserEntityById(currentUserId);
 
         ProjectParticipant currentProjectWithCurrentUser = projectParticipantRepository
                 .findAllByProjectAndParticipant(projectEntity, userEntity);
@@ -167,11 +159,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void submitLink(UserServiceModel userServiceModel, Long id, Long currentUserId) {
 
-        ProjectEntity currentProject = projectRepository.findById(id).orElseThrow(() ->
-                new ObjectNotFoundException("Project was not found!"));
+        ProjectEntity currentProject = findProjectEntityById(id);
 
-        UserEntity currentUserEntity = userRepository.findById(currentUserId).orElseThrow(() ->
-                new ObjectNotFoundException("User was not found!"));
+        UserEntity currentUserEntity = findUserEntityById(currentUserId);
 
         ProjectParticipant projectParticipant = projectParticipantRepository
                 .findAllByProjectAndParticipant(currentProject, currentUserEntity);
@@ -203,9 +193,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Long findProjectAuthorId(Long projectId) {
 
-        return projectRepository.findById(projectId).orElseThrow(() ->
-                        new ObjectNotFoundException("Project was not found!"))
-                .getAuthor().getId();
+        return findProjectEntityById(projectId).getAuthor().getId();
     }
 
     @Override
@@ -224,4 +212,13 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
     }
 
+    private UserEntity findUserEntityById(Long id) {
+        return userRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("User with id: " + id + " was not found!"));
+    }
+
+    private ProjectEntity findProjectEntityById(Long id) {
+        return projectRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("ProjectEntity with id: " + id + " was not found!"));
+    }
 }

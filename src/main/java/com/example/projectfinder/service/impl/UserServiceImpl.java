@@ -65,10 +65,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel findUserById(Long id) {
 
-        return userRepository
-                .findById(id)
-                .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
-                .orElseThrow();
+        UserEntity userEntity = findUserEntityById(id);
+
+        return modelMapper.map(userEntity, UserServiceModel.class);
 
     }
 
@@ -83,25 +82,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findCurrentLoginUserEntity(Long currentUserId) {
 
-        return userRepository
-                .findById(currentUserId)
-                .orElseThrow(() -> new ObjectNotFoundException("User was not Found!"));
+        return findUserEntityById(currentUserId);
     }
 
     @Override
     public EditProfileViewModel getById(Long id) {
 
-        return this.userRepository.findById(id)
-                .map(this::mapProfileDetailsView)
-                .orElseThrow();
+        UserEntity userEntity = findUserEntityById(id);
+
+        return mapProfileDetailsView(userEntity);
     }
 
     @Override
     public void updateProfile(EditProfileServiceModel editProfileServiceModel) {
 
-        UserEntity userEntity = this.userRepository.findById(editProfileServiceModel.getId())
-                .orElseThrow(() -> new ObjectNotFoundException("User with id " + editProfileServiceModel.getId() +
-                        " not found !"));
+        UserEntity userEntity = findUserEntityById(editProfileServiceModel.getId());
 
         userEntity.setName(editProfileServiceModel.getName());
         userEntity.setUsername(editProfileServiceModel.getUsername());
@@ -150,8 +145,7 @@ public class UserServiceImpl implements UserService {
         List<RoleEntity> roles = new ArrayList<>();
         roles.add(userRole);
 
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() ->
-                new ObjectNotFoundException("User was not Found!"));
+        UserEntity userEntity = findUserEntityById(id);
 
         userEntity.setRoles(roles);
 
@@ -215,4 +209,11 @@ public class UserServiceImpl implements UserService {
 
         return editProfileViewModel;
     }
+
+    private UserEntity findUserEntityById(Long id) {
+
+        return userRepository.findById(id).orElseThrow(() ->
+                new ObjectNotFoundException("User with id: " + id + " was not Found!"));
+    }
 }
+

@@ -32,7 +32,7 @@ public class ProjectViewsInterceptorServiceImpl implements ProjectViewsIntercept
         }
 
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() ->
-                new ObjectNotFoundException("Project not found"));
+                new ObjectNotFoundException("Project with id: " + projectId + " was not found"));
 
         projectEntity.setViewsCount(projectEntity.getViewsCount() + 1);
         projectRepository.save(projectEntity);
