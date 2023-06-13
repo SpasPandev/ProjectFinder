@@ -126,53 +126,53 @@ VALUES (5, 3),
        (5, 4);
 
 -- project
-INSERT INTO project (id, title, author_id, project_description)
+INSERT INTO project (id, title, author_id, project_description, views_count)
 VALUES (1, 'Gosho''s first project title', 3, 'Gosho''s first project description lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
                     blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. ');
+                    amet consectetur adipisicing elit. ', 0);
 
-INSERT INTO project (id, title, author_id, project_description)
+INSERT INTO project (id, title, author_id, project_description, views_count)
 VALUES (2, 'Gosho''s second project title', 3, 'Gosho''s second project description lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
                     blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. ');
+                    amet consectetur adipisicing elit. ', 0);
 
-INSERT INTO project (id, title, author_id, project_description)
+INSERT INTO project (id, title, author_id, project_description, views_count)
 VALUES (3, 'Bob''s first project title', 4, 'Bob''s first project description lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
                     blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. ');
+                    amet consectetur adipisicing elit. ', 0);
 
-INSERT INTO project (id, title, author_id, project_description)
+INSERT INTO project (id, title, author_id, project_description, views_count)
 VALUES (4, 'Gosho''s third project title', 3, 'Gosho''s third project description lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
                     blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. ');
+                    amet consectetur adipisicing elit. ', 0);
 
-INSERT INTO project (id, title, author_id, project_description)
+INSERT INTO project (id, title, author_id, project_description, views_count)
 VALUES (5, 'Bob''s second project title', 4, 'Bob''s second project description lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
                     blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. ');
+                    amet consectetur adipisicing elit. ', 0);
 
-INSERT INTO project (id, title, author_id, project_description)
+INSERT INTO project (id, title, author_id, project_description, views_count)
 VALUES (6, 'Bob''s third project title', 4, 'Bob''s third project description lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur voluptatibus saepe, doloremque
                     explicabo nemo asperiores at corporis voluptatum sint blanditiis maiores dolores molestias illo
                     voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur voluptatibus saepe, doloremque explicabo nemo asperiores at corporis voluptatum sint
                     blanditiis maiores dolores molestias illo voluptate quae rem nulla nobis sequi.Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. ');
+                    amet consectetur adipisicing elit. ', 0);
 
 -- project technologies
 INSERT INTO project_technologies (`project_entity_id`, `technologies_id`)
