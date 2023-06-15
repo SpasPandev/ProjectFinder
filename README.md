@@ -1,6 +1,6 @@
 # ProjectFinder
 
-ProjectFinder is a Spring Web MVC project that serves as a platform where companies can upload project tasks, and students can enroll for them and submit their developed solutions. 
+ProjectFinder is a Spring Web MVC project that serves as a platform where companies can upload project tasks, and students can enroll for them and submit their developed solutions.  
 The goal of this project is to create a system with a large database that stores all the projects, providing students with the opportunity to find project topics closely aligned with the real-world business environment.
 
 ## Technologies Used
