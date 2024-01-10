@@ -1,7 +1,7 @@
 package com.example.projectfinder.web;
 
 import com.example.projectfinder.model.dto.CreateProjectDto;
-import com.example.projectfinder.model.binding.SubmitLinkDto;
+import com.example.projectfinder.model.dto.SubmitLinkDto;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.service.ApplicationUser;
 import com.example.projectfinder.service.ProjectService;

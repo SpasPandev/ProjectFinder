@@ -1,4 +1,4 @@
-package com.example.projectfinder.model.binding;
+package com.example.projectfinder.model.dto;
 
 public class SubmitLinkDto {
 
