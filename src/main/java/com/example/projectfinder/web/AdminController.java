@@ -1,6 +1,6 @@
 package com.example.projectfinder.web;
 
-import com.example.projectfinder.model.binding.ChangeRoleBindingModel;
+import com.example.projectfinder.model.dto.ChangeRoleDto;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -26,8 +26,8 @@ public class AdminController {
     }
 
     @ModelAttribute
-    public ChangeRoleBindingModel changeRoleBindingModel() {
-        return new ChangeRoleBindingModel();
+    public ChangeRoleDto changeRoleDto() {
+        return new ChangeRoleDto();
     }
 
     @GetMapping("/admin")
@@ -40,22 +40,22 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/{id}")
-    public String adminChangeUserRole(@PathVariable Long id, @Valid ChangeRoleBindingModel changeRoleBindingModel,
+    public String adminChangeUserRole(@PathVariable Long id, @Valid ChangeRoleDto changeRoleDto,
                                       BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
 
             redirectAttributes
-                    .addFlashAttribute("changeRoleBindingModel", changeRoleBindingModel);
+                    .addFlashAttribute("changeRoleDto", changeRoleDto);
 
             redirectAttributes
-                    .addFlashAttribute("org.springframework.validation.BindingResult.changeRoleBindingModel",
+                    .addFlashAttribute("org.springframework.validation.BindingResult.changeRoleDto",
                             bindingResult);
 
             return "redirect:/admin";
         }
 
-        userService.adminChangeUserRole(modelMapper.map(changeRoleBindingModel, UserServiceModel.class), id);
+        userService.adminChangeUserRole(changeRoleDto, id);
 
         return "redirect:/admin";
     }

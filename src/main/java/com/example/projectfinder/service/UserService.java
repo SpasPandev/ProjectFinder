@@ -1,5 +1,6 @@
 package com.example.projectfinder.service;
 
+import com.example.projectfinder.model.dto.ChangeRoleDto;
 import com.example.projectfinder.model.dto.EditProfileDto;
 import com.example.projectfinder.model.dto.UserRegisterReqDto;
 import com.example.projectfinder.model.dto.UserLoginDto;
@@ -120,9 +121,9 @@ public class UserService {
         return technologyRepository.findTechnologyNameInStringById(currentUserTechnologyId);
     }
 
-    public void adminChangeUserRole(UserServiceModel userServiceModel, Long id) {
+    public void adminChangeUserRole(ChangeRoleDto changeRoleDto, Long id) {
 
-        RoleEntity userRole = this.roleRepository.findByRole(userServiceModel.getRole());
+        RoleEntity userRole = this.roleRepository.findByRole(changeRoleDto.getRole());
         List<RoleEntity> roles = new ArrayList<>();
         roles.add(userRole);
 
