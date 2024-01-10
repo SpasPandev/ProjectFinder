@@ -45,6 +45,12 @@ public class ProjectService {
     }
 
     @Transactional
+    public ProjectViewModel findProjectViewModelByProjectId(Long id) {
+
+        return modelMapper.map(findProjectEntityById(id), ProjectViewModel.class);
+    }
+
+    @Transactional
     public List<ProjectViewModel> findAllProjectViewsOrderDescId() {
 
         return this.projectRepository.findAllByDeletedIsFalseOrderByIdDesc()

@@ -4,7 +4,6 @@ import com.example.projectfinder.model.binding.CreateProjectBindingModel;
 import com.example.projectfinder.model.binding.SubmitLinkBindingModel;
 import com.example.projectfinder.model.service.ProjectServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
-import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.service.ApplicationUser;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
@@ -55,7 +54,7 @@ public class ProjectController {
         model.addAttribute("allParticipants", projectService.showAllParticipants(id));
 
         model.addAttribute("project",
-                modelMapper.map(projectService.findProjectById(id), ProjectViewModel.class));
+                projectService.findProjectViewModelByProjectId(id));
 
         model.addAttribute("isParticipant", isParticipant);
 
