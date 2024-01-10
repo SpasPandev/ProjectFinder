@@ -1,10 +1,10 @@
 package com.example.projectfinder.model.binding;
 
-public class SubmitLinkBindingModel {
+public class SubmitLinkDto {
 
     private String link;
 
-    public SubmitLinkBindingModel() {
+    public SubmitLinkDto() {
     }
 
     public String getLink() {

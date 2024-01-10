@@ -1,8 +1,7 @@
 package com.example.projectfinder.web;
 
 import com.example.projectfinder.model.dto.CreateProjectDto;
-import com.example.projectfinder.model.binding.SubmitLinkBindingModel;
-import com.example.projectfinder.model.service.ProjectServiceModel;
+import com.example.projectfinder.model.binding.SubmitLinkDto;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.service.ApplicationUser;
 import com.example.projectfinder.service.ProjectService;
@@ -42,8 +41,8 @@ public class ProjectController {
     }
 
     @ModelAttribute
-    public SubmitLinkBindingModel submitLinkBindingModel() {
-        return new SubmitLinkBindingModel();
+    public SubmitLinkDto submitLinkDto() {
+        return new SubmitLinkDto();
     }
 
     @GetMapping("/project/{id}")
@@ -111,12 +110,12 @@ public class ProjectController {
     }
 
     @PostMapping("/submit/{id}")
-    public String submitProject(@PathVariable Long id, @Valid SubmitLinkBindingModel submitLinkBindingModel,
+    public String submitProject(@PathVariable Long id, @Valid SubmitLinkDto submitLinkDto,
                                 BindingResult bindingResult, RedirectAttributes redirectAttributes,
                                 @AuthenticationPrincipal ApplicationUser currentUser) {
 
         Pattern pattern = Pattern.compile("^(https?:\\/\\/github.com?\\/)\\w*(\\/)\\w*");
-        Matcher matcher = pattern.matcher(submitLinkBindingModel.getLink());
+        Matcher matcher = pattern.matcher(submitLinkDto.getLink());
 
         if (!matcher.matches()) {
 
@@ -127,15 +126,15 @@ public class ProjectController {
 
         if (bindingResult.hasErrors()) {
 
-            redirectAttributes.addFlashAttribute("submitLinkBindingModel", submitLinkBindingModel);
+            redirectAttributes.addFlashAttribute("submitLinkDto", submitLinkDto);
 
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.submitLinkBindingModel",
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.submitLinkDto",
                     bindingResult);
 
             return "redirect:/project/{id}";
         }
 
-        projectService.submitLink(modelMapper.map(submitLinkBindingModel, UserServiceModel.class),
+        projectService.submitLink(modelMapper.map(submitLinkDto, UserServiceModel.class),
                 id, currentUser.getId());
 
         return "redirect:/project/{id}";

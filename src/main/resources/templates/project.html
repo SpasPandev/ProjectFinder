@@ -145,7 +145,7 @@
 
                             <form th:method="post"
                                   th:action="@{/submit/{id}(id = ${project.id})}"
-                                  th:object="${submitLinkBindingModel}">
+                                  th:object="${submitLinkDto}">
                                 <div class="modal-body">
                                     <label>Enter link for your github repository</label>
                                     <input th:field="*{link}" type="text"
