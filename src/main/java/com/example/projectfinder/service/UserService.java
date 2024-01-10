@@ -1,10 +1,9 @@
 package com.example.projectfinder.service;
 
-import com.example.projectfinder.model.dto.UserRegisterReqDto;
 import com.example.projectfinder.model.dto.EditProfileDto;
+import com.example.projectfinder.model.dto.UserRegisterReqDto;
 import com.example.projectfinder.model.dto.UserLoginDto;
 import com.example.projectfinder.model.entity.*;
-import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.repository.*;
@@ -79,17 +78,17 @@ public class UserService {
         return findUserEntityById(currentUserId);
     }
 
-    public void updateProfile(EditProfileServiceModel editProfileServiceModel) {
+    public void updateProfile(EditProfileDto editProfileDto) {
 
-        UserEntity userEntity = findUserEntityById(editProfileServiceModel.getId());
+        UserEntity userEntity = findUserEntityById(editProfileDto.getId());
 
-        userEntity.setName(editProfileServiceModel.getName());
-        userEntity.setUsername(editProfileServiceModel.getUsername());
-        userEntity.setEmail(editProfileServiceModel.getEmail());
-        userEntity.setPassword(editProfileServiceModel.getPassword());
-        userEntity.setDescription(editProfileServiceModel.getDescription());
+        userEntity.setName(editProfileDto.getName());
+        userEntity.setUsername(editProfileDto.getUsername());
+        userEntity.setEmail(editProfileDto.getEmail());
+        userEntity.setPassword(passwordEncoder.encode(editProfileDto.getPassword()));
+        userEntity.setDescription(editProfileDto.getDescription());
 
-        List<TechnologyEntity> technologies = technologyRepository.findByTechnologiesIn(editProfileServiceModel.getTechnology());
+        List<TechnologyEntity> technologies = technologyRepository.findByTechnologiesIn(editProfileDto.getTechnology());
 
         userEntity.setTechnologies(technologies);
 
@@ -174,8 +173,8 @@ public class UserService {
         return userRepository.findTechnologyIdsByUserId(userId);
     }
 
-    public EditProfileDto getEditProfileDtoById(Long id) {
-        return modelMapper.map(userRepository.findById(id).get(), EditProfileDto.class);
+    public com.example.projectfinder.model.dto.EditProfileDto getEditProfileDtoById(Long id) {
+        return modelMapper.map(userRepository.findById(id).get(), com.example.projectfinder.model.dto.EditProfileDto.class);
     }
 
     private UserEntity findUserEntityById(Long id) {

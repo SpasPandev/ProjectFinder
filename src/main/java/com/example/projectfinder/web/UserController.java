@@ -1,10 +1,8 @@
 package com.example.projectfinder.web;
 
-import com.example.projectfinder.model.binding.EditProfileBindingModel;
-import com.example.projectfinder.model.dto.UserRegisterReqDto;
 import com.example.projectfinder.model.dto.EditProfileDto;
+import com.example.projectfinder.model.dto.UserRegisterReqDto;
 import com.example.projectfinder.model.dto.UserLoginDto;
-import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.service.ApplicationUser;
@@ -165,7 +163,7 @@ public class UserController {
             return "redirect:/home";
         }
 
-        EditProfileDto editProfileDto = userService.getEditProfileDtoById(id);
+        com.example.projectfinder.model.dto.EditProfileDto editProfileDto = userService.getEditProfileDtoById(id);
 
         model.addAttribute("editProfileDto", editProfileDto);
 
@@ -175,15 +173,15 @@ public class UserController {
     @PatchMapping("/profile/{id}/editProfile")
     public String editProfileConfirm(@PathVariable Long id,
                                      @AuthenticationPrincipal ApplicationUser currentUser,
-                                     @Valid EditProfileBindingModel editProfileBindingModel,
+                                     @Valid EditProfileDto editProfileDto,
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes) {
 
-        boolean isChosenTechnologyListEmpty = editProfileBindingModel.getTechnology().isEmpty();
+        boolean isChosenTechnologyListEmpty = editProfileDto.getTechnology().isEmpty();
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfileBindingModel", bindingResult);
+            redirectAttributes.addFlashAttribute("editProfileDto", editProfileDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfileDto", bindingResult);
             redirectAttributes.addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
 
             return "redirect:/profile/" + id + "/editProfile";
@@ -191,33 +189,30 @@ public class UserController {
 
         if (isChosenTechnologyListEmpty) {
             redirectAttributes.addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
-            redirectAttributes.addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+            redirectAttributes.addFlashAttribute("editProfileDto", editProfileDto);
 
             return "redirect:/profile/" + id + "/editProfile";
         }
 
-        boolean isUsernameExists = userService.isUsernameExists(editProfileBindingModel.getUsername());
-        boolean isEmailExists = userService.isEmailExists(editProfileBindingModel.getEmail());
+        boolean isUsernameExists = userService.isUsernameExists(editProfileDto.getUsername());
+        boolean isEmailExists = userService.isEmailExists(editProfileDto.getEmail());
 
-        if (isUsernameExists && !currentUser.getUsername().equals(editProfileBindingModel.getUsername())) {
+        if (isUsernameExists && !currentUser.getUsername().equals(editProfileDto.getUsername())) {
             redirectAttributes
                     .addFlashAttribute("showUsernameExistsError", true)
-                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+                    .addFlashAttribute("editProfileDto", editProfileDto);
 
             return "redirect:/profile/" + id + "/editProfile";
-        } else if (isEmailExists && !currentUser.getEmail().equals(editProfileBindingModel.getEmail())) {
+        }
+        else if (isEmailExists && !currentUser.getEmail().equals(editProfileDto.getEmail())) {
             redirectAttributes
                     .addFlashAttribute("showEmailExistsError", true)
-                    .addFlashAttribute("editProfileBindingModel", editProfileBindingModel);
+                    .addFlashAttribute("editProfileDto", editProfileDto);
 
             return "redirect:/profile/" + id + "/editProfile";
         }
 
-        EditProfileServiceModel editProfileServiceModel = modelMapper.map(editProfileBindingModel, EditProfileServiceModel.class);
-        editProfileServiceModel.setId(id);
-        editProfileServiceModel.setPassword(passwordEncoder.encode(editProfileBindingModel.getPassword()));
-
-        this.userService.updateProfile(editProfileServiceModel);
+        this.userService.updateProfile(editProfileDto);
 
         return "redirect:/profile/" + id;
     }
