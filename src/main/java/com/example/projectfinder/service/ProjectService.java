@@ -1,5 +1,6 @@
 package com.example.projectfinder.service;
 
+import com.example.projectfinder.model.dto.CreateProjectDto;
 import com.example.projectfinder.model.entity.ProjectEntity;
 import com.example.projectfinder.model.entity.ProjectParticipant;
 import com.example.projectfinder.model.entity.UserEntity;
@@ -59,13 +60,13 @@ public class ProjectService {
                 .collect(Collectors.toList());
     }
 
-    public void createNewProject(ProjectServiceModel projectServiceModel, Long currentUserId) {
+    public void createNewProject(CreateProjectDto createProjectDto, Long currentUserId) {
 
-        ProjectEntity projectEntity = modelMapper.map(projectServiceModel, ProjectEntity.class);
+        ProjectEntity projectEntity = modelMapper.map(createProjectDto, ProjectEntity.class);
 
         projectEntity.setAuthor(userService.findCurrentLoginUserEntity(currentUserId));
 
-        projectEntity.setTechnologies(projectServiceModel
+        projectEntity.setTechnologies(createProjectDto
                 .getTechnologies()
                 .stream()
                 .map(technologyService::findTechnologyByName)

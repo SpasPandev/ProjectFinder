@@ -1,11 +1,11 @@
-package com.example.projectfinder.model.binding;
+package com.example.projectfinder.model.dto;
 
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
-public class CreateProjectBindingModel {
+public class CreateProjectDto {
 
     @NotEmpty
     private String title;
@@ -14,7 +14,7 @@ public class CreateProjectBindingModel {
     @NotEmpty
     private Set<TechnologyNameEnum> technologies;
 
-    public CreateProjectBindingModel() {
+    public CreateProjectDto() {
     }
 
     public String getTitle() {

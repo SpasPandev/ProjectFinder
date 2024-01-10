@@ -1,6 +1,6 @@
 package com.example.projectfinder.web;
 
-import com.example.projectfinder.model.binding.CreateProjectBindingModel;
+import com.example.projectfinder.model.dto.CreateProjectDto;
 import com.example.projectfinder.model.binding.SubmitLinkBindingModel;
 import com.example.projectfinder.model.service.ProjectServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
@@ -37,8 +37,8 @@ public class ProjectController {
     }
 
     @ModelAttribute
-    public CreateProjectBindingModel createProjectBindingModel() {
-        return new CreateProjectBindingModel();
+    public CreateProjectDto createProjectDto() {
+        return new CreateProjectDto();
     }
 
     @ModelAttribute
@@ -91,24 +91,21 @@ public class ProjectController {
 
     @PreAuthorize("!hasRole('STUDENT')")
     @PostMapping("/createProject")
-    public String createProjectConfirm(@Valid CreateProjectBindingModel createProjectBindingModel,
+    public String createProjectConfirm(@Valid CreateProjectDto createProjectDto,
                                        BindingResult bindingResult, RedirectAttributes redirectAttributes,
                                        @AuthenticationPrincipal ApplicationUser currentUser) {
 
-        boolean isChosenTechnologyListEmpty = createProjectBindingModel.getTechnologies().isEmpty();
+        boolean isChosenTechnologyListEmpty = createProjectDto.getTechnologies().isEmpty();
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
-            redirectAttributes.addFlashAttribute("createProjectBindingModel", createProjectBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createProjectBindingModel", bindingResult);
+            redirectAttributes.addFlashAttribute("createProjectDto", createProjectDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createProjectDto", bindingResult);
 
             return "redirect:createProject";
         }
 
-        ProjectServiceModel projectServiceModel =
-                modelMapper.map(createProjectBindingModel, ProjectServiceModel.class);
-
-        projectService.createNewProject(projectServiceModel, currentUser.getId());
+        projectService.createNewProject(createProjectDto, currentUser.getId());
 
         return "redirect:home";
     }
