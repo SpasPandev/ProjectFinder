@@ -1,6 +1,7 @@
 package com.example.projectfinder.service.impl;
 
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
+import com.example.projectfinder.model.dto.EditProfileDto;
 import com.example.projectfinder.model.entity.*;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
@@ -84,14 +85,6 @@ public class UserServiceImpl implements UserService {
     public UserEntity findCurrentLoginUserEntity(Long currentUserId) {
 
         return findUserEntityById(currentUserId);
-    }
-
-    @Override
-    public EditProfileViewModel getById(Long id) {
-
-        UserEntity userEntity = findUserEntityById(id);
-
-        return mapProfileDetailsView(userEntity);
     }
 
     @Override
@@ -198,17 +191,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findTechnologyIdsByUserId(userId);
     }
 
-    private EditProfileViewModel mapProfileDetailsView(UserEntity userEntity) {
-
-        EditProfileViewModel editProfileViewModel = modelMapper.map(userEntity, EditProfileViewModel.class);
-
-        editProfileViewModel.setName(userEntity.getName());
-        editProfileViewModel.setUsername(userEntity.getUsername());
-        editProfileViewModel.setEmail(userEntity.getEmail());
-        editProfileViewModel.setPassword(userEntity.getPassword());
-        editProfileViewModel.setDescription(userEntity.getDescription());
-
-        return editProfileViewModel;
+    @Override
+    public EditProfileDto getEditProfileDtoById(Long id) {
+        return modelMapper.map(userRepository.findById(id).get(), EditProfileDto.class);
     }
 
     private UserEntity findUserEntityById(Long id) {

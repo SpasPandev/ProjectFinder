@@ -2,6 +2,7 @@ package com.example.projectfinder.web;
 
 import com.example.projectfinder.model.binding.EditProfileBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
+import com.example.projectfinder.model.dto.EditProfileDto;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
@@ -165,10 +166,9 @@ public class UserController {
             return "redirect:/home";
         }
 
-        EditProfileViewModel editProfileViewModel = this.userService.getById(id);
-        EditProfileBindingModel editProfileBindingModel = modelMapper.map(editProfileViewModel, EditProfileBindingModel.class);
+        EditProfileDto editProfileDto = userService.getEditProfileDtoById(id);
 
-        model.addAttribute("editProfileBindingModel", editProfileBindingModel);
+        model.addAttribute("editProfileDto", editProfileDto);
 
         return "editProfile";
     }

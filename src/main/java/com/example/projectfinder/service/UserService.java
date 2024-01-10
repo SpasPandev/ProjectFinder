@@ -1,6 +1,7 @@
 package com.example.projectfinder.service;
 
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
+import com.example.projectfinder.model.dto.EditProfileDto;
 import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
@@ -21,8 +22,6 @@ public interface UserService {
 
     UserEntity findCurrentLoginUserEntity(Long currentUserId);
 
-    EditProfileViewModel getById(Long id);
-
     void updateProfile(EditProfileServiceModel editProfileServiceModel);
 
     List<UserViewModel> findAllUsers();
@@ -40,4 +39,6 @@ public interface UserService {
     void setIsDeletedStatusTrue(Long id);
 
     List<Long> finsUserTechnologiesIdsByUserId(Long userId);
+
+    EditProfileDto getEditProfileDtoById(Long id);
 }
