@@ -1,6 +1,6 @@
 package com.example.projectfinder.service;
 
-import com.example.projectfinder.model.binding.UserRegisterBindingModel;
+import com.example.projectfinder.model.dto.UserRegisterReqDto;
 import com.example.projectfinder.model.dto.EditProfileDto;
 import com.example.projectfinder.model.dto.UserLoginDto;
 import com.example.projectfinder.model.entity.*;
@@ -35,17 +35,17 @@ public class UserService {
         this.projectRepository = projectRepository;
     }
 
-    public void registerUser(UserRegisterBindingModel userRegisterBindingModel) {
+    public void registerUser(UserRegisterReqDto userRegisterReqDto) {
 
-        RoleEntity userRole = this.roleRepository.findByRole(userRegisterBindingModel.getRole());
+        RoleEntity userRole = this.roleRepository.findByRole(userRegisterReqDto.getRole());
         List<RoleEntity> roles = new ArrayList<>();
         roles.add(userRole);
 
-        List<TechnologyEntity> technologies = technologyRepository.findTechnologyEntitiesByTechnologiesIn(userRegisterBindingModel.getTechnology());
+        List<TechnologyEntity> technologies = technologyRepository.findTechnologyEntitiesByTechnologiesIn(userRegisterReqDto.getTechnology());
 
-        UserEntity userEntity = modelMapper.map(userRegisterBindingModel, UserEntity.class);
+        UserEntity userEntity = modelMapper.map(userRegisterReqDto, UserEntity.class);
 
-        userEntity.setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(userRegisterReqDto.getPassword()));
 
         userEntity.setRoles(roles);
 

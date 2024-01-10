@@ -1,11 +1,10 @@
 package com.example.projectfinder.web;
 
 import com.example.projectfinder.model.binding.EditProfileBindingModel;
-import com.example.projectfinder.model.binding.UserRegisterBindingModel;
+import com.example.projectfinder.model.dto.UserRegisterReqDto;
 import com.example.projectfinder.model.dto.EditProfileDto;
 import com.example.projectfinder.model.dto.UserLoginDto;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
-import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.UserViewModel;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.service.ApplicationUser;
@@ -36,8 +35,8 @@ public class UserController {
     }
 
     @ModelAttribute
-    public UserRegisterBindingModel userRegisterBindingModel() {
-        return new UserRegisterBindingModel();
+    public UserRegisterReqDto userRegisterReqDto() {
+        return new UserRegisterReqDto();
     }
 
     @GetMapping("/login")
@@ -73,27 +72,27 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid UserRegisterBindingModel userRegisterBindingModel,
+    public String register(@Valid UserRegisterReqDto userRegisterReqDto,
                            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        boolean isUsernameExists = userService.isUsernameExists(userRegisterBindingModel.getUsername());
+        boolean isUsernameExists = userService.isUsernameExists(userRegisterReqDto.getUsername());
 
-        boolean isEmailExists = userService.isEmailExists(userRegisterBindingModel.getEmail());
+        boolean isEmailExists = userService.isEmailExists(userRegisterReqDto.getEmail());
 
-        boolean isChosenTechnologyListEmpty = userRegisterBindingModel.getTechnology().isEmpty();
+        boolean isChosenTechnologyListEmpty = userRegisterReqDto.getTechnology().isEmpty();
 
         if (isUsernameExists && isEmailExists) {
             redirectAttributes
                     .addFlashAttribute("showUsernameExistsError", true)
                     .addFlashAttribute("showEmailExistsError", true)
-                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+                    .addFlashAttribute("userRegisterReqDto", userRegisterReqDto);
 
             return "redirect:/register";
         } else if (isUsernameExists) {
 
             redirectAttributes.addFlashAttribute("showUsernameExistsError", true);
 
-            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+            redirectAttributes.addFlashAttribute("userRegisterReqDto", userRegisterReqDto);
 
             return "redirect:/register";
 
@@ -101,16 +100,16 @@ public class UserController {
 
             redirectAttributes.addFlashAttribute("showEmailExistsError", true);
 
-            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+            redirectAttributes.addFlashAttribute("userRegisterReqDto", userRegisterReqDto);
 
             return "redirect:/register";
         }
 
-        if (!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
+        if (!userRegisterReqDto.getPassword().equals(userRegisterReqDto.getConfirmPassword())) {
 
             redirectAttributes
                     .addFlashAttribute("showPasswordsDontMatchError", true)
-                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+                    .addFlashAttribute("userRegisterReqDto", userRegisterReqDto);
 
             return "redirect:/register";
         }
@@ -121,19 +120,19 @@ public class UserController {
                     .addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
 
             redirectAttributes
-                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+                    .addFlashAttribute("userRegisterReqDto", userRegisterReqDto);
 
             redirectAttributes
                     .addFlashAttribute("isChosenTechnologyListEmpty", isChosenTechnologyListEmpty);
 
             redirectAttributes
-                    .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel",
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterReqDto",
                             bindingResult);
 
             return "redirect:/register";
         }
 
-        userService.registerUser(userRegisterBindingModel);
+        userService.registerUser(userRegisterReqDto);
 
         return "redirect:login";
     }

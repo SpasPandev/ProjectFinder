@@ -1,4 +1,4 @@
-package com.example.projectfinder.model.binding;
+package com.example.projectfinder.model.dto;
 
 import com.example.projectfinder.model.entity.enums.RoleNameEnum;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-public class UserRegisterBindingModel {
+public class UserRegisterReqDto {
 
     @NotEmpty
     private String name;
@@ -26,7 +26,7 @@ public class UserRegisterBindingModel {
     @NotNull
     private Set<TechnologyNameEnum> technology;
 
-    public UserRegisterBindingModel() {
+    public UserRegisterReqDto() {
     }
 
     public String getName() {
