@@ -2,6 +2,7 @@ package com.example.projectfinder.service;
 
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
 import com.example.projectfinder.model.dto.EditProfileDto;
+import com.example.projectfinder.model.dto.UserLoginDto;
 import com.example.projectfinder.model.entity.*;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
@@ -53,11 +54,10 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
-    public Optional<UserServiceModel> findUserByUsername(String username) {
+    public Optional<UserLoginDto> findUserByUsername(String username) {
 
-        return userRepository
-                .findByUsername(username)
-                .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class));
+        return userRepository.findByUsername(username)
+                .map(userEntity -> modelMapper.map(userEntity, UserLoginDto.class));
     }
 
     public UserServiceModel findUserById(Long id) {

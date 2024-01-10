@@ -3,6 +3,7 @@ package com.example.projectfinder.web;
 import com.example.projectfinder.model.binding.EditProfileBindingModel;
 import com.example.projectfinder.model.binding.UserRegisterBindingModel;
 import com.example.projectfinder.model.dto.EditProfileDto;
+import com.example.projectfinder.model.dto.UserLoginDto;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.UserViewModel;
@@ -51,10 +52,10 @@ public class UserController {
             @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY) String password,
             RedirectAttributes redirectAttributes) {
 
-        Optional<UserServiceModel> userOpt = userService.findUserByUsername(username);
+        Optional<UserLoginDto> userLoginDtoOpt = userService.findUserByUsername(username);
 
-        if (userOpt.isPresent() && userOpt.get().isDeleted() &&
-                passwordEncoder.matches(password, userOpt.get().getPassword())) {
+        if (userLoginDtoOpt.isPresent() && userLoginDtoOpt.get().isDeleted() &&
+                passwordEncoder.matches(password, userLoginDtoOpt.get().getPassword())) {
 
             redirectAttributes.addFlashAttribute("showErrorMessDeletedUser", true);
             return "redirect:/login";
