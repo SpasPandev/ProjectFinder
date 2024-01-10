@@ -6,7 +6,6 @@ import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.EditProfileViewModel;
 import com.example.projectfinder.model.view.UserViewModel;
-import com.example.projectfinder.repository.UserRepository;
 import com.example.projectfinder.service.UserService;
 import com.example.projectfinder.service.impl.ApplicationUser;
 import org.modelmapper.ModelMapper;
@@ -133,7 +132,7 @@ public class UserController {
             return "redirect:/register";
         }
 
-        userService.registerUser(modelMapper.map(userRegisterBindingModel, UserServiceModel.class));
+        userService.registerUser(userRegisterBindingModel);
 
         return "redirect:login";
     }

@@ -1,5 +1,6 @@
 package com.example.projectfinder.service.impl;
 
+import com.example.projectfinder.model.binding.UserRegisterBindingModel;
 import com.example.projectfinder.model.entity.*;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
@@ -35,17 +36,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void registerUser(UserServiceModel userServiceModel) {
+    public void registerUser(UserRegisterBindingModel userRegisterBindingModel) {
 
-        RoleEntity userRole = this.roleRepository.findByRole(userServiceModel.getRole());
+        RoleEntity userRole = this.roleRepository.findByRole(userRegisterBindingModel.getRole());
         List<RoleEntity> roles = new ArrayList<>();
         roles.add(userRole);
 
-        List<TechnologyEntity> technologies = technologyRepository.findTechnologyEntitiesByTechnologiesIn(userServiceModel.getTechnology());
+        List<TechnologyEntity> technologies = technologyRepository.findTechnologyEntitiesByTechnologiesIn(userRegisterBindingModel.getTechnology());
 
-        UserEntity userEntity = modelMapper.map(userServiceModel, UserEntity.class);
+        UserEntity userEntity = modelMapper.map(userRegisterBindingModel, UserEntity.class);
 
-        userEntity.setPassword(passwordEncoder.encode(userServiceModel.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
 
         userEntity.setRoles(roles);
 

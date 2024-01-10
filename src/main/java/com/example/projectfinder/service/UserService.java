@@ -1,5 +1,6 @@
 package com.example.projectfinder.service;
 
+import com.example.projectfinder.model.binding.UserRegisterBindingModel;
 import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.service.EditProfileServiceModel;
 import com.example.projectfinder.model.service.UserServiceModel;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    void registerUser(UserServiceModel userServiceModel);
+    void registerUser(UserRegisterBindingModel userRegisterBindingModel);
 
     Optional<UserServiceModel> findUserByUsername(String username);
 
