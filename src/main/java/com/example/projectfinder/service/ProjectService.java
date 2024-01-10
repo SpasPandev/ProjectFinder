@@ -4,7 +4,7 @@ import com.example.projectfinder.model.dto.CreateProjectDto;
 import com.example.projectfinder.model.entity.ProjectEntity;
 import com.example.projectfinder.model.entity.ProjectParticipant;
 import com.example.projectfinder.model.entity.UserEntity;
-import com.example.projectfinder.model.service.ProjectServiceModel;
+import com.example.projectfinder.model.service.ProjectDto;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.repository.*;
@@ -38,11 +38,11 @@ public class ProjectService {
     }
 
     @Transactional
-    public ProjectServiceModel findProjectById(Long id) {
+    public ProjectDto findProjectById(Long id) {
 
         ProjectEntity projectEntity = findProjectEntityById(id);
 
-        return modelMapper.map(projectEntity, ProjectServiceModel.class);
+        return modelMapper.map(projectEntity, ProjectDto.class);
     }
 
     @Transactional

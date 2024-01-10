@@ -6,7 +6,7 @@ import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;
 import java.util.List;
 import java.util.Set;
 
-public class ProjectServiceModel {
+public class ProjectDto {
 
     private Long id;
 
@@ -24,7 +24,7 @@ public class ProjectServiceModel {
 
     private int viewsCount;
 
-    public ProjectServiceModel() {
+    public ProjectDto() {
     }
 
     public Long getId() {
@@ -91,7 +91,7 @@ public class ProjectServiceModel {
         return viewsCount;
     }
 
-    public ProjectServiceModel setViewsCount(int viewsCount) {
+    public ProjectDto setViewsCount(int viewsCount) {
         this.viewsCount = viewsCount;
         return this;
     }
