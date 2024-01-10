@@ -1,4 +1,4 @@
-package com.example.projectfinder.service.impl;
+package com.example.projectfinder.service;
 
 import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.repository.UserRepository;

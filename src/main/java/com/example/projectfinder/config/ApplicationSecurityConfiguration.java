@@ -2,7 +2,7 @@ package com.example.projectfinder.config;
 
 import com.example.projectfinder.model.entity.enums.RoleNameEnum;
 import com.example.projectfinder.repository.UserRepository;
-import com.example.projectfinder.service.impl.ApplicationUserDetailsServiceImpl;
+import com.example.projectfinder.service.ApplicationUserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
