@@ -143,9 +143,7 @@ public class UserController {
                 .addAttribute("technologyNameInString", userService.findUserTechnologyNameInString(id))
                 .addAttribute("userRoleNameInString", userService.findUserRoleNameInString(id));
 
-        model
-                .addAttribute("user", modelMapper
-                        .map(userService.findUserById(id), UserViewModel.class));
+        model.addAttribute("user", userService.findUserViewModelByUserId(id));
 
         model.addAttribute("currentUserId", currentUser.getId());
 

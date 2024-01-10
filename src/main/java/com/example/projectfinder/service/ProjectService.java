@@ -1,10 +1,11 @@
 package com.example.projectfinder.service;
 
 import com.example.projectfinder.model.dto.CreateProjectDto;
+import com.example.projectfinder.model.dto.SubmitLinkDto;
 import com.example.projectfinder.model.entity.ProjectEntity;
 import com.example.projectfinder.model.entity.ProjectParticipant;
 import com.example.projectfinder.model.entity.UserEntity;
-import com.example.projectfinder.model.service.ProjectDto;
+import com.example.projectfinder.model.dto.ProjectDto;
 import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.repository.*;
@@ -151,7 +152,7 @@ public class ProjectService {
         return technologyRepository.findTechnologyNameInStringById(currentProjectTechnologyId);
     }
 
-    public void submitLink(UserServiceModel userServiceModel, Long id, Long currentUserId) {
+    public void submitLink(SubmitLinkDto submitLinkDto, Long id, Long currentUserId) {
 
         ProjectEntity currentProject = findProjectEntityById(id);
 
@@ -160,7 +161,7 @@ public class ProjectService {
         ProjectParticipant projectParticipant = projectParticipantRepository
                 .findAllByProjectAndParticipant(currentProject, currentUserEntity);
 
-        projectParticipant.setLink(userServiceModel.getLink());
+        projectParticipant.setLink(submitLinkDto.getLink());
 
         projectParticipantRepository.save(projectParticipant);
     }

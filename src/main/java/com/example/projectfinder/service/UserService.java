@@ -60,11 +60,9 @@ public class UserService {
                 .map(userEntity -> modelMapper.map(userEntity, UserLoginDto.class));
     }
 
-    public UserServiceModel findUserById(Long id) {
+    public UserViewModel findUserViewModelByUserId(Long userId) {
 
-        UserEntity userEntity = findUserEntityById(id);
-
-        return modelMapper.map(userEntity, UserServiceModel.class);
+        return modelMapper.map(findUserEntityById(userId), UserViewModel.class);
 
     }
 

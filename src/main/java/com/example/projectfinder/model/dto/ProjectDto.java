@@ -1,4 +1,4 @@
-package com.example.projectfinder.model.service;
+package com.example.projectfinder.model.dto;
 
 import com.example.projectfinder.model.entity.UserEntity;
 import com.example.projectfinder.model.entity.enums.TechnologyNameEnum;

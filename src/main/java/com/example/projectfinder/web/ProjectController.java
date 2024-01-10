@@ -134,8 +134,7 @@ public class ProjectController {
             return "redirect:/project/{id}";
         }
 
-        projectService.submitLink(modelMapper.map(submitLinkDto, UserServiceModel.class),
-                id, currentUser.getId());
+        projectService.submitLink(submitLinkDto, id, currentUser.getId());
 
         return "redirect:/project/{id}";
     }
