@@ -1,4 +1,4 @@
-package com.example.projectfinder.web;
+package com.example.projectfinder.web.thymeleafController;
 
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.ApplicationUser;
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-public class UploadedController {
+public class UploadedControllerTL {
 
     private final ProjectService projectService;
 
-    public UploadedController(ProjectService projectService) {
+    public UploadedControllerTL(ProjectService projectService) {
         this.projectService = projectService;
     }
 

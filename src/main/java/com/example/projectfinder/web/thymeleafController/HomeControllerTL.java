@@ -1,4 +1,4 @@
-package com.example.projectfinder.web;
+package com.example.projectfinder.web.thymeleafController;
 
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class HomeController {
+public class HomeControllerTL {
 
     private final ProjectService projectService;
     private final UserService userService;
 
     private boolean interests = false;
 
-    public HomeController(ProjectService projectService, UserService userService) {
+    public HomeControllerTL(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
         this.userService = userService;
     }

@@ -1,8 +1,7 @@
-package com.example.projectfinder.web;
+package com.example.projectfinder.web.thymeleafController;
 
 import com.example.projectfinder.model.dto.CreateProjectDto;
 import com.example.projectfinder.model.dto.SubmitLinkDto;
-import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.service.ApplicationUser;
 import com.example.projectfinder.service.ProjectService;
 import com.example.projectfinder.service.UserService;
@@ -23,13 +22,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Controller
-public class ProjectController {
+public class ProjectControllerTL {
 
     private final ModelMapper modelMapper;
     private final ProjectService projectService;
     private final UserService userService;
 
-    public ProjectController(ModelMapper modelMapper, ProjectService projectService, UserService userService) {
+    public ProjectControllerTL(ModelMapper modelMapper, ProjectService projectService, UserService userService) {
         this.modelMapper = modelMapper;
         this.projectService = projectService;
         this.userService = userService;

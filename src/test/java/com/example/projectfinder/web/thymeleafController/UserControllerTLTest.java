@@ -1,4 +1,4 @@
-package com.example.projectfinder.web;
+package com.example.projectfinder.web.thymeleafController;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,7 +29,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class UserControllerTLTest {
 
     @Autowired
     private MockMvc mockMvc;

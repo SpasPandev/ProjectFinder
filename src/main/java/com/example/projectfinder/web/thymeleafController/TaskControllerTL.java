@@ -1,4 +1,4 @@
-package com.example.projectfinder.web;
+package com.example.projectfinder.web.thymeleafController;
 
 import com.example.projectfinder.model.view.ProjectViewModel;
 import com.example.projectfinder.service.ProjectService;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class TaskController {
+public class TaskControllerTL {
 
     private final ProjectService projectService;
 
-    public TaskController(ProjectService projectService) {
+    public TaskControllerTL(ProjectService projectService) {
         this.projectService = projectService;
     }
 

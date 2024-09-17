@@ -1,7 +1,6 @@
-package com.example.projectfinder.web;
+package com.example.projectfinder.web.thymeleafController;
 
 import com.example.projectfinder.model.dto.ChangeRoleDto;
-import com.example.projectfinder.model.service.UserServiceModel;
 import com.example.projectfinder.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,12 +14,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-public class AdminController {
+public class AdminControllerTL {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
 
-    public AdminController(UserService userService, ModelMapper modelMapper) {
+    public AdminControllerTL(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
     }
